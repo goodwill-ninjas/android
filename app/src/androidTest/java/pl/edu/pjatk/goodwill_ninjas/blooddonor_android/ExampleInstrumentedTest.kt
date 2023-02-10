@@ -1,4 +1,4 @@
-package com.blooddonor.android
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.blooddonor.android", appContext.packageName)
+        assertEquals("pl.edu.pjatk.goodwill_ninjas.blooddonor_android", appContext.packageName)
     }
 }

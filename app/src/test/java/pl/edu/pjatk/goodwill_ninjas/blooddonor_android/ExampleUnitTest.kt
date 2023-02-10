@@ -1,4 +1,4 @@
-package com.blooddonor.android
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android
 
 import org.junit.Test
 

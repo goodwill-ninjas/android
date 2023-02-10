@@ -1,4 +1,4 @@
-package com.blooddonor.android.ui.theme
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
