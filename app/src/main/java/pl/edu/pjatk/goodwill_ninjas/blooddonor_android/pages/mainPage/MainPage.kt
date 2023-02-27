@@ -35,7 +35,10 @@ fun MainPage(name: String, bloodDonation: NextDonation, navController: NavContro
         bottomBar = { MyBottomBar() },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navController.navigate(Screen.MainPage.withArgs())
+                navController.navigate(
+
+                    Screen.DatePicker.route
+                )
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
@@ -55,8 +58,8 @@ fun MainPage(name: String, bloodDonation: NextDonation, navController: NavContro
             Box(modifier = Modifier.padding()) {
                 Image(painter = image, contentDescription = null, Modifier.height(250.dp))
             }
-            Box(modifier = Modifier.padding()){
-                Card (
+            Box(modifier = Modifier.padding()) {
+                Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(15.dp)
@@ -69,10 +72,17 @@ fun MainPage(name: String, bloodDonation: NextDonation, navController: NavContro
                         Text(text = stringResource(R.string.full_blood))
                         Text(
                             buildAnnotatedString {
-                                append(bloodDonation.date.format(DateTimeFormatter.ISO_DATE).toString())
+                                append(
+                                    bloodDonation.date.format(DateTimeFormatter.ISO_DATE).toString()
+                                )
                             }
                         )
-                        Text(stringResource(id = R.string.next_donation, bloodDonation.calculateNextDonation()))
+                        Text(
+                            stringResource(
+                                id = R.string.next_donation,
+                                bloodDonation.calculateNextDonation()
+                            )
+                        )
                     }
                 }
             }
