@@ -1,13 +1,11 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
-<<<<<<< HEAD
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-=======
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -35,14 +33,12 @@ import java.text.SimpleDateFormat
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
->>>>>>> b7cc35df1b661d255575aaaced8a6d6cf9d3f2c7
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePicker(
 
-<<<<<<< HEAD
 ) {
     val datePickerState = rememberDatePickerState()
     DatePicker(
@@ -54,77 +50,15 @@ fun DatePicker(
 
 
 
-=======
-
-) {
-    val dateSelected = remember { mutableStateOf("") }
-    val simpleDateFormatPattern = "EEE, MMM d"
-    val dateFormat = SimpleDateFormat(simpleDateFormatPattern, Locale.getDefault())
-    dateFormat.timeZone = TimeZone.getTimeZone("UTC")
-
-
-    val calendarState = rememberSheetState()
-
-    val formattedDate by remember {
-        derivedStateOf {
-            DateTimeFormatter.ofPattern("MMM dd yyyy").format(LocalDate.now())
-        }
-    }
-    val onSelectDate = ""
-    CalendarDialog(state = calendarState,
-        config = CalendarConfig(
-
-        ),
-        selection = CalendarSelection.Date { _ ->
-            Log.d("selected date", "$dateSelected")
-
-        })
-    Column(
-
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-
-    ) {
-        Button(onClick = { calendarState.show() }) {
-            Text(text = "Wybierz datę: $formattedDate")
-            Log.d("selected date", "$formattedDate")
-        }
-
-    }
-
-}
-
-@Composable
-fun SimpleCard() {
-    val paddingModifier = Modifier.padding(10.dp)
-    Card(modifier = paddingModifier) {
-        Text(
-            text = "Simple Card with elevation",
-            modifier = paddingModifier
-        )
-    }
-    Column() {
-
-    }
-}
->>>>>>> b7cc35df1b661d255575aaaced8a6d6cf9d3f2c7
 
 @Preview()
 @Composable
 fun DatePickerPreview() {
 
     Surface {
-<<<<<<< HEAD
 
         DatePicker()
 
-=======
-        DatePicker()
-        SimpleCard()
->>>>>>> b7cc35df1b661d255575aaaced8a6d6cf9d3f2c7
     }
 
 }
