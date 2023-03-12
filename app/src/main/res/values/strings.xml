@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Blooddonor-android</string>
+    <string name="dodaj_donację">Dodaj donację</string>
 </resources>
