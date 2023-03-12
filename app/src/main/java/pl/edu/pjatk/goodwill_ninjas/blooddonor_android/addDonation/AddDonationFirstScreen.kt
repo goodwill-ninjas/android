@@ -1,38 +1,17 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.activity.compose.setContent
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentManager
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.maxkeppeker.sheets.core.models.base.rememberSheetState
-import com.maxkeppeler.sheets.calendar.CalendarDialog
-import com.maxkeppeler.sheets.calendar.models.CalendarConfig
-import com.maxkeppeler.sheets.calendar.models.CalendarSelection
-import com.maxkeppeler.sheets.calendar.models.CalendarStyle
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.util.getDefaultDateInMillis
-import java.text.SimpleDateFormat
 
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,15 +19,66 @@ import java.util.*
 fun DatePicker(
 
 ) {
-    val datePickerState = rememberDatePickerState()
-    DatePicker(
-        datePickerState = datePickerState,
-        modifier = Modifier.padding(16.dp)
-    )
-    Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
+    var datePickerState = rememberDatePickerState()
+    Column {
+        DatePicker(
+            datePickerState = datePickerState,
+            modifier = Modifier.padding(16.dp)
+        )
+        Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
+
+        BloodQtyDonated()
+    }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BloodQtyDonated() {
+    Column(modifier = Modifier.fillMaxSize()) {
+        val pattern = remember { Regex("^[0-9][0-9][0-9]") }
+        var bloodQtyDonated by remember {
+            mutableStateOf("450")
+        }
+        val newBloodQtyDonated = 0
+        OutlinedTextField(
 
+            value = bloodQtyDonated, onValueChange = {
+
+
+                    newBloodQtyDonated ->
+                bloodQtyDonated = newBloodQtyDonated
+
+            },
+
+            label = {
+                Text(text = "Ilość ml")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = { Log.d("ImeAction", "clicked") }
+            )
+        )
+
+    }
+
+}
+
+@Composable
+fun DateDisplay() {
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(
+            text = "Hello",
+            modifier = Modifier.padding(bottom = 8.dp),
+            style = MaterialTheme.typography.bodyMedium
+
+        )
+
+    }
+}
 
 
 @Preview()
@@ -58,6 +88,7 @@ fun DatePickerPreview() {
     Surface {
 
         DatePicker()
+
 
     }
 
