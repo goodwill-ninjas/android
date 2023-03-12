@@ -2,6 +2,8 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android
 
 
 import android.os.Bundle
+import android.provider.Telephony.Mms.Addr
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -50,5 +52,6 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     BlooddonorandroidTheme {
         Navigation
+
     }
 }
