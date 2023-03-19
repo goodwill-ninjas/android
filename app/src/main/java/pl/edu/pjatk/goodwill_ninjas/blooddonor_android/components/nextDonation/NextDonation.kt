@@ -1,8 +1,8 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation
 
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 import java.time.temporal.ChronoUnit
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class NextDonation(
     override val date: LocalDateTime,
@@ -15,11 +15,4 @@ class NextDonation(
             ChronoUnit.DAYS.between(LocalDateTime.now(), date.plusMonths(2))
         }
     }
-
-}
-
-
-enum class DonationType {
-    FULL,
-    BLOOD_CELLS
 }

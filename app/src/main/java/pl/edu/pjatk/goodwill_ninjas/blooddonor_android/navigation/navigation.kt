@@ -4,16 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-//import org.joda.time.DateTime
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.DonationType
 import java.time.LocalDateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.NextDonation
-import java.time.format.DateTimeFormatter
-import java.util.*
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 
 object Routes {
-    val SELF = "Main"
+    const val SELF = "Main"
 }
 
 @Composable

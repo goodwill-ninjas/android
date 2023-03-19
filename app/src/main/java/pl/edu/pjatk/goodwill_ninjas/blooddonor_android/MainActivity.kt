@@ -20,21 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             BlooddonorandroidTheme {
-
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    )
-                    {
-
-                        Navigation(navController)
-                    }
-                }
+                Navigation(navController)
             }
         }
     }
