@@ -19,7 +19,8 @@ import java.time.format.DateTimeFormatter
 fun BloodCard (
     bloodType: String,
     bloodDonation: NextDonation,
-    isNextDonationCard: Boolean
+    isNextDonationCard: Boolean,
+    amount: Int
 ) {
     Box {
         Card(
@@ -49,6 +50,11 @@ fun BloodCard (
                                 bloodDonation.calculateNextDonation()
                             )
                         )
+                    }
+                }
+                if (amount != 0) {
+                    Box {
+                        Text(text = stringResource(id = R.string.donation_card_amount, amount))
                     }
                 }
             }
