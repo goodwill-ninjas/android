@@ -1,7 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
-
-
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,13 +14,9 @@ import androidx.compose.ui.unit.dp
 import java.util.*
 
 
-import java.util.*
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
 fun DatePicker(
-
 ) {
     var datePickerState = rememberDatePickerState()
     Column {
@@ -46,15 +40,10 @@ fun BloodQtyDonated() {
         }
         val newBloodQtyDonated = 0
         OutlinedTextField(
-
-            value = bloodQtyDonated, onValueChange = {
-
-
-                    newBloodQtyDonated ->
+            value = bloodQtyDonated, onValueChange = { newBloodQtyDonated ->
                 bloodQtyDonated = newBloodQtyDonated
 
             },
-
             label = {
                 Text(text = "Ilość ml")
             },
@@ -66,9 +55,7 @@ fun BloodQtyDonated() {
                 onNext = { Log.d("ImeAction", "clicked") }
             )
         )
-
     }
-
 }
 
 @Composable
@@ -79,9 +66,7 @@ fun DateDisplay() {
             text = "Hello",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.bodyMedium
-
         )
-
     }
 }
 
@@ -91,11 +76,7 @@ fun DateDisplay() {
 fun DatePickerPreview() {
 
     Surface {
-
         DatePicker()
-
-
     }
-
 }
 

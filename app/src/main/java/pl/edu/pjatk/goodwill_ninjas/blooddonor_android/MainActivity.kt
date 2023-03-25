@@ -2,7 +2,6 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android
 
 
 import android.os.Bundle
-
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             BlooddonorandroidTheme {
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -50,7 +50,5 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     BlooddonorandroidTheme {
         Navigation
-
     }
 }
-
