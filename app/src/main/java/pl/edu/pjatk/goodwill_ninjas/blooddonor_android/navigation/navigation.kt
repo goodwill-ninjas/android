@@ -9,21 +9,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+<<<<<<< HEAD
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
+=======
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BottomSheetDialog
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.DatePicker
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.DonationType
+>>>>>>> 26d5110 (Add date utils)
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import java.time.LocalDateTime
 
 object Routes {
+<<<<<<< HEAD
     const val SELF = "Main"
     const val JOURNAL = "Journal"
 }
+=======
+    val SELF = "Main"
+    val ADD_DONATION = "Add_donation"
+    val BOTTOM_SHEET_DIALOG = "Bottom_dialog"
+    }
+>>>>>>> 26d5110 (Add date utils)
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
+<<<<<<< HEAD
 fun Navigation() {
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
@@ -60,6 +74,25 @@ fun Navigation() {
             composable(route = Routes.JOURNAL) {
                 DonationJournal(name, donations)
             }
+=======
+fun Navigation(navHostController: NavHostController) {
+    NavHost(navController = navHostController, startDestination = Routes.SELF) {
+        composable(route = Routes.SELF) {
+            MainPage(
+                name = "Android",
+                bloodDonation = NextDonation(
+                    LocalDateTime.of(2023, 2, 23, 0, 0),
+                    DonationType.FULL
+                ),
+                navHostController
+            )
+        }
+//        composable(route = Routes.ADD_DONATION) {
+//            DatePicker()
+//        }
+        composable(route = Routes.BOTTOM_SHEET_DIALOG) {
+            BottomSheetDialog()
+>>>>>>> 26d5110 (Add date utils)
         }
     }
 }

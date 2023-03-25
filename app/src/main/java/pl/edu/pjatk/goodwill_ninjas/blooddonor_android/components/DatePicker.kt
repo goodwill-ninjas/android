@@ -9,30 +9,37 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BloodQtyDonated
+import java.text.SimpleDateFormat
+import java.util.*
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePicker(
-dateConverter: DateConverter
 ) {
-
     var datePickerState = rememberDatePickerState()
-
-    Column {
-        androidx.compose.material3.DatePicker(
-            datePickerState = datePickerState,
-            modifier = Modifier.padding(16.dp)
-        )
-        Text("Data wybrana: ${datePickerState.selectedDateMillis ?: "no selection"}")
-
-
-    }
+    androidx.compose.material3.DatePicker(
+        datePickerState = datePickerState,
+        modifier = Modifier.padding(16.dp)
+    )
+    Text(
+        text = "${
+            if (datePickerState.selectedDateMillis != null)
+                Date(datePickerState.selectedDateMillis!!)
+            else
+                "No selection"
+        }"
+    )
 }
 
 
 @Preview
 @Composable
-fun prev(){
+fun prev() {
 
     DatePicker()
 }
+
+

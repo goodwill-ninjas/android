@@ -14,6 +14,7 @@ import java.time.LocalDateTime
 
 
 @Composable
+<<<<<<< HEAD
 fun MainPage(name: String) {
     val image = painterResource(id = R.drawable.droplet)
     Column(
@@ -22,6 +23,31 @@ fun MainPage(name: String) {
             .padding(10.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
+=======
+fun MainPage(name: String, bloodDonation: NextDonation, navController: NavController) {
+    val scaffoldState = rememberScaffoldState()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+
+        topBar = { MytopBar() },
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { MyBottomBar() },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navController.navigate(
+
+//                    Screen.DatePicker.route
+                    Screen.BottomSheetDialog.route
+                )
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+            }
+        },
+
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center
+>>>>>>> 26d5110 (Add date utils)
     ) {
         Box(modifier = Modifier.padding(15.dp)) {
             Image(painter = image, contentDescription = null, Modifier.height(250.dp))
