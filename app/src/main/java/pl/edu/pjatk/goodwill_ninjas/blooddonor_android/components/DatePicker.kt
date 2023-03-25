@@ -18,12 +18,26 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePicker(
+<<<<<<< HEAD
 ) {
     var datePickerState = rememberDatePickerState()
+=======
+
+) {
+    var dateTime: String
+    var datePickerState = rememberDatePickerState()
+    var simpleDateFormat: SimpleDateFormat
+    var calendar: Calendar
+    calendar = Calendar.getInstance()
+    simpleDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss aaa z")
+    dateTime = simpleDateFormat.format(datePickerState.selectedDateMillis).toString()
+
+>>>>>>> 1cb9235 (Add date utils)
     androidx.compose.material3.DatePicker(
         datePickerState = datePickerState,
         modifier = Modifier.padding(16.dp)
     )
+<<<<<<< HEAD
     Text(
         text = "${
             if (datePickerState.selectedDateMillis != null)
@@ -32,6 +46,12 @@ fun DatePicker(
                 "No selection"
         }"
     )
+=======
+
+    Text("Data wybrana: ${dateTime ?: "no selection"}")
+
+
+>>>>>>> 1cb9235 (Add date utils)
 }
 
 
