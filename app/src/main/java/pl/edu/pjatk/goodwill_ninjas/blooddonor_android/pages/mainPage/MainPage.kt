@@ -39,7 +39,8 @@ fun MainPage(name: String, bloodDonation: NextDonation, navController: NavContro
             FloatingActionButton(onClick = {
                 navController.navigate(
 
-                    Screen.DatePicker.route
+//                    Screen.DatePicker.route
+                    Screen.BottomSheetDialog.route
                 )
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")

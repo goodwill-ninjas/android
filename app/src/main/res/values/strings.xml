@@ -2,5 +2,7 @@
     <string name="app_name">Blooddonor-android</string>
     <string name="full_blood">Krew pełna</string>
     <string name="next_donation">Możesz oddać krew za %d dni.</string>
-    <string name="dodaj_donację">Dodaj donację</string>
+    <string name="add_donation">Dodaj donację</string>
+    <string name="add_disqualification">Dodaj dyskwalifikację</string>
+    <string name="add_log">Dodaj wpis dzienika</string>
 </resources>
