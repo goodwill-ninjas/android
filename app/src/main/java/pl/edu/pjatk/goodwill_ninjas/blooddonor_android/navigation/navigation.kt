@@ -1,17 +1,15 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
+//import org.joda.time.DateTime
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.DatePicker
-//import org.joda.time.DateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.DonationType
-import java.time.LocalDateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.NextDonation
-import java.time.format.DateTimeFormatter
-import java.util.*
+import java.time.LocalDateTime
 
 object Routes {
     val SELF = "Main"

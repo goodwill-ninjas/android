@@ -1,32 +1,29 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
-import android.widget.GridView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.rounded.AccountCircle
-import androidx.compose.material.icons.rounded.HourglassFull
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.ScaffoldAndFAB
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.DatePicker
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes.ADD_DONATION
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainPage(name: String, bloodDonation: NextDonation, navController: NavController) {
+fun ScaffoldAndFAB(name: String, navController: NavController, route: String, stringRes: String) {
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -39,7 +36,7 @@ fun MainPage(name: String, bloodDonation: NextDonation, navController: NavContro
             FloatingActionButton(onClick = {
                 navController.navigate(
 
-                    Screen.DatePicker.route
+                    route
                 )
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
@@ -71,24 +68,24 @@ fun MainPage(name: String, bloodDonation: NextDonation, navController: NavContro
                     Column(
                         modifier = Modifier.padding(15.dp)
                     ) {
-                        Text(text = stringResource(R.string.full_blood))
-                        Text(
-                            buildAnnotatedString {
-                                append(
-                                    bloodDonation.date.format(DateTimeFormatter.ISO_DATE).toString()
-                                )
-                            }
-                        )
-                        Text(
-                            stringResource(
-                                id = R.string.next_donation,
-                                bloodDonation.calculateNextDonation()
-                            )
-                        )
+                        Text(text = stringRes)
+
                     }
+
+                    Text(
+                        text = stringRes
+                    )
+
                 }
             }
         }
     }
 }
 
+
+
+@Preview
+@Composable
+fun showScaffoldAndFab() {
+    ScaffoldAndFAB("abc", NavController(LocalContext.current),"Add_donation", "krew krew")
+}
