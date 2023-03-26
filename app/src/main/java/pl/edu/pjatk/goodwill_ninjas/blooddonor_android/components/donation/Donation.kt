@@ -1,5 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation
 
-class Donation (val type: String, val amount: Int ) {
+import java.time.LocalDateTime
 
-}
+data class Donation (val donationType: String, val amount: Int, val donationDate: LocalDateTime)

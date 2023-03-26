@@ -13,15 +13,18 @@ import androidx.compose.ui.unit.dp
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.BloodTypeIcon
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun BloodCard (
     bloodType: String,
-    bloodDonation: NextDonation,
+    donationDate: LocalDateTime,
     isNextDonationCard: Boolean,
     amount: Int
 ) {
+    val bloodDonation = NextDonation(donationDate, bloodType)
     Box {
         Card(
             elevation = 5.dp,
@@ -39,7 +42,7 @@ fun BloodCard (
                     )
                     Column(modifier = Modifier.padding(5.dp)) {
                         Text(bloodType, fontWeight = FontWeight(700))
-                        Text(text = bloodDonation.date.format(DateTimeFormatter.ISO_DATE).toString())
+                        Text(text = donationDate.format(DateTimeFormatter.ISO_DATE).toString())
                     }
                 }
                 if (isNextDonationCard) {

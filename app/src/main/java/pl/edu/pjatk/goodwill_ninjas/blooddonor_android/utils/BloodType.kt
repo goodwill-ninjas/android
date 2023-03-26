@@ -2,9 +2,9 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils
 
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 
-enum class DonationType {
-    FULL,
-    BLOOD_CELLS
+object DonationType {
+    val FULL = "full"
+    val BLOOD_CELLS = "bloodCells"
 }
 
 object BloodTypeIcon {

@@ -6,5 +6,5 @@ import java.time.LocalDateTime
 interface DonationInterface {
     val donationDate: LocalDateTime;
     val donationType: DonationType;
-
+    val amount: Int
 }

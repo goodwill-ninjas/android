@@ -9,10 +9,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.prepareBottomMenu
 
 @Composable
-fun MyBottomBar() {
+fun MyBottomBar(navController: NavController) {
     val bottomMenuItemsList = prepareBottomMenu()
 
     val contextForToast = LocalContext.current.applicationContext
@@ -45,10 +48,7 @@ fun MyBottomBar() {
                             selected = (selectedItem == menuItem.label),
                             onClick = {
                                 selectedItem = menuItem.label
-                                Toast.makeText(
-                                    contextForToast,
-                                    menuItem.label, Toast.LENGTH_SHORT
-                                ).show()
+                                navController.navigate(menuItem.route)
                             },
                             icon = {
                                 Icon(

@@ -12,12 +12,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun MytopBar() {
+fun MytopBar(name: String) {
 
     val contextForToast = LocalContext.current.applicationContext
     TopAppBar(title = {
         Text(
-            text = "Witaj Adam",
+            text = "Witaj $name",
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center
         )

@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 class NextDonation(
     override val date: LocalDateTime,
-    override val type: DonationType,
+    override val type: String,
 ) : NextDonationInterface {
     fun calculateNextDonation(): Long {
         return if (this.type == DonationType.FULL) {

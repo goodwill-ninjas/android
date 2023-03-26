@@ -5,5 +5,5 @@ import java.time.LocalDateTime
 
 interface NextDonationInterface {
     val date: LocalDateTime
-    val type: DonationType
+    val type: String
 }
