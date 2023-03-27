@@ -1,71 +1,157 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
-import android.util.Log
+import android.annotation.SuppressLint
+import android.graphics.Paint
+import android.media.Image
+import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import java.util.*
+import androidx.compose.ui.unit.sp
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
+import java.text.DateFormat
+import java.util.Calendar
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePicker(
-) {
-    var datePickerState = rememberDatePickerState()
-    Column {
-        DatePicker(
-            datePickerState = datePickerState,
-            modifier = Modifier.padding(16.dp)
-        )
-        Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
+fun WelcomeScreen() {
 
-        BloodQtyDonated()
+    Column(
+
+    ) {
+        Row {
+            Text(
+                text = "Krew pełna", fontSize = 20.sp, fontWeight = FontWeight.Bold,
+            )
+        }
+        Row() {
+            GetDate()
+        }
+       Row{
+            Text(text = "Dodaj donację", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+        }
+        Row{
+            DateButton()
+
+        }
+        Row{
+            pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.DatePicker()
+
+        }
+        Row{
+            BloodQtyInput()
+
+        }
+
+    }
+}
+
+
+@Composable
+fun GetDate() {
+    val calendar = Calendar.getInstance().time
+    val dateFormat = DateFormat.getDateInstance().format(calendar)
+    Text(text = "$dateFormat")
+
+}
+
+//@SuppressLint("UnrememberedMutableState")
+@Composable
+fun DateButton() {
+    val showDialog = remember { mutableStateOf(true ) }
+    if (showDialog.value) {
+        alert(msg = "Tu chciałem pokazać selektor dat",
+            showDialog = showDialog.value,
+            onDismiss = { showDialog.value = false })
+        Button(
+            modifier = Modifier.padding(vertical = 10.dp),
+            onClick = {
+                showDialog.value = true
+            }
+        ) {
+            Text(text = "Wybierz datę donacji")
+        }
+    }
+}
+
+@Composable
+fun alert(
+    msg: String,
+    showDialog: Boolean,
+    onDismiss: () -> Unit
+) {
+    if (showDialog) {
+        AlertDialog(
+            title = {
+                Text(msg)
+            },
+            onDismissRequest = onDismiss,
+            confirmButton = {
+                TextButton(onClick = onDismiss) {
+                    Text("Odrzuć")
+                }
+            },
+            dismissButton = {}
+        )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BloodQtyDonated() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        val pattern = remember { Regex("^[0-9][0-9][0-9]") }
-        var bloodQtyDonated by remember {
-            mutableStateOf("450")
-        }
-        val newBloodQtyDonated = 0
-        OutlinedTextField(
-            value = bloodQtyDonated, onValueChange = { newBloodQtyDonated ->
-                bloodQtyDonated = newBloodQtyDonated
+private fun BloodQtyInput() {
 
+    var value by remember {
+        mutableStateOf("")
+    }
+
+    val context = LocalContext.current.applicationContext
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.Start ,
+//        verticalArrangement = Arrangement.Center
+    ) {
+
+        TextField(
+            value = value,
+            onValueChange = { newText ->
+                value = newText
             },
-            label = {
-                Text(text = "Ilość ml")
-            },
+            label = { Text(text = "Ilość") },
+            placeholder = { Text(text = "Ilość") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(
-                onNext = { Log.d("ImeAction", "clicked") }
+                onSearch = {
+                    Toast.makeText(
+                        context,
+                        "On Search Click: value = $value",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
             )
-        )
-    }
-}
-
-@Composable
-fun DateDisplay() {
-
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(
-            text = "Hello",
-            modifier = Modifier.padding(bottom = 8.dp),
-            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -73,10 +159,12 @@ fun DateDisplay() {
 
 @Preview()
 @Composable
-fun DatePickerPreview() {
+fun FirstScreen() {
 
-    Surface {
-        DatePicker()
+    Surface() {
+
+        WelcomeScreen()
     }
+
 }
 
