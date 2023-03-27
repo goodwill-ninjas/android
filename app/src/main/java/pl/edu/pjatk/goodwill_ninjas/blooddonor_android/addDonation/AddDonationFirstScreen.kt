@@ -8,6 +8,14 @@ import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import android.graphics.Paint
+import android.media.Image
+import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -153,6 +161,7 @@ fun AlertInAddDonation(
     if (showDialog) {
         DatePicker()
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
