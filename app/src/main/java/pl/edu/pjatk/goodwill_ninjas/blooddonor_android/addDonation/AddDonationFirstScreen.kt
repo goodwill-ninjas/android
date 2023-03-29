@@ -56,6 +56,7 @@ fun WelcomeScreen() {
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center
     ) {
+<<<<<<< HEAD
 //        val image = painterResource(id = R.drawable.droplet)
         val image = painterResource(id = R.drawable.droplet)
         Column(
@@ -118,6 +119,27 @@ fun WelcomeScreen() {
                                 shape = RoundedCornerShape(5),
 
                                 )
+=======
+        Row {
+            Text(
+                text = "Krew pełna", fontSize = 20.sp, fontWeight = FontWeight.Bold,
+            )
+        }
+        Row() {
+            GetDate()
+        }
+        Row {
+            Text(text = "Dodaj donację", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+        }
+        Row {
+            DateButton()
+
+        }
+
+        Row {
+            BloodQtyInput()
+>>>>>>> 4b02637 (Intro new add donation layout)
 
                             {
                                 Text(text = "ZAAWANSOWANE", fontWeight = FontWeight.Bold)
@@ -131,10 +153,23 @@ fun WelcomeScreen() {
 }
 
 @Composable
+<<<<<<< HEAD
 fun DateButtonInAddDonation() {
     var bloodQty by remember {
         mutableStateOf("")
     }
+=======
+fun GetDate() {
+    val calendar = Calendar.getInstance().time
+    val dateFormat = DateFormat.getDateInstance().format(calendar)
+    Text(text = "$dateFormat")
+
+}
+
+//@SuppressLint("UnrememberedMutableState")
+@Composable
+fun DateButton() {
+>>>>>>> 4b02637 (Intro new add donation layout)
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
         AlertInAddDonation(msg = "Tu chciałem pokazać selektor dat",
@@ -152,6 +187,7 @@ fun DateButtonInAddDonation() {
     }
 }
 
+
 @Composable
 fun AlertInAddDonation(
     msg: String,
@@ -160,6 +196,10 @@ fun AlertInAddDonation(
 ) {
     if (showDialog) {
         DatePicker()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4b02637 (Intro new add donation layout)
     }
 
 }
@@ -171,12 +211,22 @@ fun dropDownMenuRck() {
     var isExpanded by remember {
         mutableStateOf(false)
     }
+<<<<<<< HEAD
     var selectedOption by remember {
         mutableStateOf(options[0])
     }
     ExposedDropdownMenuBox(
         expanded = isExpanded,
         onExpandedChange = { isExpanded = !isExpanded }
+=======
+
+    val context = LocalContext.current.applicationContext
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.Start,
+//        verticalArrangement = Arrangement.Center
+>>>>>>> 4b02637 (Intro new add donation layout)
     ) {
         TextField(
             value = selectedOption,
