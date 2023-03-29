@@ -45,19 +45,16 @@ fun WelcomeScreen() {
         Row() {
             GetDate()
         }
-       Row{
+        Row {
             Text(text = "Dodaj donację", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
         }
-        Row{
+        Row {
             DateButton()
 
         }
-        Row{
-            pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.DatePicker()
 
-        }
-        Row{
+        Row {
             BloodQtyInput()
 
         }
@@ -77,21 +74,23 @@ fun GetDate() {
 //@SuppressLint("UnrememberedMutableState")
 @Composable
 fun DateButton() {
-    val showDialog = remember { mutableStateOf(true ) }
+    val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
         alert(msg = "Tu chciałem pokazać selektor dat",
             showDialog = showDialog.value,
             onDismiss = { showDialog.value = false })
-        Button(
-            modifier = Modifier.padding(vertical = 10.dp),
-            onClick = {
-                showDialog.value = true
-            }
-        ) {
-            Text(text = "Wybierz datę donacji")
+    }
+    Button(
+        modifier = Modifier.padding(vertical = 10.dp),
+        onClick = {
+            showDialog.value = true
+
         }
+    ) {
+        Text(text = "Wybierz datę donacji")
     }
 }
+
 
 @Composable
 fun alert(
@@ -104,6 +103,7 @@ fun alert(
             title = {
                 Text(msg)
             },
+
             onDismissRequest = onDismiss,
             confirmButton = {
                 TextButton(onClick = onDismiss) {
@@ -127,7 +127,7 @@ private fun BloodQtyInput() {
 
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.Start ,
+        horizontalAlignment = Alignment.Start,
 //        verticalArrangement = Arrangement.Center
     ) {
 
