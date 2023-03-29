@@ -1,53 +1,68 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import android.graphics.Paint
-import android.media.Image
-import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection.Companion.Out
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
+import androidx.constraintlayout.solver.widgets.Rectangle
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
+import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon as ExposedDropdownMenuDefaultsTrailingIcon
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WelcomeScreen() {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
-    Scaffold(
+    androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
         topBar = { MytopBar() },
         modifier = Modifier.fillMaxSize(),
         bottomBar = { MyBottomBar() },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
+            androidx.compose.material.FloatingActionButton(onClick = {
                 navController.navigate(
                     Screen.BottomSheetDialog.route
                 )
             }) {
-                Icon(
+                androidx.compose.material.Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add"
                 )
@@ -56,7 +71,6 @@ fun WelcomeScreen() {
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center
     ) {
-<<<<<<< HEAD
 //        val image = painterResource(id = R.drawable.droplet)
         val image = painterResource(id = R.drawable.droplet)
         Column(
@@ -70,7 +84,7 @@ fun WelcomeScreen() {
 //                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
             }
             Box(modifier = Modifier.padding()) {
-                Card(
+                androidx.compose.material.Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(15.dp)
@@ -85,7 +99,7 @@ fun WelcomeScreen() {
                                 text = "Krew pełna", fontSize = 20.sp, fontWeight = FontWeight.Bold,
                             )
                         }
-                        Row {
+                        Row() {
                             GetDate()
                         }
                         Row {
@@ -119,27 +133,6 @@ fun WelcomeScreen() {
                                 shape = RoundedCornerShape(5),
 
                                 )
-=======
-        Row {
-            Text(
-                text = "Krew pełna", fontSize = 20.sp, fontWeight = FontWeight.Bold,
-            )
-        }
-        Row() {
-            GetDate()
-        }
-        Row {
-            Text(text = "Dodaj donację", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-
-        }
-        Row {
-            DateButton()
-
-        }
-
-        Row {
-            BloodQtyInput()
->>>>>>> 4b02637 (Intro new add donation layout)
 
                             {
                                 Text(text = "ZAAWANSOWANE", fontWeight = FontWeight.Bold)
@@ -153,23 +146,10 @@ fun WelcomeScreen() {
 }
 
 @Composable
-<<<<<<< HEAD
 fun DateButtonInAddDonation() {
     var bloodQty by remember {
         mutableStateOf("")
     }
-=======
-fun GetDate() {
-    val calendar = Calendar.getInstance().time
-    val dateFormat = DateFormat.getDateInstance().format(calendar)
-    Text(text = "$dateFormat")
-
-}
-
-//@SuppressLint("UnrememberedMutableState")
-@Composable
-fun DateButton() {
->>>>>>> 4b02637 (Intro new add donation layout)
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
         AlertInAddDonation(msg = "Tu chciałem pokazać selektor dat",
@@ -187,7 +167,6 @@ fun DateButton() {
     }
 }
 
-
 @Composable
 fun AlertInAddDonation(
     msg: String,
@@ -196,14 +175,8 @@ fun AlertInAddDonation(
 ) {
     if (showDialog) {
         DatePicker()
-<<<<<<< HEAD
-=======
-
->>>>>>> 4b02637 (Intro new add donation layout)
     }
-
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun dropDownMenuRck() {
@@ -211,22 +184,12 @@ fun dropDownMenuRck() {
     var isExpanded by remember {
         mutableStateOf(false)
     }
-<<<<<<< HEAD
     var selectedOption by remember {
         mutableStateOf(options[0])
     }
     ExposedDropdownMenuBox(
         expanded = isExpanded,
         onExpandedChange = { isExpanded = !isExpanded }
-=======
-
-    val context = LocalContext.current.applicationContext
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.Start,
-//        verticalArrangement = Arrangement.Center
->>>>>>> 4b02637 (Intro new add donation layout)
     ) {
         TextField(
             value = selectedOption,
