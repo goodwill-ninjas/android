@@ -5,7 +5,9 @@ sealed class Screen(val route: String) {
     object DatePicker : Screen("Add_donation")
     object BottomSheetDialog : Screen("Bottom_dialog")
     object AddDonationFirstScreen: Screen("Add_donation")
-    object Advanced : Screen("Advanced_screen")
+    object AdvancedDonationParams : Screen("Advanced_params")
+
+    object AddDisqualification : Screen("Add_disqualification")
 
 
     fun withArgs(vararg args: String): String {
