@@ -29,11 +29,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+
 import java.util.*
 
 @Composable
 fun AdvancedDonationParams(navHController: NavController) {
     val navController = rememberNavController()
+
     val scaffoldState = rememberScaffoldState()
     androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
@@ -102,6 +104,7 @@ fun AdvancedDonationParams(navHController: NavController) {
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BloodPressureInput() {
@@ -204,6 +207,7 @@ private fun ExaminationResult() {
         )
     }
 }
+
 @Composable
 fun DonationHandSelector() {
     var bloodQty by remember {
@@ -234,6 +238,7 @@ fun DonationHandSelector() {
             }
         )
         androidx.compose.material.DropdownMenu(
+
             expanded = expanded,
             onDismissRequest = { expanded = false },
             modifier = Modifier

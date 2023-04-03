@@ -17,6 +17,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.CustomDateDial
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+
 @Composable
 fun AddDisqualification(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
@@ -59,6 +60,7 @@ fun AddDisqualification(navController: NavController) {
                     Column(
                         modifier = Modifier.padding(15.dp)
                     ) {
+
                         Column() {
                             Row(){Text(text = "Wybierz datę początku dyskwalifikacji")}
 
