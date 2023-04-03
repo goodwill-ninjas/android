@@ -23,17 +23,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+
 import java.util.*
 
 @Composable
-fun AdvancedDonationParams(navHController: NavController) {
+fun AdvancedDonationParams() {
     val navController = rememberNavController()
+
     val scaffoldState = rememberScaffoldState()
     androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
@@ -84,7 +87,7 @@ fun AdvancedDonationParams(navHController: NavController) {
                             BloodPressureInput()
                         }
                         Row() {
-                            HemoglobineLevel()
+                            HemoglobineLevelInput()
                         }
                         Row() {
                             ExaminationResult()
@@ -100,74 +103,6 @@ fun AdvancedDonationParams(navHController: NavController) {
                 }
             }
         }
-    }
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun BloodPressureInput() {
-    var value by remember {
-        mutableStateOf("")
-    }
-    val context = LocalContext.current.applicationContext
-    Column(
-        horizontalAlignment = Alignment.Start,
-    ) {
-        TextField(
-            value = value,
-            onValueChange = { newText ->
-                value = newText
-            },
-            label = { androidx.compose.material3.Text(text = "Ciśnienie") },
-            placeholder = { Text(text = "00:00") },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions(
-                onSearch = {
-                    Toast.makeText(
-                        context,
-                        "On Search Click: value = $value",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            )
-        )
-    }
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun HemoglobineLevel() {
-    var value by remember {
-        mutableStateOf("")
-    }
-    val context = LocalContext.current.applicationContext
-    Column(
-        horizontalAlignment = Alignment.Start,
-    ) {
-        TextField(
-            value = value,
-            onValueChange = { newText ->
-                value = newText
-            },
-            label = { androidx.compose.material3.Text(text = "Hemoglobina") },
-            placeholder = { Text(text = "00:00") },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions(
-                onSearch = {
-                    Toast.makeText(
-                        context,
-                        "On Search Click: value = $value",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            )
-        )
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
@@ -204,6 +139,7 @@ private fun ExaminationResult() {
         )
     }
 }
+
 @Composable
 fun DonationHandSelector() {
     var bloodQty by remember {
@@ -234,6 +170,7 @@ fun DonationHandSelector() {
             }
         )
         androidx.compose.material.DropdownMenu(
+
             expanded = expanded,
             onDismissRequest = { expanded = false },
             modifier = Modifier
@@ -249,4 +186,9 @@ fun DonationHandSelector() {
             }
         }
     }
+}
+@Preview
+@Composable
+fun viewThis(){
+    AdvancedDonationParams()
 }
