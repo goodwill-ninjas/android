@@ -1,6 +1,8 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
+import android.content.Context
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,9 +17,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -43,12 +49,19 @@ fun BottomSheetDialog() {
 }
 
 @Composable
-fun addDonation() {
+fun addDonation(navController: NavController) {
     Button(onClick = {
-        //your onclick code here
+
+        navController.navigate(
+
+            Screen.BottomSheetDialog.route
+        )
+
+
     }) {
-        Text(text = stringResource(R.string.add_donation))
+        androidx.compose.material3.Text(text = "Dodaj donację")
     }
+
 }
 
 @Composable
@@ -61,15 +74,15 @@ fun addDiscqualification() {
 }
 
 
-@Preview()
-@Composable
-fun BottomSheetPreview() {
-
-    Surface {
-
-        BottomSheetDialog()
-
-
-    }
-
-}
+//@Preview()
+//@Composable
+//fun BottomSheetPreview() {
+//
+//    Surface {
+//
+//        BottomSheetDialog()
+//
+//
+//    }
+//
+//}
