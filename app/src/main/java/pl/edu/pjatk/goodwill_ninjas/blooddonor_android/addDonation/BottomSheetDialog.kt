@@ -12,7 +12,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomSheetDialog() {
+fun BottomSheetDialog(navController: NavController) {
 
     val bottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Expanded)
@@ -22,8 +22,8 @@ fun BottomSheetDialog() {
         sheetState = bottomSheetState,
         sheetContent = {
             Column(modifier = Modifier.padding(12.dp)) {
-                addDonation()
-                addDiscqualification()
+                addDonation(navController)
+                addDiscqualification(navController)
             }
         },
 
@@ -35,7 +35,7 @@ fun BottomSheetDialog() {
 fun addDonation(navController: NavController) {
     Button(onClick = {
         navController.navigate(
-            Screen.BottomSheetDialog.route
+            Screen.AddDonationFirstScreen.route
         )
     }) {
         androidx.compose.material3.Text(text = "Dodaj donację")
@@ -43,9 +43,10 @@ fun addDonation(navController: NavController) {
 }
 
 @Composable
-fun addDiscqualification() {
+fun addDiscqualification(navController: NavController) {
     Button(onClick = {
-        //your onclick code here
+        navController.navigate(
+            Screen.AddDisqualification.route)
     }) {
         Text(text = stringResource(id = R.string.add_disqualification))
     }

@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -18,10 +18,10 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.NextDonation
 import java.time.format.DateTimeFormatter
-
 @Composable
-fun MainPage(name: String, bloodDonation: NextDonation, navController: NavController) {
+fun AddDisqualification(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -62,24 +62,11 @@ fun MainPage(name: String, bloodDonation: NextDonation, navController: NavContro
                     Column(
                         modifier = Modifier.padding(15.dp)
                     ) {
-                        Text(text = stringResource(R.string.full_blood))
-                        Text(
-                            buildAnnotatedString {
-                                append(
-                                    bloodDonation.date.format(DateTimeFormatter.ISO_DATE).toString()
-                                )
-                            }
-                        )
-                        Text(
-                            stringResource(
-                                id = R.string.next_donation,
-                                bloodDonation.calculateNextDonation()
-                            )
-                        )
+
+
                     }
                 }
             }
         }
     }
 }
-

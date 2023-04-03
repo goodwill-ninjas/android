@@ -58,25 +58,5 @@ fun BloodQtyDonated() {
     }
 }
 
-@Composable
-fun DateDisplay() {
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(
-            text = "Hello",
-            modifier = Modifier.padding(bottom = 8.dp),
-            style = MaterialTheme.typography.bodyMedium
-        )
-    }
-}
-
-
-@Preview()
-@Composable
-fun DatePickerPreview() {
-
-    Surface {
-        DatePicker()
-    }
-}
 
