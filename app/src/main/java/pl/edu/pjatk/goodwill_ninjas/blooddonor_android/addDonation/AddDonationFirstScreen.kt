@@ -33,7 +33,11 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.text.DateFormat
 import java.util.Calendar
 import kotlin.contracts.contract
@@ -43,7 +47,7 @@ import kotlin.contracts.contract
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen() {
-
+    val navController = rememberNavController()
     Column(
 
     ) {
@@ -66,12 +70,20 @@ fun WelcomeScreen() {
 
         Row {
             BloodQtyInput()
+//            dropDownMenuRck()
 
         }
 
         Row{
             dropDownMenuRck()
 
+        }
+        Row{
+            Button(onClick = {
+                navController.navigate(Screen.Advanced.route)
+            }) {
+                Text(text = "Zaawansowane")
+            }
         }
 
     }
@@ -135,7 +147,7 @@ private fun BloodQtyInput() {
     val context = LocalContext.current.applicationContext
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+
         horizontalAlignment = Alignment.Start,
     ) {
 
@@ -194,7 +206,7 @@ fun dropDownMenuRck() {
                     //This value is used to assign to the DropDown the same width
                     textfieldSize = coordinates.size.toSize()
                 },
-            label = { androidx.compose.material.Text("Label") },
+            label = { androidx.compose.material.Text("Wybierz RCKiK") },
             trailingIcon = {
                 androidx.compose.material.Icon(icon, "contentDescription",
                     Modifier.clickable { expanded = !expanded })
@@ -220,14 +232,17 @@ fun dropDownMenuRck() {
 
 }
 
-@Preview()
-@Composable
-fun FirstScreen() {
 
-    Surface() {
 
-        WelcomeScreen()
-    }
-
-}
+//
+//@Preview()
+//@Composable
+//fun FirstScreen() {
+//
+//    Surface() {
+//
+//        WelcomeScreen()
+//    }
+//
+//}
 
