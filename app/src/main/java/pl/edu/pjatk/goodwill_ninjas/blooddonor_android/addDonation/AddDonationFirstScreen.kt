@@ -1,46 +1,32 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
-import android.media.Image
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.text.DateFormat
-import java.util.Calendar
-import kotlin.contracts.contract
+import java.util.*
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,7 +35,6 @@ import kotlin.contracts.contract
 fun WelcomeScreen() {
     val navController = rememberNavController()
     Column(
-
     ) {
         Row {
             Text(
@@ -61,22 +46,15 @@ fun WelcomeScreen() {
         }
         Row {
             Text(text = "Dodaj donację", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-
         }
         Row {
             DateButton()
-
         }
-
         Row {
             BloodQtyInput()
-//            dropDownMenuRck()
-
         }
-
         Row{
             dropDownMenuRck()
-
         }
         Row{
             Button(onClick = {
@@ -85,7 +63,6 @@ fun WelcomeScreen() {
                 Text(text = "Zaawansowane")
             }
         }
-
     }
 }
 
@@ -95,7 +72,6 @@ fun GetDate() {
     val calendar = Calendar.getInstance().time
     val dateFormat = DateFormat.getDateInstance().format(calendar)
     Text(text = "$dateFormat")
-
 }
 
 //@SuppressLint("UnrememberedMutableState")
@@ -129,25 +105,18 @@ fun alert(
     onDismiss: () -> Unit
 ) {
     if (showDialog) {
-
         DatePicker()
-
-
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BloodQtyInput() {
-
     var value by remember {
         mutableStateOf("")
     }
-
     val context = LocalContext.current.applicationContext
-
     Column(
-
         horizontalAlignment = Alignment.Start,
     ) {
 
@@ -178,23 +147,18 @@ private fun BloodQtyInput() {
 
 @Composable
 fun dropDownMenuRck() {
-
     var bloodQty by remember {
         mutableStateOf("")
     }
     val context = LocalContext.current.applicationContext
-
     var expanded by remember { mutableStateOf(false) }
     val suggestions = listOf("RCKiK Gdańsk", "RCKiK Waraszawa", "RCKiK Poznań", "RCKiK Kraków")
     var selectedText by remember { mutableStateOf("") }
-
     var textfieldSize by remember { mutableStateOf(Size.Zero) }
-
     val icon = if (expanded)
         Icons.Filled.KeyboardArrowUp
     else
         Icons.Filled.KeyboardArrowDown
-
 
     Column(Modifier.padding(20.dp)) {
         androidx.compose.material.OutlinedTextField(
@@ -229,20 +193,6 @@ fun dropDownMenuRck() {
             }
         }
     }
-
 }
 
-
-
-//
-//@Preview()
-//@Composable
-//fun FirstScreen() {
-//
-//    Surface() {
-//
-//        WelcomeScreen()
-//    }
-//
-//}
 
