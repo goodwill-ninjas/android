@@ -1,24 +1,34 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
 import android.annotation.SuppressLint
+<<<<<<< HEAD
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+=======
+>>>>>>> 78a55f5 (Add advanced and disqualification)
 import androidx.compose.foundation.clickable
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+<<<<<<< HEAD
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme.colors
+=======
+import androidx.compose.material.FabPosition
+>>>>>>> 78a55f5 (Add advanced and disqualification)
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+<<<<<<< HEAD
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
+=======
+>>>>>>> 78a55f5 (Add advanced and disqualification)
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -33,18 +43,22 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import androidx.constraintlayout.solver.widgets.Rectangle
 import androidx.navigation.compose.rememberNavController
+<<<<<<< HEAD
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon as ExposedDropdownMenuDefaultsTrailingIcon
+=======
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+import java.util.*
+>>>>>>> 78a55f5 (Add advanced and disqualification)
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -72,7 +86,10 @@ fun WelcomeScreen() {
         floatingActionButtonPosition = FabPosition.Center
     ) {
 //        val image = painterResource(id = R.drawable.droplet)
+<<<<<<< HEAD
         val image = painterResource(id = R.drawable.droplet)
+=======
+>>>>>>> 78a55f5 (Add advanced and disqualification)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -119,6 +136,7 @@ fun WelcomeScreen() {
                             dropDownMenuRck()
                         }
                         Row {
+<<<<<<< HEAD
                             OutlinedButton(
 
                                 onClick = {
@@ -136,6 +154,12 @@ fun WelcomeScreen() {
 
                             {
                                 Text(text = "ZAAWANSOWANE", fontWeight = FontWeight.Bold)
+=======
+                            Button(onClick = {
+                                navController.navigate(Screen.AdvancedDonationParams.route)
+                            }) {
+                                Text(text = "Zaawansowane")
+>>>>>>> 78a55f5 (Add advanced and disqualification)
                             }
                         }
                     }
@@ -144,7 +168,10 @@ fun WelcomeScreen() {
         }
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 78a55f5 (Add advanced and disqualification)
 @Composable
 fun DateButtonInAddDonation() {
     var bloodQty by remember {
@@ -166,7 +193,10 @@ fun DateButtonInAddDonation() {
         Text(text = "Wybierz datę donacji")
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 78a55f5 (Add advanced and disqualification)
 @Composable
 fun AlertInAddDonation(
     msg: String,
@@ -177,13 +207,17 @@ fun AlertInAddDonation(
         DatePicker()
     }
 }
+<<<<<<< HEAD
 @OptIn(ExperimentalMaterial3Api::class)
+=======
+>>>>>>> 78a55f5 (Add advanced and disqualification)
 @Composable
 fun dropDownMenuRck() {
     val options = listOf("RCKiK Gdańsk", "RCKiK Warszawa", "RCKiK Poznań", "RCKiK Kraków")
     var isExpanded by remember {
         mutableStateOf(false)
     }
+<<<<<<< HEAD
     var selectedOption by remember {
         mutableStateOf(options[0])
     }
@@ -210,6 +244,46 @@ fun dropDownMenuRck() {
                         isExpanded = false
                     },
                 )
+=======
+    val context = LocalContext.current.applicationContext
+    var expanded by remember { mutableStateOf(false) }
+    val suggestions = listOf("RCKiK Gdańsk", "RCKiK Waraszawa", "RCKiK Poznań", "RCKiK Kraków")
+    var selectedText by remember { mutableStateOf("") }
+    var textfieldSize by remember { mutableStateOf(Size.Zero) }
+    val icon = if (expanded)
+        Icons.Filled.KeyboardArrowUp
+    else
+        Icons.Filled.KeyboardArrowDown
+    Column(Modifier.padding(20.dp)) {
+        androidx.compose.material.OutlinedTextField(
+            value = bloodQty,
+            onValueChange = { newText -> bloodQty = newText },
+            modifier = Modifier
+                .fillMaxWidth()
+                .onGloballyPositioned { coordinates ->
+                    //This value is used to assign to the DropDown the same width
+                    textfieldSize = coordinates.size.toSize()
+                },
+            label = { androidx.compose.material.Text("Wybierz RCKiK") },
+            trailingIcon = {
+                androidx.compose.material.Icon(icon, "contentDescription",
+                    Modifier.clickable { expanded = !expanded })
+            }
+        )
+        androidx.compose.material.DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
+        ) {
+            suggestions.forEach { label ->
+                androidx.compose.material.DropdownMenuItem(onClick = {
+                    selectedText = label
+                    expanded = false
+                }) {
+                    androidx.compose.material.Text(text = label)
+                }
+>>>>>>> 78a55f5 (Add advanced and disqualification)
             }
         }
     }

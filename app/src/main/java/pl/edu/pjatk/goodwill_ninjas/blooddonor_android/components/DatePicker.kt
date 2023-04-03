@@ -1,43 +1,35 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDatePickerState
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BloodQtyDonated
-import java.text.SimpleDateFormat
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import java.util.*
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePicker(
-<<<<<<< HEAD
 ) {
     var datePickerState = rememberDatePickerState()
-=======
-
-) {
-    var dateTime: String
-    var datePickerState = rememberDatePickerState()
-    var simpleDateFormat: SimpleDateFormat
-    var calendar: Calendar
-    calendar = Calendar.getInstance()
-    simpleDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss aaa z")
-    dateTime = simpleDateFormat.format(datePickerState.selectedDateMillis).toString()
-
->>>>>>> 1cb9235 (Add date utils)
     androidx.compose.material3.DatePicker(
         datePickerState = datePickerState,
         modifier = Modifier.padding(16.dp)
     )
-<<<<<<< HEAD
     Text(
         text = "${
             if (datePickerState.selectedDateMillis != null)
@@ -46,20 +38,98 @@ fun DatePicker(
                 "No selection"
         }"
     )
-=======
-
-    Text("Data wybrana: ${dateTime ?: "no selection"}")
-
-
->>>>>>> 1cb9235 (Add date utils)
 }
 
-
-@Preview
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun prev() {
-
-    DatePicker()
+fun CustomDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String) -> Unit) {
+    var datePickerState = remember { mutableStateOf(value) }
+    Dialog(onDismissRequest = { setShowDialog(false) }) {
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Wybierz datę",
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontFamily = FontFamily.Default,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                DatePicker()
+                Spacer(modifier = Modifier.height(20.dp))
+                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+                    Button(
+                        onClick = {
+                            if (datePickerState.value.isEmpty()) {
+                                datePickerState.value = "Pole daty nie może być puste"
+                            }
+                            setValue(datePickerState.value)
+                            setShowDialog(false)
+                        },
+                        shape = RoundedCornerShape(10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(20.dp)
+                    ) {
+                        Text(text = "Wybrano")
+                    }
+                }
+            }
+        }
+    }
 }
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomDateDialog() {
+    val showDialog = remember { mutableStateOf(false) }
+    if (showDialog.value)
+        CustomDialog(value = "", setShowDialog = {
+            showDialog.value = it
+        }) {
+        }
+    Box(modifier = Modifier.background(Color.White)) {
+        Column(
+            modifier = Modifier
+                .background(Color.White),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            OutlinedButton(
+                onClick = {
+                    showDialog.value = true
+                },
+                modifier = Modifier.width(200.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Red
+                ),
+                shape = RoundedCornerShape(5),
+
+                ) {
+                androidx.compose.material.Text(
+                    text = "Kalendarz",
+                    fontWeight = Bold, color = Color.Red
+                )
+            }
+        }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    CustomDateDialog()
+}
