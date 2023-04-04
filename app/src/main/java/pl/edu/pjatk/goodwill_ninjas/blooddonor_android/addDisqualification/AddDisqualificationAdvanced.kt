@@ -1,40 +1,36 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Card
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
+
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobineLevelInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 
-import java.util.*
-
 @Composable
-fun AdvancedDonationParams() {
+fun AddDisqualificationAdvanced(navHostController: NavHostController) {
     val navController = rememberNavController()
 
     val scaffoldState = rememberScaffoldState()
@@ -70,7 +66,7 @@ fun AdvancedDonationParams() {
 //                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
             }
             Box(modifier = Modifier.padding()) {
-                androidx.compose.material.Card(
+                Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(15.dp)
@@ -90,13 +86,7 @@ fun AdvancedDonationParams() {
                             HemoglobineLevelInput()
                         }
                         Row() {
-                            ExaminationResult()
-                        }
-                        Row {
-                            DonationHandSelector()
-                        }
-                        Row() {
-                            BloodQtyInput()
+                            DiscqualificationDescription()
                         }
                     }
 
@@ -107,7 +97,7 @@ fun AdvancedDonationParams() {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ExaminationResult() {
+private fun DiscqualificationDescription() {
     var value by remember {
         mutableStateOf("")
     }
@@ -116,12 +106,13 @@ private fun ExaminationResult() {
         horizontalAlignment = Alignment.Start,
     ) {
         TextField(
+            modifier = Modifier.height(45.dp),
             value = value,
             onValueChange = { newText ->
                 value = newText
             },
-            label = { androidx.compose.material3.Text(text = "Podaj wynik badania") },
-            placeholder = { Text(text = "podaj wynik badania") },
+            label = { androidx.compose.material3.Text(text = "Podaj przyczynę dyskwalifikacji") },
+            placeholder = { Text(text = "Podaj przyczynę dyskwalifikacji") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Search
@@ -138,57 +129,4 @@ private fun ExaminationResult() {
             )
         )
     }
-}
-
-@Composable
-fun DonationHandSelector() {
-    var bloodQty by remember {
-        mutableStateOf("")
-    }
-    val context = LocalContext.current.applicationContext
-    var expanded by remember { mutableStateOf(false) }
-    val suggestions = listOf("Prawa", "Lewa")
-    var selectedText by remember { mutableStateOf("") }
-    var textfieldSize by remember { mutableStateOf(Size.Zero) }
-    val icon = if (expanded)
-        Icons.Filled.KeyboardArrowUp
-    else
-        Icons.Filled.KeyboardArrowDown
-    Column(Modifier.padding(20.dp)) {
-        androidx.compose.material.OutlinedTextField(
-            value = bloodQty,
-            onValueChange = { newText -> bloodQty = newText },
-            modifier = Modifier
-                .fillMaxWidth()
-                .onGloballyPositioned { coordinates ->
-                    textfieldSize = coordinates.size.toSize()
-                },
-            label = { androidx.compose.material.Text("Wybierz rękę") },
-            trailingIcon = {
-                androidx.compose.material.Icon(icon, "contentDescription",
-                    Modifier.clickable { expanded = !expanded })
-            }
-        )
-        androidx.compose.material.DropdownMenu(
-
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
-        ) {
-            suggestions.forEach { label ->
-                androidx.compose.material.DropdownMenuItem(onClick = {
-                    selectedText = label
-                    expanded = false
-                }) {
-                    androidx.compose.material.Text(text = label)
-                }
-            }
-        }
-    }
-}
-@Preview
-@Composable
-fun viewThis(){
-    AdvancedDonationParams()
 }

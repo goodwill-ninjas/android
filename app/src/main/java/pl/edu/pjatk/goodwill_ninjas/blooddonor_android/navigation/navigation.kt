@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualification
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualificationAdvanced
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.DonationType
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
@@ -19,6 +20,7 @@ object Routes {
     val BOTTOM_SHEET_DIALOG = "Bottom_dialog"
     val ADVANCED = "Advanced_params"
     val ADD_DISQUALIFICATION = "Add_disqualification"
+    val ADD_DISCQUALIFICATION_ADVANCED = "Add_disqualification_advanced"
 }
 
 @Composable
@@ -30,8 +32,7 @@ fun Navigation(navHostController: NavHostController) {
                 bloodDonation = NextDonation(
                     LocalDateTime.of(2023, 2, 23, 0, 0),
                     DonationType.FULL
-                ),
-                navHostController
+                ), navHostController
             )
         }
         composable(route = Routes.ADD_DONATION) {
@@ -43,10 +44,13 @@ fun Navigation(navHostController: NavHostController) {
 
         }
         composable(route = Routes.ADVANCED) {
-            AdvancedDonationParams(navHostController)
+            AdvancedDonationParams()
         }
         composable(route = Routes.ADD_DISQUALIFICATION){
             AddDisqualification(navHostController)
+        }
+        composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED){
+            AddDisqualificationAdvanced(navHostController)
         }
     }
 }

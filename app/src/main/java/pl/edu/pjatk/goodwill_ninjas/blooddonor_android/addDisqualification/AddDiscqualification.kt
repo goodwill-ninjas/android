@@ -62,13 +62,21 @@ fun AddDisqualification(navController: NavController) {
                     ) {
 
                         Column() {
-                            Row(){Text(text = "Wybierz datę początku dyskwalifikacji")}
+                            Row() { Text(text = "Wybierz datę początku dyskwalifikacji") }
 
-                            Row(){CustomDateDialog()}
+                            Row() { CustomDateDialog() }
                         }
                         Column() {
-                            Row(){Text(text = "Wybierz datę końca dyskwalifikacji")}
-                            Row(){CustomDateDialog()}
+                            Row() { Text(text = "Wybierz datę końca dyskwalifikacji") }
+                            Row() { CustomDateDialog() }
+                        }
+
+                        Row {
+                            androidx.compose.material3.Button(onClick = {
+                                navController.navigate(Screen.AddDisqualificationAdvanced.route)
+                            }) {
+                                androidx.compose.material3.Text(text = "Zaawansowane")
+                            }
                         }
                     }
                 }
