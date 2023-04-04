@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.SignInScreen
 import java.time.LocalDateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
@@ -25,6 +26,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 object Routes {
     const val SELF = "Main"
     const val JOURNAL = "Journal"
+    const val LOGIN = "Login"
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -60,9 +62,9 @@ fun Navigation() {
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center
     ) {
-        NavHost(navController = navController, startDestination = Routes.SELF) {
-            composable(route = Routes.SELF) {
-                MainPage(name = name)
+        NavHost(navController = navController, startDestination = Routes.LOGIN) {
+            composable(route = Routes.LOGIN) {
+                SignInScreen()
             }
             composable(route = Routes.JOURNAL) {
                 DonationJournal(name, donations)
