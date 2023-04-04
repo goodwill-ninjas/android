@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -98,22 +99,33 @@ fun CustomDateDialog() {
             showDialog.value = it
         }) {
         }
-        Box(modifier = Modifier.background(Color.White)) {
-            Column(
-                modifier = Modifier
-                    .background(Color.White),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Button(onClick = {
+    Box(modifier = Modifier.background(Color.White)) {
+        Column(
+            modifier = Modifier
+                .background(Color.White),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            OutlinedButton(
+                onClick = {
                     showDialog.value = true
-                }) {
-                    Text(text = "Kalendarz")
-                }
+                },
+                modifier = Modifier.width(200.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Red
+                ),
+                shape = RoundedCornerShape(5),
+
+                ) {
+                androidx.compose.material.Text(
+                    text = "Kalendarz",
+                    fontWeight = Bold, color = Color.Red
+                )
             }
         }
     }
-
+}
 
 
 @Preview(showBackground = true)

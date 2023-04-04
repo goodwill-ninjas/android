@@ -1,30 +1,50 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.FabPosition
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection.Companion.Out
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.constraintlayout.solver.widgets.Rectangle
 import androidx.navigation.compose.rememberNavController
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
+import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon as ExposedDropdownMenuDefaultsTrailingIcon
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -52,6 +72,7 @@ fun WelcomeScreen() {
         floatingActionButtonPosition = FabPosition.Center
     ) {
 //        val image = painterResource(id = R.drawable.droplet)
+        val image = painterResource(id = R.drawable.droplet)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -98,10 +119,23 @@ fun WelcomeScreen() {
                             dropDownMenuRck()
                         }
                         Row {
-                            Button(onClick = {
-                                navController.navigate(Screen.AdvancedDonationParams.route)
-                            }) {
-                                Text(text = "Zaawansowane")
+                            OutlinedButton(
+
+                                onClick = {
+                                    navController.navigate(Screen.AdvancedDonationParams.route)
+                                },
+
+                                modifier = Modifier.width(200.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.White,
+                                    contentColor = Color.Red
+                                ),
+                                shape = RoundedCornerShape(5),
+
+                                )
+
+                            {
+                                Text(text = "ZAAWANSOWANE", fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -110,6 +144,7 @@ fun WelcomeScreen() {
         }
     }
 }
+
 @Composable
 fun DateButtonInAddDonation() {
     var bloodQty by remember {
@@ -131,6 +166,7 @@ fun DateButtonInAddDonation() {
         Text(text = "Wybierz datę donacji")
     }
 }
+
 @Composable
 fun AlertInAddDonation(
     msg: String,
@@ -141,52 +177,40 @@ fun AlertInAddDonation(
         DatePicker()
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun dropDownMenuRck() {
-    var bloodQty by remember {
-        mutableStateOf("")
+    val options = listOf("RCKiK Gdańsk", "RCKiK Warszawa", "RCKiK Poznań", "RCKiK Kraków")
+    var isExpanded by remember {
+        mutableStateOf(false)
     }
-    val context = LocalContext.current.applicationContext
-    var expanded by remember { mutableStateOf(false) }
-    val suggestions = listOf("RCKiK Gdańsk", "RCKiK Waraszawa", "RCKiK Poznań", "RCKiK Kraków")
-    var selectedText by remember { mutableStateOf("") }
-    var textfieldSize by remember { mutableStateOf(Size.Zero) }
-    val icon = if (expanded)
-        Icons.Filled.KeyboardArrowUp
-    else
-        Icons.Filled.KeyboardArrowDown
-    Column(Modifier.padding(20.dp)) {
-        androidx.compose.material.OutlinedTextField(
-            value = bloodQty,
-            onValueChange = { newText -> bloodQty = newText },
-            modifier = Modifier
-                .fillMaxWidth()
-                .onGloballyPositioned { coordinates ->
-                    //This value is used to assign to the DropDown the same width
-                    textfieldSize = coordinates.size.toSize()
-                },
-            label = { androidx.compose.material.Text("Wybierz RCKiK") },
-            trailingIcon = {
-                androidx.compose.material.Icon(icon, "contentDescription",
-                    Modifier.clickable { expanded = !expanded })
-            }
+    var selectedOption by remember {
+        mutableStateOf(options[0])
+    }
+    ExposedDropdownMenuBox(
+        expanded = isExpanded,
+        onExpandedChange = { isExpanded = !isExpanded }
+    ) {
+        TextField(
+            value = selectedOption,
+            onValueChange = {},
+            readOnly = false,
+            label = Text("label"),
+//            trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
-        androidx.compose.material.DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
-        ) {
-            suggestions.forEach { label ->
-                androidx.compose.material.DropdownMenuItem(onClick = {
-                    selectedText = label
-                    expanded = false
-                }) {
-                    androidx.compose.material.Text(text = label)
-                }
+        ExposedDropdownMenu(
+            expanded = isExpanded,
+            onDismissRequest = { isExpanded = false }) {
+            options.forEach { selectedText ->
+                DropdownMenuItem(
+                    text = { Text(selectedText) },
+                    onClick = {
+                        selectedOption = selectedText
+                        isExpanded = false
+                    },
+                )
             }
         }
     }
 }
-
-

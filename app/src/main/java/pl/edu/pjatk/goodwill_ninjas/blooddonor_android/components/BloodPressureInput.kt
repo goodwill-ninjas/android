@@ -6,6 +6,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
@@ -14,7 +17,8 @@ import androidx.compose.ui.text.input.KeyboardType
 
 
 @Composable
-public fun BloodQtyInput() {
+
+fun BloodPressureInput() {
     var value by remember {
         mutableStateOf("")
     }
@@ -22,14 +26,13 @@ public fun BloodQtyInput() {
     Column(
         horizontalAlignment = Alignment.Start,
     ) {
-
         TextField(
             value = value,
             onValueChange = { newText ->
                 value = newText
             },
-            label = { Text(text = "Ilość") },
-            placeholder = { Text(text = "Ilość") },
+            label = { androidx.compose.material3.Text(text = "Ciśnienie") },
+            placeholder = { Text(text = "00:00") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Search

@@ -3,13 +3,16 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
@@ -62,13 +65,33 @@ fun AddDisqualification(navController: NavController) {
                     ) {
 
                         Column() {
-                            Row(){Text(text = "Wybierz datę początku dyskwalifikacji")}
+                            Row() { Text(text = "Wybierz datę początku dyskwalifikacji") }
 
-                            Row(){CustomDateDialog()}
+                            Row() { CustomDateDialog() }
                         }
                         Column() {
-                            Row(){Text(text = "Wybierz datę końca dyskwalifikacji")}
-                            Row(){CustomDateDialog()}
+                            Row() { Text(text = "Wybierz datę końca dyskwalifikacji") }
+                            Row() { CustomDateDialog() }
+                        }
+
+                        Row {
+                            OutlinedButton(
+                                onClick = {
+                                    navController.navigate(Screen.AddDisqualificationAdvanced.route)
+                                },
+                                modifier = Modifier.width(200.dp),
+                                colors = ButtonDefaults.buttonColors(
+//                                    containerColor = Color.White,
+                                    contentColor = Color.Red
+                                ),
+                                shape = RoundedCornerShape(5),
+                            )
+                            {
+                                Text(
+                                    text = "Zaawansowane",
+                                    fontWeight = FontWeight.Bold, color = Color.White
+                                )
+                            }
                         }
                     }
                 }
