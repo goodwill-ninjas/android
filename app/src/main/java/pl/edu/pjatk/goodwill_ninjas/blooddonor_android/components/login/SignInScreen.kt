@@ -45,6 +45,7 @@ fun SignInScreen() {
                 },
                 onImeAction = {
                     localFocusManager.moveFocus(FocusDirection.Down)
+
                 }
         )
         val passwordState = remember {
@@ -57,12 +58,10 @@ fun SignInScreen() {
         SignInButton(enabled = emailState.isValid() && passwordState.isValid())
     }
 }
-
 @Composable
 fun Title() {
     Text(text = "Zaloguj się")
 }
-
 @Composable
 fun Email(email: String, error: String?, onEmailChanged: (String) -> Unit, onImeAction: () -> Unit) {
     Column {
@@ -83,7 +82,9 @@ fun Email(email: String, error: String?, onEmailChanged: (String) -> Unit, onIme
                 ),
                 keyboardActions = KeyboardActions(
                         onNext = {
+
                             onImeAction()
+
                         }
                 ),
                 isError = error != null
@@ -91,7 +92,6 @@ fun Email(email: String, error: String?, onEmailChanged: (String) -> Unit, onIme
         error?.let { ErrorField(it) }
     }
 }
-
 @Composable
 fun ErrorField(error: String) {
     Text(
@@ -100,7 +100,6 @@ fun ErrorField(error: String) {
             style = TextStyle(color = MaterialTheme.colors.error)
     )
 }
-
 @Composable
 fun Password(password: String, error: String?, onPasswordChanged: (String) -> Unit) {
 
@@ -145,7 +144,6 @@ fun Password(password: String, error: String?, onPasswordChanged: (String) -> Un
     )
     error?.let { ErrorField(it) }
 }
-
 @Composable
 fun SignInButton(enabled: Boolean) {
     Button(
