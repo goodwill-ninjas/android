@@ -1,6 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
@@ -13,12 +14,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
 import java.time.LocalDateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 
@@ -43,6 +46,7 @@ fun Navigation() {
         Donation("Krew pełna", 450, LocalDateTime.of(2017, 10, 16, 0, 0)),
     )
     val name = "Android"
+    
     Scaffold(
         scaffoldState = scaffoldState,
 
