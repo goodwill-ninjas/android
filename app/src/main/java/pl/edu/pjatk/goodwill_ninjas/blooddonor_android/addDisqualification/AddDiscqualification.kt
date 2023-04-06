@@ -91,6 +91,7 @@ fun AddDisqualification(navController: NavController) {
                                     text = "Zaawansowane",
                                     fontWeight = FontWeight.Bold, color = Color.White
                                 )
+
                             }
                         }
                     }
