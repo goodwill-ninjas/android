@@ -1,131 +1,193 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
-<<<<<<< HEAD
-
-
-import android.util.Log
+import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-=======
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
->>>>>>> e866ba6 (Add calendar picker)
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
 
-<<<<<<< HEAD
-
-import java.util.*
-
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
+fun WelcomeScreen() {
+    val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { MytopBar() },
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { MyBottomBar() },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navController.navigate(
+                    Screen.BottomSheetDialog.route
+                )
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add"
+                )
+            }
+        },
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center
+    ) {
+        val image = painterResource(id = R.drawable.droplet)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues = it),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(modifier = Modifier.padding()) {
+//                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
+            }
+            Box(modifier = Modifier.padding()) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(15.dp)
+                        .clickable { },
+                    elevation = 10.dp
+                ) {
+                    Column(
+                        modifier = Modifier.padding(15.dp)
+                    ) {
+                        Row {
+                            Text(
+                                text = "Krew pełna", fontSize = 20.sp, fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        Row {
+                            GetDate()
+                        }
+                        Row {
+                            Text(
+                                text = "Dodaj donację",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        Row {
+                            CustomDateDialog()
+                        }
+                        Row {
+                            BloodQtyInput()
+                        }
+                        Row {
+                            dropDownMenuRck()
+                        }
+                        Row {
+                            OutlinedButton(
 
-fun DatePicker(
+                                onClick = {
+                                    navController.navigate(Screen.AdvancedDonationParams.route)
+                                },
 
-) {
-    var datePickerState = rememberDatePickerState()
-    Column {
-        DatePicker(
-            datePickerState = datePickerState,
-            modifier = Modifier.padding(16.dp)
-        )
-        Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
+                                modifier = Modifier.width(200.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.White,
+                                    contentColor = Color.Red
+                                ),
+                                shape = RoundedCornerShape(5),
 
-        BloodQtyDonated()
-    }
-}
+                                )
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BloodQtyDonated() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        val pattern = remember { Regex("^[0-9][0-9][0-9]") }
-        var bloodQtyDonated by remember {
-            mutableStateOf("450")
+                            {
+                                Text(text = "ZAAWANSOWANE", fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                }
+            }
         }
-        val newBloodQtyDonated = 0
-        OutlinedTextField(
-
-            value = bloodQtyDonated, onValueChange = {
-
-
-                    newBloodQtyDonated ->
-                bloodQtyDonated = newBloodQtyDonated
-
-            },
-
-            label = {
-                Text(text = "Ilość ml")
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = { Log.d("ImeAction", "clicked") }
-            )
-        )
-
     }
-
 }
 
 @Composable
-fun DateDisplay() {
+fun DateButtonInAddDonation() {
+    var bloodQty by remember {
+        mutableStateOf("")
+    }
+    val showDialog = remember { mutableStateOf(false) }
+    if (showDialog.value) {
+        AlertInAddDonation(msg = "Tu chciałem pokazać selektor dat",
+            showDialog = showDialog.value,
+            onDismiss = { showDialog.value = false })
+    }
+    Button(
+        modifier = Modifier.padding(vertical = 10.dp),
+        onClick = {
+            showDialog.value = true
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(
-            text = "Hello",
-            modifier = Modifier.padding(bottom = 8.dp),
-            style = MaterialTheme.typography.bodyMedium
-
-        )
-
+        }
+    ) {
+        Text(text = "Wybierz datę donacji")
     }
 }
-=======
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DatePicker(
 
+@Composable
+fun AlertInAddDonation(
+    msg: String,
+    showDialog: Boolean,
+    onDismiss: () -> Unit
 ) {
-    val datePickerState = rememberDatePickerState()
-    DatePicker(
-        datePickerState = datePickerState,
-        modifier = Modifier.padding(16.dp)
-    )
-    Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
-}
-
-
->>>>>>> e866ba6 (Add calendar picker)
-
-
-@Preview()
-@Composable
-fun DatePickerPreview() {
-
-    Surface {
-
+    if (showDialog) {
         DatePicker()
-
-<<<<<<< HEAD
-
     }
-
 }
 
-=======
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun dropDownMenuRck() {
+    val options = listOf("RCKiK Gdańsk", "RCKiK Warszawa", "RCKiK Poznań", "RCKiK Kraków")
+    var isExpanded by remember {
+        mutableStateOf(false)
     }
-
+    var selectedOption by remember {
+        mutableStateOf(options[0])
+    }
+    ExposedDropdownMenuBox(
+        expanded = isExpanded,
+        onExpandedChange = { isExpanded = !isExpanded }
+    ) {
+        TextField(
+            value = selectedOption,
+            onValueChange = {},
+            readOnly = false,
+            label = Text("label"),
+//            trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+        )
+        ExposedDropdownMenu(
+            expanded = isExpanded,
+            onDismissRequest = { isExpanded = false }) {
+            options.forEach { selectedText ->
+                DropdownMenuItem(
+                    text = { Text(selectedText) },
+                    onClick = {
+                        selectedOption = selectedText
+                        isExpanded = false
+                    },
+                )
+            }
+        }
+    }
 }
->>>>>>> e866ba6 (Add calendar picker)
