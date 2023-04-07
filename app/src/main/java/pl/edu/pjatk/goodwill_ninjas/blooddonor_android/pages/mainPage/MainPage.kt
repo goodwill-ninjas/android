@@ -12,6 +12,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import java.time.LocalDateTime
 
+
 @Composable
 fun MainPage(name: String) {
     val image = painterResource(id = R.drawable.droplet)
@@ -31,6 +32,5 @@ fun MainPage(name: String) {
             amount = 0,
             donationDate = LocalDateTime.of(2023, 2, 23, 0, 0)
         )
-
     }
 }

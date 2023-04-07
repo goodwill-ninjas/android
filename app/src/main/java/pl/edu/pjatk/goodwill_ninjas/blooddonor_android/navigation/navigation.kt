@@ -7,22 +7,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.DatePicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 import java.time.LocalDateTime
 
 object Routes {
-
     const val SELF = "Main"
     const val JOURNAL = "Journal"
 }
@@ -65,7 +60,6 @@ fun Navigation() {
             composable(route = Routes.JOURNAL) {
                 DonationJournal(name, donations)
             }
-
         }
     }
 }
