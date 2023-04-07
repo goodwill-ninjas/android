@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
+<<<<<<< HEAD
 
 
 import android.util.Log
@@ -11,10 +12,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+=======
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+>>>>>>> e866ba6 (Add calendar picker)
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.util.*
 
+<<<<<<< HEAD
 
 import java.util.*
 
@@ -84,6 +92,22 @@ fun DateDisplay() {
 
     }
 }
+=======
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DatePicker(
+
+) {
+    val datePickerState = rememberDatePickerState()
+    DatePicker(
+        datePickerState = datePickerState,
+        modifier = Modifier.padding(16.dp)
+    )
+    Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
+}
+
+
+>>>>>>> e866ba6 (Add calendar picker)
 
 
 @Preview()
@@ -94,8 +118,14 @@ fun DatePickerPreview() {
 
         DatePicker()
 
+<<<<<<< HEAD
 
     }
 
 }
 
+=======
+    }
+
+}
+>>>>>>> e866ba6 (Add calendar picker)
