@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -46,16 +45,15 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon as ExposedDropdownMenuDefaultsTrailingIcon
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WelcomeScreen() {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { MytopBar() },
+        topBar = { MytopBar(name = "Wojciech") },
         modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar() },
+        bottomBar = { MyBottomBar(navController) },
         floatingActionButton = {
             androidx.compose.material.FloatingActionButton(onClick = {
                 navController.navigate(
@@ -196,7 +194,7 @@ fun dropDownMenuRck() {
             onValueChange = {},
             readOnly = false,
             label = Text("label"),
-//            trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+            trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
         ExposedDropdownMenu(

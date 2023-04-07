@@ -26,9 +26,9 @@ fun AddDisqualification(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { MytopBar() },
+        topBar = { MytopBar(name = "Wojciech") },
         modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar() },
+        bottomBar = { MyBottomBar(navController) },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.navigate(

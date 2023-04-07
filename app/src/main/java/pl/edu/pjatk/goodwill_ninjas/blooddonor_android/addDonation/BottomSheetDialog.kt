@@ -33,7 +33,7 @@ fun BottomSheetDialog(navController: NavController) {
 fun addDonation(navController: NavController) {
     Button(onClick = {
         navController.navigate(
-            Screen.AddDonationFirstScreen.route
+            Screen.ADD_DONATION_FIRST_SCREEN.route
         )
     }) {
         androidx.compose.material3.Text(text = "Dodaj donację")

@@ -1,56 +1,78 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
-
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualification
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualificationAdvanced
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.*
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.DonationType
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.NextDonation
-
+import androidx.navigation.compose.rememberNavController
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
 import java.time.LocalDateTime
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 
 object Routes {
-    val SELF = "Main"
-    val ADD_DONATION = "Add_donation"
-    val BOTTOM_SHEET_DIALOG = "Bottom_dialog"
-    val ADVANCED = "Advanced_params"
-    val ADD_DISQUALIFICATION = "Add_disqualification"
-    val ADD_DISCQUALIFICATION_ADVANCED = "Add_disqualification_advanced"
+    const val SELF = "Main"
+    const val JOURNAL = "Journal"
+    const val ADD_DONATION_FIRST_SCREEN = "AddDonationFirstScreen"
+    const val AddDisqualification = "AddDisqualification"
+    const val BottomSheetDialog = "BottomSheetDialog"
+    const val AddDisqualificationAdvanced = "AddDisqualificationAdvanced"
+    const val AdvancedDonationParams = "AdvancedDonationParams"
+
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Navigation(navHostController: NavHostController) {
-    NavHost(navController = navHostController, startDestination = Routes.SELF) {
-        composable(route = Routes.SELF) {
-            MainPage(
-                name = "Android",
-                bloodDonation = NextDonation(
-                    LocalDateTime.of(2023, 2, 23, 0, 0),
-                    DonationType.FULL
-                ), navHostController
-            )
-        }
-        composable(route = Routes.ADD_DONATION) {
-            WelcomeScreen()
+fun Navigation() {
+    val scaffoldState = rememberScaffoldState()
+    val navController = rememberNavController()
+    val donations = listOf(
+        Donation("Krew pełna", 450, LocalDateTime.of(2023, 2, 3, 0, 0)),
+        Donation("Krew pełna", 450, LocalDateTime.of(2022, 11, 16, 0, 0)),
+        Donation("Krew pełna", 450, LocalDateTime.of(2021, 2, 3, 0, 0)),
+        Donation("Krew pełna", 450, LocalDateTime.of(2020, 7, 3, 0, 0)),
+        Donation("Krew pełna", 450, LocalDateTime.of(2019, 10, 3, 0, 0)),
+        Donation("Krew pełna", 450, LocalDateTime.of(2018, 12, 3, 0, 0)),
+        Donation("Krew pełna", 450, LocalDateTime.of(2018, 2, 3, 0, 0)),
+        Donation("Krew pełna", 450, LocalDateTime.of(2017, 10, 16, 0, 0)),
+    )
+    val name = "Android"
+    Scaffold(
+        scaffoldState = scaffoldState,
 
-        }
-        composable(route = Routes.BOTTOM_SHEET_DIALOG) {
-            BottomSheetDialog(navHostController)
+        topBar = { MytopBar(name) },
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { MyBottomBar(navController) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navController.navigate(Screen.Journal.route)
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+            }
+        },
 
-        }
-        composable(route = Routes.ADVANCED) {
-            AdvancedDonationParams()
-        }
-        composable(route = Routes.ADD_DISQUALIFICATION){
-            AddDisqualification(navHostController)
-        }
-        composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED){
-            AddDisqualificationAdvanced(navHostController)
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center
+    ) {
+        NavHost(navController = navController, startDestination = Routes.SELF) {
+            composable(route = Routes.SELF) {
+                MainPage(name = name)
+            }
+            composable(route = Routes.JOURNAL) {
+                DonationJournal(name, donations)
+            }
         }
     }
 }

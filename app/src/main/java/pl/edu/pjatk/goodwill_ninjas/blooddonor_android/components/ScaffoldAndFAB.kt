@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.DatePicker
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes.ADD_DONATION
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,9 +28,9 @@ fun ScaffoldAndFAB(name: String, navController: NavController, route: String, st
     Scaffold(
         scaffoldState = scaffoldState,
 
-        topBar = { MytopBar() },
+        topBar = { MytopBar(name="Wojciech") },
         modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar() },
+        bottomBar = { MyBottomBar(navController) },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.navigate(

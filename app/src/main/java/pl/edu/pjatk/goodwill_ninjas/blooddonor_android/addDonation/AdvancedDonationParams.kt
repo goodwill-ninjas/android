@@ -34,15 +34,15 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
 
 @Composable
-fun AdvancedDonationParams() {
+fun AdvancedDonationParams(navController: NavController) {
     val navController = rememberNavController()
 
     val scaffoldState = rememberScaffoldState()
     androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { MytopBar() },
+        topBar = { MytopBar(name = "Wojciech") },
         modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar() },
+        bottomBar = { MyBottomBar(navController) },
         floatingActionButton = {
             androidx.compose.material.FloatingActionButton(onClick = {
                 navController.navigate(
@@ -186,9 +186,4 @@ fun DonationHandSelector() {
             }
         }
     }
-}
-@Preview
-@Composable
-fun viewThis(){
-    AdvancedDonationParams()
 }

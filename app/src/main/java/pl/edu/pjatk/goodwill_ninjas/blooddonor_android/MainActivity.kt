@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     )
                     {
-                        Navigation(navController)
+                        Navigation()
                     }
                 }
             }
