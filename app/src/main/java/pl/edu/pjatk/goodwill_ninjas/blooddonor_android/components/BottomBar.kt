@@ -28,6 +28,26 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.Blooddonorandroi
 
 
 
+@Composable
+fun BottomBarAnimation() {
+
+    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
+
+    BlooddonorandroidTheme {
+        val navController = rememberNavController()
+
+        // Subscribe to navBackStackEntry, required to get current route
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+        // Control TopBar and BottomBar
+        when (navBackStackEntry?.destination?.route) {
+
+            "Bottom_dialog" -> {
+
+                bottomBarState.value = false
+            }
+        }
+    }}
 
 @Composable
 fun MyBottomBar(navController: NavController) {

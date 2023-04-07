@@ -40,7 +40,7 @@ import java.util.*
 fun AdvancedDonationParams(navController: NavController) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
-   Scaffold(
+    Scaffold(
         scaffoldState = scaffoldState,
 //        topBar = { MytopBar(name = "Wojciech") },
 //        modifier = Modifier.fillMaxSize(),
@@ -89,7 +89,7 @@ fun AdvancedDonationParams(navController: NavController) {
                             BloodPressureInput()
                         }
                         Row() {
-                            HemoglobineLevelInput()
+                            HemoglobinLevelInput()
                         }
                         Row() {
                             ExaminationResult()

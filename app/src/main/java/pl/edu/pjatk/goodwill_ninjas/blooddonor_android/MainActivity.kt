@@ -17,9 +17,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.BottomBarAnimation
@@ -55,7 +57,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlooddonorandroidTheme {
                 val state by viewModel.state.collectAsState()
-                Navigation(state = state, onEvent = viewModel::onEvent)
+                Navigation(state = state, onEvent = viewModel::onEvent, navController = NavController(
+                    LocalContext.current))
             }
         }
     }

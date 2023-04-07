@@ -15,17 +15,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobineLevelInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobinLevelInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 
 @Composable
-fun AddDisqualificationAdvanced(navHostController: NavHostController) {
+fun AddDisqualificationAdvanced(navController: NavController) {
     val navController = rememberNavController()
 
     val scaffoldState = rememberScaffoldState()
@@ -78,7 +79,7 @@ fun AddDisqualificationAdvanced(navHostController: NavHostController) {
                             BloodPressureInput()
                         }
                         Row() {
-                            HemoglobineLevelInput()
+                            HemoglobinLevelInput()
                         }
                         Row() {
                             DiscqualificationDescription()
