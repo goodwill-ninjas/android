@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Blooddonor-android</string>
-
-<!--    Blood card     -->
     <string name="full_blood">Krew pełna</string>
     <string name="next_donation">Możesz oddać krew za %d dni.</string>
     <string name="donation_card_amount">%d ml.</string>
+    <string name="dodaj_donację">Dodaj donację</string>
 </resources>
