@@ -64,14 +64,14 @@ fun AddDisqualification(navController: NavController) {
                         modifier = Modifier.padding(15.dp)
                     ) {
 
-                        Column() {
-                            Row() { Text(text = "Wybierz datę początku dyskwalifikacji") }
+                        Column {
+                            Row { Text(text = "Wybierz datę początku dyskwalifikacji") }
 
-                            Row() { CustomDateDialog() }
+                            Row { CustomDateDialog() }
                         }
-                        Column() {
-                            Row() { Text(text = "Wybierz datę końca dyskwalifikacji") }
-                            Row() { CustomDateDialog() }
+                        Column {
+                            Row { Text(text = "Wybierz datę końca dyskwalifikacji") }
+                            Row { CustomDateDialog() }
                         }
 
                         Row {

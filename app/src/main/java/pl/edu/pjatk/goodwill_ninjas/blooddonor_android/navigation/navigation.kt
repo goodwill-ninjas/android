@@ -1,36 +1,33 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualification
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualificationAdvanced
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
-import java.time.LocalDateTime
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
+import java.time.LocalDateTime
 
 object Routes {
-    const val SELF = "Main"
-    const val JOURNAL = "Journal"
-    const val ADD_DONATION_FIRST_SCREEN = "AddDonationFirstScreen"
-    const val AddDisqualification = "AddDisqualification"
-    const val BottomSheetDialog = "BottomSheetDialog"
-    const val AddDisqualificationAdvanced = "AddDisqualificationAdvanced"
-    const val AdvancedDonationParams = "AdvancedDonationParams"
-
+    val SELF = "Main"
+    val ADD_DONATION = "Add_donation"
+    val BOTTOM_SHEET_DIALOG = "Bottom_dialog"
+    val ADVANCED = "Advanced_params"
+    val ADD_DISQUALIFICATION = "Add_disqualification"
+    val ADD_DISCQUALIFICATION_ADVANCED = "Add_disqualification_advanced"
+    val JOURNAL = "Journal"
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -72,6 +69,23 @@ fun Navigation() {
             }
             composable(route = Routes.JOURNAL) {
                 DonationJournal(name, donations)
+            }
+            composable(route = Routes.ADD_DONATION) {
+                WelcomeScreen()
+
+            }
+            composable(route = Routes.BOTTOM_SHEET_DIALOG) {
+                BottomSheetDialog(navController)
+
+            }
+            composable(route = Routes.ADVANCED) {
+                AdvancedDonationParams(navController)
+            }
+            composable(route = Routes.ADD_DISQUALIFICATION) {
+                AddDisqualification(navController)
+            }
+            composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED) {
+                AddDisqualificationAdvanced(navController)
             }
         }
     }

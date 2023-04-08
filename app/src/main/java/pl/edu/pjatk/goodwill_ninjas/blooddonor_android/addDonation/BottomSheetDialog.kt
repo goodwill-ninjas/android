@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -33,7 +34,7 @@ fun BottomSheetDialog(navController: NavController) {
 fun addDonation(navController: NavController) {
     Button(onClick = {
         navController.navigate(
-            Screen.ADD_DONATION_FIRST_SCREEN.route
+            Screen.AddDonationFirstScreen.route
         )
     }) {
         androidx.compose.material3.Text(text = "Dodaj donację")

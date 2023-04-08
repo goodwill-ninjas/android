@@ -23,7 +23,6 @@ fun MytopBar(name: String) {
         )
     },
         actions = {
-
             TopAppBarActionButton(
                 imageVector = Icons.Outlined.AddAlert,
                 description = "Alert"
@@ -31,8 +30,6 @@ fun MytopBar(name: String) {
                 Toast.makeText(contextForToast, "Alert", Toast.LENGTH_SHORT)
                     .show()
             }
-
-
             TopAppBarActionButton(
                 imageVector = Icons.Outlined.Share,
                 description = "Share"
@@ -40,7 +37,6 @@ fun MytopBar(name: String) {
                 Toast.makeText(contextForToast, "Share", Toast.LENGTH_SHORT)
                     .show()
             }
-
             TopAppBarActionButton(
                 imageVector = Icons.Outlined.Search,
                 description = "Search"

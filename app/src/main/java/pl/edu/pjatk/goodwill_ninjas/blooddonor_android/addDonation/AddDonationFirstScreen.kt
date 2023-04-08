@@ -5,6 +5,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+<<<<<<< HEAD
+=======
+
+>>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,15 +49,25 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon as ExposedDropdownMenuDefaultsTrailingIcon
 
+<<<<<<< HEAD
+=======
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+>>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
 @Composable
 fun WelcomeScreen() {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
+<<<<<<< HEAD
         topBar = { MytopBar(name = "Wojciech") },
         modifier = Modifier.fillMaxSize(),
         bottomBar = { MyBottomBar(navController) },
+=======
+        topBar = { MytopBar() },
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { MyBottomBar() },
+>>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
         floatingActionButton = {
             androidx.compose.material.FloatingActionButton(onClick = {
                 navController.navigate(
@@ -194,7 +208,11 @@ fun dropDownMenuRck() {
             onValueChange = {},
             readOnly = false,
             label = Text("label"),
+<<<<<<< HEAD
             trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+=======
+//            trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+>>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
         ExposedDropdownMenu(
@@ -211,4 +229,8 @@ fun dropDownMenuRck() {
             }
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
