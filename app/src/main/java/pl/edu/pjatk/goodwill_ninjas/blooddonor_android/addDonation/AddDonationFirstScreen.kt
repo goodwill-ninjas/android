@@ -5,25 +5,20 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-<<<<<<< HEAD
-=======
+import androidx.compose.material.*
 
->>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,27 +42,16 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import java.util.*
-import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon as ExposedDropdownMenuDefaultsTrailingIcon
-
-<<<<<<< HEAD
-=======
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
->>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
 @Composable
 fun WelcomeScreen() {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
-<<<<<<< HEAD
         topBar = { MytopBar(name = "Wojciech") },
         modifier = Modifier.fillMaxSize(),
         bottomBar = { MyBottomBar(navController) },
-=======
-        topBar = { MytopBar() },
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar() },
->>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
         floatingActionButton = {
             androidx.compose.material.FloatingActionButton(onClick = {
                 navController.navigate(
@@ -189,7 +173,7 @@ fun AlertInAddDonation(
         DatePicker()
     }
 }
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun dropDownMenuRck() {
     val options = listOf("RCKiK Gdańsk", "RCKiK Warszawa", "RCKiK Poznań", "RCKiK Kraków")
@@ -208,11 +192,8 @@ fun dropDownMenuRck() {
             onValueChange = {},
             readOnly = false,
             label = Text("label"),
-<<<<<<< HEAD
-            trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
-=======
+
 //            trailinIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
->>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
         )
         ExposedDropdownMenu(
@@ -229,8 +210,5 @@ fun dropDownMenuRck() {
             }
         }
     }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 87b5fd060d94eac67db7a9c7a14f4ad825dd7285

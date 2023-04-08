@@ -5,14 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -95,7 +90,7 @@ fun AddDisqualificationAdvanced(navHostController: NavHostController) {
         }
     }
 }
-@OptIn(ExperimentalMaterial3Api::class)
+//@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DiscqualificationDescription() {
     var value by remember {
@@ -111,7 +106,7 @@ private fun DiscqualificationDescription() {
             onValueChange = { newText ->
                 value = newText
             },
-            label = { androidx.compose.material3.Text(text = "Podaj przyczynę dyskwalifikacji") },
+            label = { Text(text = "Podaj przyczynę dyskwalifikacji") },
             placeholder = { Text(text = "Podaj przyczynę dyskwalifikacji") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,

@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +21,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.DatePicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes.ADD_DONATION
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+import androidx.compose.ui.res.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +48,7 @@ fun ScaffoldAndFAB(name: String, navController: NavController, route: String, st
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center
     ) {
-        val image = painterResource(id=R.Drawable.droplet)
+        val image = painterResource(id=R.drawable.droplet)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -85,8 +86,3 @@ fun ScaffoldAndFAB(name: String, navController: NavController, route: String, st
 
 
 
-@Preview
-@Composable
-fun showScaffoldAndFab() {
-    ScaffoldAndFAB("abc", NavController(LocalContext.current),"Add_donation", "krew krew")
-}
