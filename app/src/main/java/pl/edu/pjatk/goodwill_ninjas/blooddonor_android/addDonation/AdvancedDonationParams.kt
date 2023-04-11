@@ -7,13 +7,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -104,7 +103,6 @@ fun AdvancedDonationParams(navController: NavController) {
         }
     }
 }
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExaminationResult() {
     var value by remember {
@@ -119,7 +117,7 @@ private fun ExaminationResult() {
             onValueChange = { newText ->
                 value = newText
             },
-            label = { androidx.compose.material3.Text(text = "Podaj wynik badania") },
+            label = { Text(text = "Podaj wynik badania") },
             placeholder = { Text(text = "podaj wynik badania") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,

@@ -6,7 +6,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -15,22 +14,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.util.*
 
-//@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DatePicker(
-) {
-    var datePickerState = rememberDatePickerState()
-    Column {
-        DatePicker(
-            datePickerState = datePickerState,
-            modifier = Modifier.padding(16.dp)
-        )
-        Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
 
-        BloodQtyDonated()
-    }
-}
-@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun DatePicker(
+//) {
+//    var datePickerState = rememberDatePickerState()
+//    Column {
+//        DatePicker()
+//        Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
+//
+//        BloodQtyDonated()
+//    }
+//}
+
 @Composable
 fun BloodQtyDonated() {
     Column(modifier = Modifier.fillMaxSize()) {

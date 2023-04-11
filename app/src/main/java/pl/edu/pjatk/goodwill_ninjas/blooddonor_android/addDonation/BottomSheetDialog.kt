@@ -41,13 +41,12 @@ fun addDonation(navController: NavController) {
         Text(text = "Dodaj donację")
     }
 }
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun addDiscqualification(navController: NavController) {
     Button(onClick = {
         navController.navigate(
             Screen.AddDisqualification.route)
     }) {
-        Text(text = stringResource(id = R.string.add_disqualification))
+        Text("Dodaj dyskwalifikację")
     }
 }

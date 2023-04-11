@@ -1,19 +1,21 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
-import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,26 +23,46 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun DatePicker(
 ) {
-    var datePickerState = rememberDatePickerState()
-    androidx.compose.material3.DatePicker(
-        datePickerState = datePickerState,
-        modifier = Modifier.padding(16.dp)
+    var date by rememberSaveable { mutableStateOf("") }
+    val day: Int
+    val month: Int
+    val year: Int
+    val mCalendar = Calendar.getInstance()
+    day = mCalendar.get(Calendar.DAY_OF_MONTH)
+    month = mCalendar.get(Calendar.MONTH)
+    year = mCalendar.get(Calendar.YEAR)
+    val mDatePickerDialog = DatePickerDialog(
+        LocalContext.current,
+        { _, day: Int, month: Int, year: Int -> date = "$year/${month+1})/$day" },
+        day,
+        month,
+        year
     )
-    Text(
-        text = "${
-            if (datePickerState.selectedDateMillis != null)
-                Date(datePickerState.selectedDateMillis!!)
-            else
-                "No selection"
-        }"
-    )
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.align(Alignment.Center)) {
+            OutlinedTextField(value = (date), onValueChange = { date = it },
+                readOnly = true,
+                label = { Text(text = "Data")}
+
+            )
+            Icon(
+                imageVector = Icons.Filled.DateRange, contentDescription = null,
+                modifier = Modifier
+                    .size(60.dp)
+                    .padding(4.dp)
+                    .clickable {
+                        mDatePickerDialog.show()
+                    }
+            )
+        }
+    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun CustomDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String) -> Unit) {
     var datePickerState = remember { mutableStateOf(value) }
@@ -59,7 +81,7 @@ fun CustomDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (Str
                         style = TextStyle(
                             fontSize = 24.sp,
                             fontFamily = FontFamily.Default,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = Bold
                         )
                     )
                 }
@@ -89,8 +111,6 @@ fun CustomDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (Str
 }
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomDateDialog() {
     val showDialog = remember { mutableStateOf(false) }
@@ -112,13 +132,13 @@ fun CustomDateDialog() {
                 },
                 modifier = Modifier.width(200.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
+                    backgroundColor = Color.White,
                     contentColor = Color.Red
                 ),
                 shape = RoundedCornerShape(5),
 
                 ) {
-                androidx.compose.material.Text(
+                Text(
                     text = "Kalendarz",
                     fontWeight = Bold, color = Color.Red
                 )
@@ -131,5 +151,5 @@ fun CustomDateDialog() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    CustomDateDialog()
+    DatePicker()
 }

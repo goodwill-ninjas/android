@@ -1,24 +1,31 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualification
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualificationAdvanced
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.*
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.AdvancedDonationParams
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BottomSheetDialog
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.WelcomeScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import java.time.LocalDateTime
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 
 object Routes {
     val SELF = "Main"

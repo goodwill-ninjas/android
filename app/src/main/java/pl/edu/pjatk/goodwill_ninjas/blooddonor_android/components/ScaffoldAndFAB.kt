@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,12 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.DatePicker
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.DatePicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes.ADD_DONATION
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import androidx.compose.ui.res.painterResource
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun ScaffoldAndFAB(name: String, navController: NavController, route: String, stringRes: String) {
     val scaffoldState = rememberScaffoldState()
@@ -48,7 +47,7 @@ fun ScaffoldAndFAB(name: String, navController: NavController, route: String, st
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center
     ) {
-        val image = painterResource(id=R.drawable.droplet)
+//        val image = painterResource(id=R.drawable.droplet)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -57,7 +56,7 @@ fun ScaffoldAndFAB(name: String, navController: NavController, route: String, st
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(modifier = Modifier.padding()) {
-                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
+//                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
             }
             Box(modifier = Modifier.padding()) {
                 Card(

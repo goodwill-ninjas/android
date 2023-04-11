@@ -5,16 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun HemoglobineLevelInput() {
     var value by remember {
@@ -29,7 +27,7 @@ fun HemoglobineLevelInput() {
             onValueChange = { newText ->
                 value = newText
             },
-            label = { androidx.compose.material3.Text(text = "Hemoglobina") },
+            label = { Text(text = "Hemoglobina") },
             placeholder = { Text(text = "00:00") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
