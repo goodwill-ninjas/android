@@ -1,6 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
@@ -61,7 +62,8 @@ fun Navigation() {
         bottomBar = { MyBottomBar(navController) },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navController.navigate(Screen.Journal.route)
+                Log.i("straight from FAB", "main FAB")
+                navController.navigate(Screen.BottomSheetDialog.route)
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
@@ -78,7 +80,7 @@ fun Navigation() {
                 DonationJournal(name, donations)
             }
             composable(route = Routes.ADD_DONATION) {
-                WelcomeScreen()
+                WelcomeScreen(navController)
 
             }
             composable(route = Routes.BOTTOM_SHEET_DIALOG) {
@@ -96,4 +98,5 @@ fun Navigation() {
             }
         }
     }
+
 }

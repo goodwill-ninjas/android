@@ -5,11 +5,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.FabPosition
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.rememberScaffoldState
@@ -22,39 +28,37 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-
 import java.util.*
 
 @Composable
 fun AdvancedDonationParams(navController: NavController) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
-    androidx.compose.material.Scaffold(
+   Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { MytopBar(name = "Wojciech") },
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar(navController) },
-        floatingActionButton = {
-            androidx.compose.material.FloatingActionButton(onClick = {
-                navController.navigate(
-                    Screen.BottomSheetDialog.route
-                )
-            }) {
-                androidx.compose.material.Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add"
-                )
-            }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center
+//        topBar = { MytopBar(name = "Wojciech") },
+//        modifier = Modifier.fillMaxSize(),
+//        bottomBar = { MyBottomBar(navController) },
+//        floatingActionButton = {
+//            androidx.compose.material.FloatingActionButton(onClick = {
+//                navController.navigate(
+//                    Screen.BottomSheetDialog.route
+//                )
+//            }) {
+//                androidx.compose.material.Icon(
+//                    imageVector = Icons.Default.Add,
+//                    contentDescription = "Add"
+//                )
+//            }
+//        },
+//        isFloatingActionButtonDocked = true,
+//        floatingActionButtonPosition = FabPosition.Center
     ) {
 //        val image = painterResource(id = R.drawable.droplet)
         Column(
@@ -103,6 +107,7 @@ fun AdvancedDonationParams(navController: NavController) {
         }
     }
 }
+
 @Composable
 private fun ExaminationResult() {
     var value by remember {
@@ -137,50 +142,37 @@ private fun ExaminationResult() {
     }
 }
 
+
 @Composable
 fun DonationHandSelector() {
-    var bloodQty by remember {
-        mutableStateOf("")
+    val options = listOf("Lewa", "Prawa")
+    var isExpanded by remember {
+        mutableStateOf(false)
     }
-    val context = LocalContext.current.applicationContext
-    var expanded by remember { mutableStateOf(false) }
-    val suggestions = listOf("Prawa", "Lewa")
-    var selectedText by remember { mutableStateOf("") }
-    var textfieldSize by remember { mutableStateOf(Size.Zero) }
-    val icon = if (expanded)
-        Icons.Filled.KeyboardArrowUp
-    else
-        Icons.Filled.KeyboardArrowDown
-    Column(Modifier.padding(20.dp)) {
-        androidx.compose.material.OutlinedTextField(
-            value = bloodQty,
-            onValueChange = { newText -> bloodQty = newText },
-            modifier = Modifier
-                .fillMaxWidth()
-                .onGloballyPositioned { coordinates ->
-                    textfieldSize = coordinates.size.toSize()
-                },
-            label = { androidx.compose.material.Text("Wybierz rękę") },
-            trailingIcon = {
-                androidx.compose.material.Icon(icon, "contentDescription",
-                    Modifier.clickable { expanded = !expanded })
-            }
-        )
-        androidx.compose.material.DropdownMenu(
-
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
-        ) {
-            suggestions.forEach { label ->
-                androidx.compose.material.DropdownMenuItem(onClick = {
-                    selectedText = label
-                    expanded = false
-                }) {
-                    androidx.compose.material.Text(text = label)
+    var selectedOption by remember {
+        mutableStateOf("Lewa")
+    }
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+        Box() {
+            TextButton(onClick = { isExpanded = true }) {
+                Row {
+                    Text(text = "$selectedOption")
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = "")
                 }
+            }
+            DropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
+                options.forEach {
+                    DropdownMenuItem(onClick = {
+                        isExpanded = false
+                        selectedOption = it
+                    }) {
+                        Text(text = it)
+
+                    }
+                }
+
             }
         }
     }
+
 }

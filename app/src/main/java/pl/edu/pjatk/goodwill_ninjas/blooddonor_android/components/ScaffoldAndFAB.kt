@@ -1,6 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
 import android.os.Build.VERSION_CODES.R
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -81,6 +82,7 @@ fun ScaffoldAndFAB(name: String, navController: NavController, route: String, st
             }
         }
     }
+    Log.i("message", "this is FAB")
 }
 
 

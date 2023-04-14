@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
@@ -25,28 +26,28 @@ import java.util.*
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WelcomeScreen() {
-    val navController = rememberNavController()
+fun WelcomeScreen(navController: NavController) {
+//    val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
-    androidx.compose.material.Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = { MytopBar(name = "Wojciech") },
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar(navController) },
-        floatingActionButton = {
-            androidx.compose.material.FloatingActionButton(onClick = {
-                navController.navigate(
-                    Screen.BottomSheetDialog.route
-                )
-            }) {
-                androidx.compose.material.Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add"
-                )
-            }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center
+   Scaffold(
+//        scaffoldState = scaffoldState,
+//        topBar = { MytopBar(name = "Wojciech") },
+//        modifier = Modifier.fillMaxSize(),
+//        bottomBar = { MyBottomBar(navController) },
+//        floatingActionButton = {
+//           FloatingActionButton(onClick = {
+//                navController.navigate(
+//                    Screen.BottomSheetDialog.route
+//                )
+//            }) {
+//                androidx.compose.material.Icon(
+//                    imageVector = Icons.Default.Add,
+//                    contentDescription = "Add"
+//                )
+//            }
+//        },
+//        isFloatingActionButtonDocked = true,
+//        floatingActionButtonPosition = FabPosition.Center
     ) {
 //        val image = painterResource(id = R.drawable.droplet)
         val image = painterResource(id = R.drawable.droplet)
@@ -87,7 +88,7 @@ fun WelcomeScreen() {
                             )
                         }
                         Row {
-                            CustomDateDialog()
+                            DatePicker()
                         }
                         Row {
                             BloodQtyInput()
@@ -189,8 +190,3 @@ fun dropDownMenuRck() {
 
 }
 
-@Preview
-@Composable
-fun view(){
-    WelcomeScreen()
-}

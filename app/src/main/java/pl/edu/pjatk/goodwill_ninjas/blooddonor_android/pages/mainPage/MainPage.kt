@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -26,5 +27,6 @@ fun MainPage(name: String) {
             Image(painter = image, contentDescription = null, Modifier.height(250.dp))
         }
         BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2023, 2, 23, 0, 0))
+        Log.i("mainpage", "this is MainPage")
     }
 }

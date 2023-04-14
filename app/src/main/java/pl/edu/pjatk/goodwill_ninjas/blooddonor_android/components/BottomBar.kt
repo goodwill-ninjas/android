@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -66,4 +67,5 @@ fun MyBottomBar(navController: NavController) {
             }
         }
     }
+    Log.i("message", "this is FAB from BottomBar")
 }

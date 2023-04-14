@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -63,4 +64,5 @@ fun BloodCard (
             }
         }
     }
+    Log.i("message", "this is BloodCard")
 }

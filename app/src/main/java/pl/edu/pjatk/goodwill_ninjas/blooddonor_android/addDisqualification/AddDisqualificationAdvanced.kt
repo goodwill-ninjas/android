@@ -31,23 +31,23 @@ fun AddDisqualificationAdvanced(navHostController: NavHostController) {
     val scaffoldState = rememberScaffoldState()
     androidx.compose.material.Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { MytopBar(name = "Wojciech") },
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = { MyBottomBar(navController) },
-        floatingActionButton = {
-            androidx.compose.material.FloatingActionButton(onClick = {
-                navController.navigate(
-                    Screen.BottomSheetDialog.route
-                )
-            }) {
-                androidx.compose.material.Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add"
-                )
-            }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center
+//        topBar = { MytopBar(name = "Wojciech") },
+//        modifier = Modifier.fillMaxSize(),
+//        bottomBar = { MyBottomBar(navController) },
+//        floatingActionButton = {
+//            androidx.compose.material.FloatingActionButton(onClick = {
+//                navController.navigate(
+//                    Screen.BottomSheetDialog.route
+//                )
+//            }) {
+//                androidx.compose.material.Icon(
+//                    imageVector = Icons.Default.Add,
+//                    contentDescription = "Add"
+//                )
+//            }
+//        },
+//        isFloatingActionButtonDocked = true,
+//        floatingActionButtonPosition = FabPosition.Center
     ) {
 //        val image = painterResource(id = R.drawable.droplet)
         Column(

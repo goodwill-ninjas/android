@@ -27,7 +27,7 @@ import java.util.*
 @Composable
 fun DatePicker(
 ) {
-    var date by rememberSaveable { mutableStateOf("") }
+    var date by remember { mutableStateOf("") }
     val day: Int
     val month: Int
     val year: Int
@@ -37,11 +37,13 @@ fun DatePicker(
     year = mCalendar.get(Calendar.YEAR)
     val mDatePickerDialog = DatePickerDialog(
         LocalContext.current,
-        { _, day: Int, month: Int, year: Int -> date = "$year/${month+1})/$day" },
+        { _, day: Int, month: Int, year: Int -> date = "$year/${month+1}/$day" },
         day,
         month,
         year
+
     )
+    mDatePickerDialog.datePicker.minDate = mCalendar.timeInMillis
     Box(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.align(Alignment.Center)) {
             OutlinedTextField(value = (date), onValueChange = { date = it },

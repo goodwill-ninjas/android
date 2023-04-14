@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardActions
@@ -46,4 +47,5 @@ public fun BloodQtyInput() {
             )
         )
     }
+    Log.i("message", "Input Blood from Input")
 }
