@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.Navigation
 import androidx.navigation.compose.rememberNavController
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.BottomBarAnimation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Navigation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 
@@ -25,7 +26,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BlooddonorandroidTheme {
-                Navigation()
+//                Navigation()
+                BottomBarAnimation()
             }
         }
     }
