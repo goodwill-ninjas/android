@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationDao
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEntity
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
 
-@Database(entities = [DonationEntity::class], version = 1)
+@Database(entities = [Donation::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun donationDao(): DonationDao
 

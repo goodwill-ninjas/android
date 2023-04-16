@@ -22,8 +22,10 @@ import java.time.LocalDateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 
 object Routes {
     const val SELF = "Main"
@@ -32,7 +34,10 @@ object Routes {
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Navigation() {
+fun Navigation(
+    state: DonationState,
+    onEvent: (DonationEvent) -> Unit
+) {
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
     val donations = listOf(
@@ -55,7 +60,10 @@ fun Navigation() {
         bottomBar = { MyBottomBar(navController) },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navController.navigate(Screen.Journal.route)
+                onEvent(DonationEvent.SetDonatedType("Krew pełna"))
+                onEvent(DonationEvent.SetDonationDate(1681648417))
+                onEvent(DonationEvent.SetAmount(450))
+                onEvent(DonationEvent.SaveDonation)
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
@@ -69,7 +77,7 @@ fun Navigation() {
                 MainPage(name = name)
             }
             composable(route = Routes.JOURNAL) {
-                DonationJournal(name, donations)
+                DonationJournal(name, state, onEvent)
             }
         }
     }
