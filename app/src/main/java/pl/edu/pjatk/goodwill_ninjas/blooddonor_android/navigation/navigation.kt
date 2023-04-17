@@ -55,6 +55,7 @@ fun Navigation() {
     )
     val name = "Android"
 
+
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -87,12 +88,13 @@ fun BottomBarAnimation() {
         },
         floatingActionButton = {
             if (currentRoute != "Bottom_dialog") {
-            FloatingActionButton(onClick = {
-                Log.i("straight from FAB", "main FAB")
-                navController.navigate(Screen.BottomSheetDialog.route)
-            }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-            }}
+                FloatingActionButton(onClick = {
+                    Log.i("straight from FAB", "main FAB")
+                    navController.navigate(Screen.BottomSheetDialog.route)
+                }) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                }
+            }
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center
@@ -131,9 +133,10 @@ fun BottomBarAnimation() {
             }
             composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED) {
                 AddDisqualificationAdvanced(navController)
+
             }
+
         }
     }
-    Log.i("mainScaffold", "this is mainScaffold")
 }
 
