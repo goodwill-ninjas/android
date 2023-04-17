@@ -12,6 +12,7 @@ sealed class Screen(val route: String) {
 
     object AddDisqualificationAdvanced: Screen("add_disqualification_advanced")
     object Journal: Screen("Journal")
+    object BottomModal: Screen("BottomModal")
 
 
         fun withArgs(vararg args: String): String {

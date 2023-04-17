@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
+import BottomModal
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +37,7 @@ object Routes {
     val ADD_DISQUALIFICATION = "Add_disqualification"
     val ADD_DISCQUALIFICATION_ADVANCED = "Add_disqualification_advanced"
     val JOURNAL = "Journal"
+    val BottomModal = "BottomModal"
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -66,7 +68,7 @@ fun BottomBarAnimation() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     when (navBackStackEntry?.destination?.route) {
-        "Bottom_dialog" -> {
+        "BottomModal" -> {
             bottomBarState.value = false
             Log.i("bottomstate", "false")
         }
@@ -81,16 +83,17 @@ fun BottomBarAnimation() {
 
         bottomBar = {
 
-            if (currentRoute != "Bottom_dialog") {
+            if (currentRoute != "BottomModal") {
 
                 MyBottomBar(navController)
             }
         },
         floatingActionButton = {
-            if (currentRoute != "Bottom_dialog") {
+            if (currentRoute != "BottomModal") {
                 FloatingActionButton(onClick = {
                     Log.i("straight from FAB", "main FAB")
-                    navController.navigate(Screen.BottomSheetDialog.route)
+//                    navController.navigate(Screen.BottomSheetDialog.route)
+                    navController.navigate(Screen.BottomModal.route)
                 }) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                 }
@@ -135,8 +138,13 @@ fun BottomBarAnimation() {
                 AddDisqualificationAdvanced(navController)
 
             }
+            composable(route = Routes.BottomModal){
+                BottomModal(navController)
+            }
+
+            }
 
         }
     }
-}
+
 
