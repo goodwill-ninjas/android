@@ -3,6 +3,8 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 import BottomModal
 import android.annotation.SuppressLint
 import android.util.Log
+import android.content.Context
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,6 +23,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDi
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.AdvancedDonationParams
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BottomSheetDialog
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.WelcomeScreen
+import androidx.room.Room
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyFAB
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
@@ -28,6 +31,14 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donat
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import java.time.LocalDateTime
+import java.time.LocalDateTime
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 
 object Routes {
     val SELF = "Main"
@@ -42,7 +53,10 @@ object Routes {
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Navigation() {
+fun Navigation(
+    state: DonationState,
+    onEvent: (DonationEvent) -> Unit
+) {
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
     val donations = listOf(
@@ -80,23 +94,15 @@ fun BottomBarAnimation() {
         scaffoldState = scaffoldState,
         topBar = { MytopBar("Android") },
         modifier = Modifier.fillMaxSize(),
-
-        bottomBar = {
-
-            if (currentRoute != "BottomModal") {
-
-                MyBottomBar(navController)
-            }
-        },
+        bottomBar = { MyBottomBar(navController) },
         floatingActionButton = {
-            if (currentRoute != "BottomModal") {
-                FloatingActionButton(onClick = {
-                    Log.i("straight from FAB", "main FAB")
-//                    navController.navigate(Screen.BottomSheetDialog.route)
-                    navController.navigate(Screen.BottomModal.route)
-                }) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-                }
+            FloatingActionButton(onClick = {
+                onEvent(DonationEvent.SetDonatedType("Krew pełna"))
+                onEvent(DonationEvent.SetDonationDate(1681648417))
+                onEvent(DonationEvent.SetAmount(450))
+                onEvent(DonationEvent.SaveDonation)
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
         },
         isFloatingActionButtonDocked = true,
@@ -118,7 +124,7 @@ fun BottomBarAnimation() {
                 MainPage(name = name)
             }
             composable(route = Routes.JOURNAL) {
-                DonationJournal(name, donations)
+                DonationJournal(name, state, onEvent)
             }
             composable(route = Routes.ADD_DONATION) {
                 WelcomeScreen(navController)
