@@ -9,24 +9,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-
 fun BottomSheetDialog(navController: NavController) {
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded }
     )
     val coroutineScope = rememberCoroutineScope()
-
     BackHandler(sheetState.isVisible) {
         coroutineScope.launch { sheetState.hide() }
     }
-
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = { BottomSheetOne(navController) },
@@ -54,7 +49,6 @@ fun BottomSheetDialog(navController: NavController) {
         }
     }
 }
-
 @Composable
 fun BottomSheetOne(navController: NavController) {
     Column(
@@ -68,12 +62,8 @@ fun BottomSheetOne(navController: NavController) {
         Row {
             addDiscqualification(navController)
         }
-
-
     }
 }
-
-
 @Composable
 fun addDonation(navController: NavController) {
     Button(onClick = {
@@ -84,7 +74,6 @@ fun addDonation(navController: NavController) {
         Text(text = "Dodaj donację")
     }
 }
-
 @Composable
 fun addDiscqualification(navController: NavController) {
     Button(onClick = {

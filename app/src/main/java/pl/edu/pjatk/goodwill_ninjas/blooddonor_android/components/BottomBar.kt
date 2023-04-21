@@ -27,38 +27,13 @@ import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 
 
-
-@Composable
-fun BottomBarAnimation() {
-
-    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
-
-    BlooddonorandroidTheme {
-        val navController = rememberNavController()
-
-        // Subscribe to navBackStackEntry, required to get current route
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-
-        // Control TopBar and BottomBar
-        when (navBackStackEntry?.destination?.route) {
-
-            "Bottom_dialog" -> {
-
-                bottomBarState.value = false
-            }
-        }
-    }}
-
 @Composable
 fun MyBottomBar(navController: NavController) {
     val bottomMenuItemsList = prepareBottomMenu()
     var isVisible by rememberSaveable  {
         mutableStateOf(true)
     }
-
-
     val contextForToast = LocalContext.current.applicationContext
-
     var selectedItem by remember {
         mutableStateOf("Home")
     }
@@ -81,14 +56,11 @@ fun MyBottomBar(navController: NavController) {
                         enabled = false
                     )
                 }
-
                 Box(modifier = Modifier.fillMaxSize()) {
                     BottomNavigation(
                         modifier = Modifier.align(alignment = Alignment.BottomCenter)
                     ) {
-
                         bottomMenuItemsList.forEach { menuItem ->
-
                             BottomNavigationItem(
                                 selected = (selectedItem == menuItem.label),
                                 onClick = {
@@ -107,13 +79,10 @@ fun MyBottomBar(navController: NavController) {
                                 enabled = true
                             )
                         }
-
-
                     }
                 }
             }
         }
         Log.i("message", "this is FAB from BottomBar")
     }
-
 }

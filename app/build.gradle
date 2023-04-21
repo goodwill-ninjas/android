@@ -20,7 +20,9 @@ android {
             useSupportLibrary true
         }
     }
+    task prepareKotlinBuildScriptModel {
 
+    }
     buildTypes {
         release {
             minifyEnabled false

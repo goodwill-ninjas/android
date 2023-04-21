@@ -1,6 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
-
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -9,13 +8,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainBottomScreen(navController: NavController) {
@@ -56,7 +53,6 @@ fun MainBottomScreen(navController: NavController) {
         }
     }
 }
-
 @Composable
 fun BottomSheet(navController: NavController) {
     Column(
@@ -70,18 +66,13 @@ fun BottomSheet(navController: NavController) {
         Row {
             addDiscqualification1(navController)
         }
-
-
     }
 }
-
 @Composable
 @Preview
 fun see() {
-
     MainBottomScreen(navController = NavController(LocalContext.current))
 }
-
 @Composable
 fun addDonation1(navController: NavController) {
     Button(onClick = {
@@ -92,7 +83,6 @@ fun addDonation1(navController: NavController) {
         Text(text = "Dodaj donację")
     }
 }
-
 @Composable
 fun addDiscqualification1(navController: NavController) {
     Button(onClick = {

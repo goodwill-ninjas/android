@@ -1,10 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
-import BottomModal
-import android.annotation.SuppressLint
-import android.util.Log
-import android.content.Context
-import androidx.compose.foundation.layout.PaddingValues
 //import org.joda.time.DateTime
 
 import BottomModal
@@ -19,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,18 +24,9 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDi
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.AdvancedDonationParams
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BottomSheetDialog
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.WelcomeScreen
-import androidx.room.Room
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyFAB
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
-import java.time.LocalDateTime
-import java.time.LocalDateTime
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
@@ -67,10 +52,11 @@ fun Navigation(
     navController: NavController,
     onEvent: (DonationEvent) -> Unit
 ) {
+    val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
+    val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val scaffoldState = rememberScaffoldState()
-    val navController = rememberNavController()
     val donations = listOf(
         Donation("Krew pełna", 450, LocalDateTime.of(2023, 2, 3, 0, 0)),
         Donation("Krew pełna", 450, LocalDateTime.of(2022, 11, 16, 0, 0)),
@@ -82,39 +68,41 @@ fun Navigation(
         Donation("Krew pełna", 450, LocalDateTime.of(2017, 10, 16, 0, 0)),
     )
     val name = "Android"
-
     val alert: () -> Unit = {
         Log.d("debugTag", "Value" + currentRoute)
     }
     alert()
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { MytopBar(name) },
         modifier = Modifier.fillMaxSize(),
 
 
+        floatingActionButton = {
+            if (currentRoute != "BottomModal") {
+            FloatingActionButton(onClick = {
+
+                onEvent(DonationEvent.SetDonatedType("Krew pełna"))
+                onEvent(DonationEvent.SetDonationDate(1681648417))
+                onEvent(DonationEvent.SetAmount(450))
+                onEvent(DonationEvent.SaveDonation)
+                navController.navigate(Screen.BottomModal.route)
+                Log.i("message", "FAB starting page")
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+            }}
+        },
+
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
             if (currentRoute != "BottomModal") {
                 MyBottomBar(navController)
+
             }
         },
 
-        floatingActionButton = {
-            if (currentRoute != "BottomModal") {
-                FloatingActionButton(onClick = {
-                    onEvent(DonationEvent.SetDonatedType("Krew pełna"))
-                    onEvent(DonationEvent.SetDonationDate(1681648417))
-                    onEvent(DonationEvent.SetAmount(450))
-                    onEvent(DonationEvent.SaveDonation)
-                    navController.navigate(Screen.BottomModal.route)
-                    Log.i("message", "FAB starting page")
-                }) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-                }
-            }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center
     ) {
         NavHost(navController, startDestination = Routes.SELF) {
             composable(route = Routes.SELF) {
@@ -141,13 +129,13 @@ fun Navigation(
                 AddDisqualificationAdvanced(navController)
 
             }
-            composable(route = Routes.BottomModal){
+            composable(route = Routes.BottomModal) {
                 BottomModal(navController)
             }
 
-            }
-
         }
+
     }
+}
 
 

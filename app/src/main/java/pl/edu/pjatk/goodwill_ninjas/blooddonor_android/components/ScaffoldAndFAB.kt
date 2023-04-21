@@ -1,34 +1,30 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
-import android.os.Build.VERSION_CODES.R
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
 import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.DatePicker
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes.ADD_DONATION
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-import androidx.compose.ui.res.painterResource
-
-
 @Composable
 fun ScaffoldAndFAB(name: String, navController: NavController, route: String, stringRes: String) {
     val scaffoldState = rememberScaffoldState()
-
     Scaffold(
         scaffoldState = scaffoldState,
 
@@ -39,7 +35,6 @@ fun ScaffoldAndFAB(name: String, navController: NavController, route: String, st
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.navigate(
-
                     route
                 )
             }) {
