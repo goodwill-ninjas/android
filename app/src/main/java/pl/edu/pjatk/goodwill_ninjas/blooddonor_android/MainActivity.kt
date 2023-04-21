@@ -19,10 +19,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Navigation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
-
-
 class MainActivity : ComponentActivity() {
-
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
@@ -51,13 +48,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     BlooddonorandroidTheme {
         Navigation
-
     }
 }

@@ -1,7 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
-//import org.joda.time.DateTime
-
 import BottomModal
 import android.annotation.SuppressLint
 import android.util.Log
@@ -32,7 +30,6 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.Don
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 import java.time.LocalDateTime
-
 object Routes {
     const val SELF = "Main"
     const val JOURNAL = "Journal"
@@ -43,8 +40,6 @@ object Routes {
     val BottomModal = "BottomModal"
     val ADVANCED = "Advanced_screen"
 }
-
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Navigation(
@@ -72,17 +67,13 @@ fun Navigation(
         Log.d("debugTag", "Value" + currentRoute)
     }
     alert()
-
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { MytopBar(name) },
         modifier = Modifier.fillMaxSize(),
-
-
         floatingActionButton = {
             if (currentRoute != "BottomModal") {
             FloatingActionButton(onClick = {
-
                 onEvent(DonationEvent.SetDonatedType("Krew pełna"))
                 onEvent(DonationEvent.SetDonationDate(1681648417))
                 onEvent(DonationEvent.SetAmount(450))
@@ -93,16 +84,13 @@ fun Navigation(
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }}
         },
-
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
             if (currentRoute != "BottomModal") {
                 MyBottomBar(navController)
-
             }
         },
-
     ) {
         NavHost(navController, startDestination = Routes.SELF) {
             composable(route = Routes.SELF) {
@@ -132,10 +120,6 @@ fun Navigation(
             composable(route = Routes.BottomModal) {
                 BottomModal(navController)
             }
-
         }
-
     }
 }
-
-

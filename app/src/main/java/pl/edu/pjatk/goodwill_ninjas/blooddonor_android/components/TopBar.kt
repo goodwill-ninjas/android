@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 @Composable
 fun MytopBar(name: String) {
-
     val contextForToast = LocalContext.current.applicationContext
     TopAppBar(title = {
         Text(
@@ -46,7 +45,6 @@ fun MytopBar(name: String) {
         }
     )
 }
-
 @Composable
 fun TopAppBarActionButton(
     imageVector: ImageVector,
