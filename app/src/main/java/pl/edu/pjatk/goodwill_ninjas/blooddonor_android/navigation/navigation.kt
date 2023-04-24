@@ -61,7 +61,7 @@ fun Navigation(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 onEvent(DonationEvent.SetDonatedType("Krew pełna"))
-                onEvent(DonationEvent.SetDonationDate(1681648417))
+                onEvent(DonationEvent.SetCreatedAt(1681648417))
                 onEvent(DonationEvent.SetAmount(450))
                 onEvent(DonationEvent.SaveDonation)
             }) {
