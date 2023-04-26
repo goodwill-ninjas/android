@@ -45,7 +45,10 @@ android {
         }
     }
 }
-
+task wrapper(type: Wrapper){
+    gradleVersion = '7.2'
+}
+task prepareKotlinBuildScriptModel{}
 dependencies {
 
     def lifecycle_version = "2.5.1"

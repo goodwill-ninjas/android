@@ -35,7 +35,6 @@ fun SignInScreen() {
     ) {
         Title()
         val localFocusManager = LocalFocusManager.current
-        localFocusManager.moveFocus(FocusDirection.Down)
         val emailState = remember { EmailState() }
         Email(
                 emailState.text, emailState.error,
