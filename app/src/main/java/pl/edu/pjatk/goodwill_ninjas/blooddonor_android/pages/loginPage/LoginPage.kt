@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.Email
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.EmailState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.Password
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.PasswordState
@@ -76,38 +77,3 @@ fun SignInScreen(navController: NavController) {
         }
     }
 }
-@Composable
-fun Email(
-    email: String,
-    error: String?,
-    onEmailChanged: (String) -> Unit,
-    onImeAction: () -> Unit
-) {
-    Column {
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = email,
-            onValueChange = { onEmailChanged(it) },
-            label = { Text(text = "Email/Login") },
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            shape = RoundedCornerShape(8.dp),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = {
-
-                    onImeAction()
-                }
-            ),
-            isError = error != null
-        )
-        error?.let { ErrorField(it) }
-    }
-}
-
-
