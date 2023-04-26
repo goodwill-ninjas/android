@@ -37,7 +37,7 @@ fun DonationJournal (
         Column(Modifier.verticalScroll(scrollableState)) {
             state.donations.forEach {donation ->
                 BloodCard(bloodType = donation.donatedType , isNextDonationCard = false, amount = donation.amount, donationDate = LocalDateTime.ofInstant(
-                    Instant.ofEpochMilli(donation.donationDate), TimeZone.getTimeZone("CEST").toZoneId()))
+                    donation.createdAt?.let { Instant.ofEpochMilli(it) }, TimeZone.getTimeZone("CEST").toZoneId()))
             }
         }
     }
