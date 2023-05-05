@@ -15,22 +15,28 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 
-@Preview
+//@Preview
 @Composable
 fun SignInScreen() {
+    val navController: NavController = rememberNavController()
     Column(
             modifier = Modifier
-                    .fillMaxWidth(
-                    )
-                    .padding(16.dp),
+                .fillMaxWidth(
+                )
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Title()
@@ -44,7 +50,6 @@ fun SignInScreen() {
                 },
                 onImeAction = {
                     localFocusManager.moveFocus(FocusDirection.Down)
-
                 }
         )
         val passwordState = remember {
@@ -54,7 +59,7 @@ fun SignInScreen() {
             passwordState.text = it
             passwordState.validate()
         }
-        SignInButton(enabled = emailState.isValid() && passwordState.isValid())
+        SignInButton(enabled = emailState.isValid() && passwordState.isValid(), navController)
     }
 }
 @Composable
@@ -76,8 +81,6 @@ fun Email(email: String, error: String?, onEmailChanged: (String) -> Unit, onIme
                 shape = RoundedCornerShape(8.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
-
-
                 ),
                 keyboardActions = KeyboardActions(
                         onNext = {
@@ -101,7 +104,6 @@ fun ErrorField(error: String) {
 }
 @Composable
 fun Password(password: String, error: String?, onPasswordChanged: (String) -> Unit) {
-
     val showPassword = remember {
         mutableStateOf(false)
     }
@@ -144,9 +146,9 @@ fun Password(password: String, error: String?, onPasswordChanged: (String) -> Un
     error?.let { ErrorField(it) }
 }
 @Composable
-fun SignInButton(enabled: Boolean) {
+fun SignInButton(enabled: Boolean, navController:NavController) {
     Button(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.Journal.route)},
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(16.dp),
             enabled = enabled,
