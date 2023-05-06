@@ -8,18 +8,18 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.room.Room
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Navigation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
+
 class MainActivity : ComponentActivity() {
+
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
@@ -38,12 +38,10 @@ class MainActivity : ComponentActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             BlooddonorandroidTheme {
                 val state by viewModel.state.collectAsState()
-                Navigation(state = state, onEvent = viewModel::onEvent, navController = NavController(
-                    LocalContext.current))
+                Navigation(state = state, onEvent = viewModel::onEvent)
             }
         }
     }

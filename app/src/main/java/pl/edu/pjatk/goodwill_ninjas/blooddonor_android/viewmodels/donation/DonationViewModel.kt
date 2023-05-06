@@ -2,12 +2,15 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationDao
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
-import java.lang.Long
 
 class DonationViewModel(
     private val dao: DonationDao
@@ -23,29 +26,50 @@ class DonationViewModel(
     fun onEvent(event: DonationEvent) {
         when (event) {
             is DonationEvent.SaveDonation -> {
-                val donatedType  = state.value.donated_type
-                val donationDate = state.value.donation_date
+                val companionUserId = state.value.companionUserId
+                val donatedType  = state.value.donatedType
                 val amount = state.value.amount
-                if (donatedType.isBlank() || donationDate.equals(0) || amount == 0) {
+                val bloodPressure = state.value.bloodPressure
+                val hemoglobin = state.value.hemoglobin
+                val details = state.value.details
+                val createdAt = state.value.createdAt
+                val deletedAt = state.value.deletedAt
+
+                if (donatedType.isBlank() || createdAt == null || amount == 0) {
                     return
                 }
                 val donation = Donation(
                     donatedType = donatedType,
-                    donationDate = donationDate,
-                    amount = amount
+                    amount = amount,
+                    details = details,
+                    bloodPressure = bloodPressure,
+                    companionUserId = companionUserId,
+                    hemoglobin = hemoglobin,
+                    createdAt = createdAt,
+                    deletedAt = deletedAt
                 )
                 viewModelScope.launch {
                     dao.upsertDonation(donation)
                 }
                 _state.update { it.copy(
-                    donated_type = "",
-                    donation_date = 0,
-                    amount = 0
+                    donatedType = "",
+                    companionUserId = null,
+                    amount = 0,
+                    bloodPressure = null,
+                    hemoglobin = null,
+                    details = null,
+                    createdAt = null,
+                    deletedAt = null
+                ) }
+            }
+            is DonationEvent.SetCompanionUserId -> {
+                _state.update { it.copy(
+                    companionUserId = event.companionUserId
                 ) }
             }
             is DonationEvent.SetDonatedType -> {
                 _state.update { it.copy(
-                    donated_type = event.donatedType
+                    donatedType = event.donatedType
                 ) }
             }
             is DonationEvent.SetAmount -> {
@@ -53,9 +77,29 @@ class DonationViewModel(
                     amount = event.amount
                 ) }
             }
-            is DonationEvent.SetDonationDate -> {
+            is DonationEvent.SetBloodPressure -> {
                 _state.update { it.copy(
-                    donation_date = event.donationDate
+                    bloodPressure = event.bloodPressure
+                ) }
+            }
+            is DonationEvent.SetHemoglobin -> {
+                _state.update { it.copy(
+                    hemoglobin = event.hemoglobin
+                ) }
+            }
+            is DonationEvent.SetDetails -> {
+                _state.update { it.copy(
+                    details = event.details
+                ) }
+            }
+            is DonationEvent.SetCreatedAt -> {
+                _state.update { it.copy(
+                    createdAt = event.createdAt
+                ) }
+            }
+            is DonationEvent.SetDeletedAt -> {
+                _state.update { it.copy(
+                    deletedAt = event.deletedAt
                 ) }
             }
         }

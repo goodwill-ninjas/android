@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -24,12 +23,11 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BottomSheetDi
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.WelcomeScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
-import java.time.LocalDateTime
+
 object Routes {
     const val SELF = "Main"
     const val JOURNAL = "Journal"
@@ -44,7 +42,6 @@ object Routes {
 @Composable
 fun Navigation(
     state: DonationState,
-    navController: NavController,
     onEvent: (DonationEvent) -> Unit
 ) {
     val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
@@ -52,16 +49,6 @@ fun Navigation(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val scaffoldState = rememberScaffoldState()
-    val donations = listOf(
-        Donation("Krew pełna", 450, LocalDateTime.of(2023, 2, 3, 0, 0)),
-        Donation("Krew pełna", 450, LocalDateTime.of(2022, 11, 16, 0, 0)),
-        Donation("Krew pełna", 450, LocalDateTime.of(2021, 2, 3, 0, 0)),
-        Donation("Krew pełna", 450, LocalDateTime.of(2020, 7, 3, 0, 0)),
-        Donation("Krew pełna", 450, LocalDateTime.of(2019, 10, 3, 0, 0)),
-        Donation("Krew pełna", 450, LocalDateTime.of(2018, 12, 3, 0, 0)),
-        Donation("Krew pełna", 450, LocalDateTime.of(2018, 2, 3, 0, 0)),
-        Donation("Krew pełna", 450, LocalDateTime.of(2017, 10, 16, 0, 0)),
-    )
     val name = "Android"
     val alert: () -> Unit = {
         Log.d("debugTag", "Value" + currentRoute)
@@ -74,10 +61,6 @@ fun Navigation(
         floatingActionButton = {
             if (currentRoute != "BottomModal") {
             FloatingActionButton(onClick = {
-                onEvent(DonationEvent.SetDonatedType("Krew pełna"))
-                onEvent(DonationEvent.SetDonationDate(1681648417))
-                onEvent(DonationEvent.SetAmount(450))
-                onEvent(DonationEvent.SaveDonation)
                 navController.navigate(Screen.BottomModal.route)
                 Log.i("message", "FAB starting page")
             }) {

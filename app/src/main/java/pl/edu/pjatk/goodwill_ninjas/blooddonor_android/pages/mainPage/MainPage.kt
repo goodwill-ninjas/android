@@ -18,9 +18,12 @@ import androidx.compose.ui.unit.dp
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import java.time.LocalDateTime
+
+
 @Composable
 fun MainPage(name: String) {
     val image = painterResource(id = R.drawable.droplet)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -31,12 +34,17 @@ fun MainPage(name: String) {
         Box(modifier = Modifier.padding(15.dp)) {
             Image(painter = image, contentDescription = null, Modifier.height(250.dp))
         }
-        BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2023, 2, 23, 0, 0))
-        Log.i("mainpage", "this is MainPage")
+        BloodCard(
+            bloodType = stringResource(R.string.full_blood),
+            isNextDonationCard = true,
+            amount = 0,
+            donationDate = LocalDateTime.of(2023, 2, 23, 0, 0)
+        )
     }
 }
+
 @Composable
 @Preview
-fun see(){
+fun see() {
     MainPage(name = "My main Page")
 }
