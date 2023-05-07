@@ -48,16 +48,13 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodQtyInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobinLevelInput
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DatePickerService
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DateReader
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 
 @Composable
-fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:DonationState) {
-    var datePickerService = DatePickerService()
-    var dateReader = DateReader(datePickerService)
+fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:DonationState, exchangeViewModel: ExchangeViewModel) {
     val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
     val imeState = rememberImeState()
@@ -66,13 +63,6 @@ fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:Donati
             scrollState.scrollTo(scrollState.maxValue)
         }
     }
-
-    val dateObservable = DateReader(datePickerService)
-    datePickerService.add(dateObservable)
-    datePickerService.sendUpdateEvent()
-//    datePickerService.date = DatePicker()
-
-
     Scaffold(
         scaffoldState = scaffoldState,
         ) {
@@ -109,17 +99,6 @@ fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:Donati
                             BloodPressureInput(onEvent)
                         }
                         Row {
-                            Button(
-                                onClick = {
-                                    onEvent(DonationEvent.SetDonatedType("kw1"))
-                                    onEvent(DonationEvent.SetCreatedAt(100000000))
-                                    onEvent(DonationEvent.SetAmount(50))
-                                    onEvent(DonationEvent.SaveDonation)
-                                    Log.d("date adv from datePicker", datePickerService.date.toString())
-                                }) {
-                            }
-                        }
-                        Row {
                             HemoglobinLevelInput(onEvent)
                         }
                         Row {
@@ -129,7 +108,7 @@ fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:Donati
                             DonationHandSelector(onEvent)
                         }
                         Row {
-                            BloodQtyInput(onEvent)
+                            BloodQtyInput(onEvent, exchangeViewModel)
                         }
                     }
 
@@ -159,19 +138,9 @@ private fun ExaminationResult(onEvent: (DonationEvent) -> Unit) {
             placeholder = { Text(text = "podaj wynik badania") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.None
             ),
-            keyboardActions = KeyboardActions(
-                onSearch = {
-                    Toast.makeText(
-                        context,
-                        "On Search Click: value = $value",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            )
         )
         onEvent(DonationEvent.SetDetails(value))
     }
@@ -189,7 +158,7 @@ fun DonationHandSelector(onEvent: (DonationEvent) -> Unit) {
         Box {
             TextButton(onClick = { isExpanded = true }) {
                 Row {
-                    Text(text = "$selectedOption")
+                    Text(text = "$selectedOption", fontSize = 20.sp)
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "")
                 }
             }

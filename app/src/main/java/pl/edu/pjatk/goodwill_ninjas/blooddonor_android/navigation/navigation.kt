@@ -26,6 +26,8 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeStore
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 
 object Routes {
@@ -43,7 +45,8 @@ object Routes {
 @Composable
 fun Navigation(
     state: DonationState,
-    onEvent: (DonationEvent) -> Unit
+    onEvent: (DonationEvent) -> Unit,
+    exchangeViewModel: ExchangeViewModel
 ) {
     val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
     val navController = rememberNavController()
@@ -74,11 +77,10 @@ fun Navigation(
                 }
                 if (currentRoute.equals("Add_donation_advanced")) {
                     FloatingActionButton(onClick = {
-
-//                        onEvent(DonationEvent.SetDonatedType("kw"))
-//                        onEvent(DonationEvent.SetCreatedAt(100000000000))
-//                        onEvent(DonationEvent.SetAmount(50))
-
+                        onEvent(DonationEvent.SetAmount(exchangeViewModel.getAmount()))
+                        onEvent(DonationEvent.SetCreatedAt(exchangeViewModel.getCreatedAt()))
+                        onEvent(DonationEvent.SetDonatedType(exchangeViewModel.getDonationType()))
+                        onEvent(DonationEvent.SetBloodCenter(exchangeViewModel.getBloodCentre()))
                         onEvent(DonationEvent.SaveDonation) }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
@@ -101,7 +103,7 @@ fun Navigation(
                 DonationJournal(name, state, onEvent)
             }
             composable(route = Routes.ADD_DONATION) {
-                WelcomeScreen(navController, onEvent)
+                WelcomeScreen(navController, onEvent, exchangeViewModel)
 
             }
             composable(route = Routes.BOTTOM_SHEET_DIALOG) {
@@ -109,10 +111,10 @@ fun Navigation(
 
             }
             composable(route = Routes.ADVANCED) {
-                AdvancedDonationParams(onEvent, state)
+                AdvancedDonationParams(onEvent, state, exchangeViewModel)
             }
             composable(route = Routes.ADD_DISQUALIFICATION) {
-                AddDisqualification(navController, onEvent)
+                AddDisqualification(navController, onEvent, exchangeViewModel)
             }
             composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED) {
                 AddDisqualificationAdvanced(navController, onEvent)

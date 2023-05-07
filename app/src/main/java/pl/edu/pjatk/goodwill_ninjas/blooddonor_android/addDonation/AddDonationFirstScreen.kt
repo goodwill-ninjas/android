@@ -26,19 +26,20 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DatePicker
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DatePickerService
+import kotlinx.coroutines.runBlocking
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
 import java.util.*
 
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit) {
+fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit,  exchangeViewModel: ExchangeViewModel) {
     val scaffoldState = rememberScaffoldState()
-    var datePickerService = DatePickerService()
     var scrollState = rememberScrollState()
     val imeState = rememberImeState()
     LaunchedEffect(key1 = imeState.value) {
@@ -81,24 +82,13 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                             GetDate()
                         }
                         Row {
-                            DisplayDonationOptions(onEvent)
+                            DisplayDonationOptions(onEvent, exchangeViewModel)
                         }
                         Row {
-                            DatePicker(onEvent)
+                            DatePicker(onEvent, exchangeViewModel)
                         }
                         Row {
-                            Button(
-                                onClick = {
-                                    onEvent(DonationEvent.SetAmount(10))
-                                    onEvent(DonationEvent.SetDonatedType("Krew pelna"))
-                                    onEvent(DonationEvent.SaveDonation)
-                                }) {
-
-                            }
-                        }
-
-                        Row {
-                            dropDownMenuRck(onEvent)
+                            dropDownMenuRck(onEvent, exchangeViewModel)
                         }
                         Row {
                             OutlinedButton(
@@ -121,29 +111,7 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                             }
                         }
 
-                        Row {
-                            dropDownMenuRck(onEvent)
-                        }
-                        Row {
-                            OutlinedButton(
-                                onClick = {
-                                    navController.navigate(Screen.AdvancedDonationParams.route)
-                                },
-                                modifier = Modifier.width(200.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = Color.White,
-                                    contentColor = Color.Red
-                                ),
-                                shape = RoundedCornerShape(5),
-                            )
-                            {
-                                Text(
-                                    text = "ZAAWANSOWANE",
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        }
+
                     }
                 }
 
@@ -154,7 +122,7 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
 }
 
 @Composable
-fun dropDownMenuRck(onEvent: (DonationEvent) -> Unit) {
+fun dropDownMenuRck(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
     BlooddonorandroidTheme {
         val options = listOf(
             "RCKiK Gdańsk",
@@ -198,27 +166,30 @@ fun dropDownMenuRck(onEvent: (DonationEvent) -> Unit) {
 
                 }
                 onEvent(DonationEvent.SetBloodCenter(selectedOption))
+                val run = runBlocking {
+                    exchangeViewModel.saveBloodCentre(selectedOption)
+                }
             }
         }
     }
 }
 
 @Composable
-fun DisplayDonationOptions(onEvent: (DonationEvent) -> Unit) {
+fun DisplayDonationOptions(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
     BlooddonorandroidTheme {
         Column(
             horizontalAlignment = Alignment.Start, modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp), verticalArrangement = Arrangement.Top
         ) {
-            dropDownMenuDonationType(onEvent)
+            dropDownMenuDonationType(onEvent, exchangeViewModel)
         }
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun dropDownMenuDonationType(onEvent: (DonationEvent) -> Unit) {
+fun dropDownMenuDonationType(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
     val options = listOf(
         "Krew pełna",
         "Osocze",
@@ -272,21 +243,18 @@ fun dropDownMenuDonationType(onEvent: (DonationEvent) -> Unit) {
                     }
                 }) {
                     Text(text = eachoption)
-
-//                    OutlinedTextField(
-//                        value = eachoption,
-//                        onValueChange = {},
-//                        readOnly = false,
-//                        textStyle = TextStyle.Default.copy(fontSize = 14.sp)
-//                    )
                 }
             }
         }
         onEvent(DonationEvent.SetDonatedType(selectedOption))
+        val run = runBlocking {
+            exchangeViewModel.saveDonationType(selectedOption)
+        }
     }
     Column {
         Row {
-            BloodQtyInput(onEvent)
+            BloodQtyInput(onEvent, exchangeViewModel)
         }
     }
 }
+

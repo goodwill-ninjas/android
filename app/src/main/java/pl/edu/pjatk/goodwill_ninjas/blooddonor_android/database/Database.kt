@@ -18,7 +18,6 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donatio
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun donationDao(): DonationDao
-
     companion object {
         // Singleton - for making sure only one database is open
         @Volatile
@@ -29,13 +28,11 @@ abstract class AppDatabase: RoomDatabase() {
                 database.execSQL("ALTER TABLE Donation RENAME COLUMN donation_date TO created_at ADD COLUMN (`companion_user_id` INTEGER, `blood_pressure` TEXT, `hemoglobin` REAL, `details` TEXT, `deleted_at` INTEGER)")
             }
         }
-
         private val MIGRATION_2_3 = object: Migration(2,3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE ADD COLUMN (`hand` TEXT, `blood_center` TEXT)")
             }
         }
-
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(

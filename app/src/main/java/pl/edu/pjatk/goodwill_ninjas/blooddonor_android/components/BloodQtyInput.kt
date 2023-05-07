@@ -18,16 +18,17 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.runBlocking
 import org.joda.time.Instant
 import org.joda.time.LocalDate
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 
 @Composable
-public fun BloodQtyInput(
-    onEvent: (DonationEvent) -> Unit
+fun BloodQtyInput(
+    onEvent: (DonationEvent) -> Unit,
+    exchangeViewModel: ExchangeViewModel
 ) {
-    val localFocusManager = LocalFocusManager.current
-    localFocusManager.moveFocus(FocusDirection.Down)
     var value by remember {
         mutableStateOf("0")
     }
@@ -51,5 +52,8 @@ public fun BloodQtyInput(
 
         )
         onEvent(DonationEvent.SetAmount(value.toInt()))
+        val run = runBlocking {
+            exchangeViewModel.saveAmount(value.toInt())
+        }
     }
 }

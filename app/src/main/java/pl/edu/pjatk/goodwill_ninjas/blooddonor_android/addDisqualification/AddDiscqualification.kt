@@ -27,12 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DatePicker
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.DatePicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 
 @Composable
-fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -> Unit) {
+fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -67,7 +68,7 @@ fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -
                                     fontSize = 20.sp,
                                 )
                             }
-                            Row { DatePicker(onEvent) }
+                            Row { DatePicker(onEvent, exchangeViewModel) }
                         }
                         Column {
                             Row {
@@ -76,7 +77,7 @@ fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -
                                     fontSize = 20.sp,
                                 )
                             }
-                            Row { DatePicker(onEvent) }
+                            Row { DatePicker(onEvent, exchangeViewModel) }
                         }
                         Row {
                             OutlinedButton(
