@@ -52,7 +52,7 @@ android {
         }
     }
 }
-
+task prepareKotlinBuildScriptModel{}
 dependencies {
     def lifecycle_version = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
@@ -86,4 +86,9 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-common:$room_version")
     kapt "androidx.room:room-compiler:$room_version"
+
+    implementation("com.google.accompanist:accompanist-pager:0.26.5-rc")
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.26.5-rc"
+    implementation("androidx.compose.material3:material3:1.0.1")
+    implementation("androidx.compose.material3:material3-window-size-class:1.0.1")
 }

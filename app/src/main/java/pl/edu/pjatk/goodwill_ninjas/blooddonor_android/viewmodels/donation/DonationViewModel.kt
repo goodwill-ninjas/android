@@ -1,5 +1,8 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
@@ -12,6 +15,13 @@ import java.lang.Long
 class DonationViewModel(
     private val dao: DonationDao
 ): ViewModel() {
+
+    var lastDonationDate by mutableStateOf("")
+    fun updateLastDonationDate(dateInput: String){
+        lastDonationDate = dateInput
+    }
+
+
     private val _state = MutableStateFlow(DonationState())
     private val _donations = dao.getAll()
     val state = combine( _state, _donations ) { state, donations ->
