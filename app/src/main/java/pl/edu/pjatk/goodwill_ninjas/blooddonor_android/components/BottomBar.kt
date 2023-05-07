@@ -83,6 +83,5 @@ fun MyBottomBar(navController: NavController) {
                 }
             }
         }
-        Log.i("message", "this is FAB from BottomBar")
     }
 }

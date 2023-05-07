@@ -1,6 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification
 
 import android.widget.Toast
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,12 +42,20 @@ import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobinLevelInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
 
 @Composable
-fun AddDisqualificationAdvanced(navController: NavController) {
+fun AddDisqualificationAdvanced(navController: NavController,  onEvent: (DonationEvent) -> Unit) {
     val navController = rememberNavController()
-    val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
+    var scrollState = rememberScrollState()
+    val imeState = rememberImeState()
+    LaunchedEffect(key1 = imeState.value){
+        if(imeState.value){
+            scrollState.animateScrollTo(scrollState.maxValue, tween(300))
+        }
+    }
     Scaffold(
         scaffoldState = scaffoldState,
     ) {
@@ -53,7 +63,7 @@ fun AddDisqualificationAdvanced(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .padding(paddingValues = it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -73,10 +83,10 @@ fun AddDisqualificationAdvanced(navController: NavController) {
                         modifier = Modifier.padding(15.dp)
                     ) {
                         Row {
-                            BloodPressureInput()
+                            BloodPressureInput(onEvent)
                         }
                         Row {
-                            HemoglobinLevelInput()
+                            HemoglobinLevelInput(onEvent)
                         }
                         Row {
                             DiscqualificationDescription()

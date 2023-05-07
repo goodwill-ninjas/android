@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +41,15 @@ fun MainPage(name: String) {
             amount = 0,
             donationDate = LocalDateTime.of(2023, 2, 23, 0, 0)
         )
+
     }
+//    BloodCard(
+//        bloodType = stringResource(R.string.full_blood),
+//        isNextDonationCard = true,
+//        amount = 0,
+//        donationDate = LocalDateTime.of(2023, 2, 23, 0, 0)
+//    )
+    Log.i("mainpage", "this is MainPage")
 }
 
 @Composable

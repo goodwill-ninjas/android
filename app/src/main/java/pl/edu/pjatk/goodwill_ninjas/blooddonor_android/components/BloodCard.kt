@@ -67,5 +67,4 @@ fun BloodCard (
             }
         }
     }
-    Log.i("message", "this is BloodCard")
 }

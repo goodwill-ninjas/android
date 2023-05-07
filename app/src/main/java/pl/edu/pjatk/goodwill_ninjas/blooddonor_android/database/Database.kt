@@ -1,19 +1,22 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationDao
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
 
 @Database(
     entities = [Donation::class],
     version = 3,
     exportSchema = true)
 abstract class AppDatabase: RoomDatabase() {
+
     abstract fun donationDao(): DonationDao
 
     companion object {
@@ -47,3 +50,5 @@ abstract class AppDatabase: RoomDatabase() {
         }
     }
 }
+
+

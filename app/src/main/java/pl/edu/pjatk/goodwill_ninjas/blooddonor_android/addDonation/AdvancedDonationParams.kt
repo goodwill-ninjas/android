@@ -1,10 +1,9 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -29,6 +29,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,24 +44,42 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodQtyInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobinLevelInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DatePickerService
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DateReader
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
+
 @Composable
-fun AdvancedDonationParams(navController: NavController) {
-    val navController = rememberNavController()
+fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:DonationState) {
+    var datePickerService = DatePickerService()
+    var dateReader = DateReader(datePickerService)
     val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
+    val imeState = rememberImeState()
+    LaunchedEffect(key1 = imeState.value){
+        if(imeState.value){
+            scrollState.scrollTo(scrollState.maxValue)
+        }
+    }
+
+    val dateObservable = DateReader(datePickerService)
+    datePickerService.add(dateObservable)
+    datePickerService.sendUpdateEvent()
+//    datePickerService.date = DatePicker()
+
+
     Scaffold(
         scaffoldState = scaffoldState,
         ) {
         val image = painterResource(id = R.drawable.droplet)
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .fillMaxSize()
                 .padding(paddingValues = it),
             verticalArrangement = Arrangement.Center,
@@ -87,19 +106,30 @@ fun AdvancedDonationParams(navController: NavController) {
                             )
                         }
                         Row {
-                            BloodPressureInput()
+                            BloodPressureInput(onEvent)
                         }
                         Row {
-                            HemoglobinLevelInput()
+                            Button(
+                                onClick = {
+                                    onEvent(DonationEvent.SetDonatedType("kw"))
+                                    onEvent(DonationEvent.SetCreatedAt(datePickerService.date))
+                                    onEvent(DonationEvent.SetAmount(50))
+                                    onEvent(DonationEvent.SaveDonation)
+                                    Log.d("date adv from datePicker", datePickerService.date.toString())
+                                }) {
+                            }
                         }
                         Row {
-                            ExaminationResult()
+                            HemoglobinLevelInput(onEvent)
                         }
                         Row {
-                            DonationHandSelector()
+                            ExaminationResult(onEvent)
                         }
                         Row {
-                            BloodQtyInput()
+                            DonationHandSelector(onEvent)
+                        }
+                        Row {
+                            BloodQtyInput(onEvent)
                         }
                     }
 
@@ -109,7 +139,7 @@ fun AdvancedDonationParams(navController: NavController) {
     }
 }
 @Composable
-private fun ExaminationResult() {
+private fun ExaminationResult(onEvent: (DonationEvent) -> Unit) {
     var value by remember {
         mutableStateOf("")
     }
@@ -143,10 +173,11 @@ private fun ExaminationResult() {
                 }
             )
         )
+        onEvent(DonationEvent.SetDetails(value))
     }
 }
 @Composable
-fun DonationHandSelector() {
+fun DonationHandSelector(onEvent: (DonationEvent) -> Unit) {
     val options = listOf("Lewa", "Prawa")
     var isExpanded by remember {
         mutableStateOf(false)
@@ -174,6 +205,7 @@ fun DonationHandSelector() {
                 }
 
             }
+            onEvent(DonationEvent.SetHand(selectedOption))
         }
     }
 }

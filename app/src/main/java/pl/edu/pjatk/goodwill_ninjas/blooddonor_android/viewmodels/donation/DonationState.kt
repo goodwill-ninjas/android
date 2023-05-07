@@ -16,3 +16,5 @@ data class DonationState(
     val hand: String? = null,
     val bloodCenter: String? = null
 )
+
+

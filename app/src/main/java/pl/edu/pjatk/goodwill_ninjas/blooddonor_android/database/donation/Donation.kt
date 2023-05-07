@@ -3,6 +3,7 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Timestamp
 
 @Entity
 data class Donation(

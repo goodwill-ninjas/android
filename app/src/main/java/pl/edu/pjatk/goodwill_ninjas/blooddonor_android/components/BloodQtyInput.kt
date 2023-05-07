@@ -18,12 +18,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import org.joda.time.Instant
+import org.joda.time.LocalDate
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+
 @Composable
-public fun BloodQtyInput() {
+public fun BloodQtyInput(
+    onEvent: (DonationEvent) -> Unit
+) {
     val localFocusManager = LocalFocusManager.current
     localFocusManager.moveFocus(FocusDirection.Down)
     var value by remember {
-        mutableStateOf("")
+        mutableStateOf("0")
     }
     val context = LocalContext.current.applicationContext
     Column(
@@ -44,6 +50,6 @@ public fun BloodQtyInput() {
             ),
 
         )
+        onEvent(DonationEvent.SetAmount(value.toInt()))
     }
-    Log.i("message", "Input Blood from Input")
 }

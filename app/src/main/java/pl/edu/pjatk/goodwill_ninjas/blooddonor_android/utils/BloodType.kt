@@ -9,3 +9,6 @@ object BloodTypeIcon {
     val FullBlood = R.drawable.droplet
     val BloodIngredients = com.google.android.material.R.drawable.abc_ic_go_search_api_material
 }
+object FabTickIcon{
+    val Tick = R.drawable.fab_done
+}

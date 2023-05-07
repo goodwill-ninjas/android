@@ -17,8 +17,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+
 @Composable
-fun BloodPressureInput() {
+fun BloodPressureInput( onEvent: (DonationEvent) -> Unit) {
     var value by remember {
         mutableStateOf("")
     }
@@ -49,5 +51,6 @@ fun BloodPressureInput() {
                 }
             )
         )
+        onEvent(DonationEvent.SetBloodPressure(value))
     }
 }

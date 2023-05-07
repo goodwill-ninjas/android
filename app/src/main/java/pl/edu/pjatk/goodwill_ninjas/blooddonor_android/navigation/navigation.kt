@@ -31,13 +31,14 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.Donat
 object Routes {
     const val SELF = "Main"
     const val JOURNAL = "Journal"
-    val ADD_DONATION = "Add_donation"
-    val BOTTOM_SHEET_DIALOG = "Bottom_dialog"
-    val ADD_DISQUALIFICATION = "Add_disqualification"
-    val ADD_DISCQUALIFICATION_ADVANCED = "Add_disqualification_advanced"
-    val BottomModal = "BottomModal"
-    val ADVANCED = "Advanced_screen"
+    const val ADD_DONATION = "Add_donation"
+    const val BOTTOM_SHEET_DIALOG = "Bottom_dialog"
+    const val ADD_DISQUALIFICATION = "Add_disqualification"
+    const val ADD_DISCQUALIFICATION_ADVANCED = "Add_disqualification_advanced"
+    const val BottomModal = "BottomModal"
+    const val ADVANCED = "Add_donation_advanced"
 }
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Navigation(
@@ -60,12 +61,29 @@ fun Navigation(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             if (currentRoute != "BottomModal") {
-            FloatingActionButton(onClick = {
-                navController.navigate(Screen.BottomModal.route)
-                Log.i("message", "FAB starting page")
-            }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-            }}
+                FloatingActionButton(onClick = {
+                    navController.navigate(Screen.BottomModal.route)
+                    Log.i("message", "FAB starting page")
+                }) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                }
+                if (currentRoute.equals("Add_donation")) {
+                    FloatingActionButton(onClick = { onEvent(DonationEvent.SaveDonation) }) {
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                    }
+                }
+                if (currentRoute.equals("Add_donation_advanced")) {
+                    FloatingActionButton(onClick = {
+
+//                        onEvent(DonationEvent.SetDonatedType("kw"))
+//                        onEvent(DonationEvent.SetCreatedAt(100000000000))
+//                        onEvent(DonationEvent.SetAmount(50))
+
+                        onEvent(DonationEvent.SaveDonation) }) {
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                    }
+                }
+            }
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
@@ -91,13 +109,13 @@ fun Navigation(
 
             }
             composable(route = Routes.ADVANCED) {
-                AdvancedDonationParams(navController)
+                AdvancedDonationParams(onEvent, state)
             }
             composable(route = Routes.ADD_DISQUALIFICATION) {
                 AddDisqualification(navController, onEvent)
             }
             composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED) {
-                AddDisqualificationAdvanced(navController)
+                AddDisqualificationAdvanced(navController, onEvent)
 
             }
             composable(route = Routes.BottomModal) {

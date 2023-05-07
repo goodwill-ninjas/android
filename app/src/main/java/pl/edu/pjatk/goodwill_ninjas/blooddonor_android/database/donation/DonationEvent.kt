@@ -1,5 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation
 
+import java.sql.Time
+import java.sql.Timestamp
 
 sealed interface DonationEvent {
     object SaveDonation: DonationEvent

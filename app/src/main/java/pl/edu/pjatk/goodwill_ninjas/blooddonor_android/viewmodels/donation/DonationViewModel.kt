@@ -1,5 +1,8 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +18,8 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donatio
 class DonationViewModel(
     private val dao: DonationDao
 ): ViewModel() {
+
+
     private val _state = MutableStateFlow(DonationState())
     private val _donations = dao.getAll()
     val state = combine( _state, _donations ) { state, donations ->
@@ -120,4 +125,5 @@ class DonationViewModel(
             }
         }
     }
+
 }
