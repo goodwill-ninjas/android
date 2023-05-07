@@ -111,8 +111,8 @@ fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:Donati
                         Row {
                             Button(
                                 onClick = {
-                                    onEvent(DonationEvent.SetDonatedType("kw"))
-                                    onEvent(DonationEvent.SetCreatedAt(datePickerService.date))
+                                    onEvent(DonationEvent.SetDonatedType("kw1"))
+                                    onEvent(DonationEvent.SetCreatedAt(100000000))
                                     onEvent(DonationEvent.SetAmount(50))
                                     onEvent(DonationEvent.SaveDonation)
                                     Log.d("date adv from datePicker", datePickerService.date.toString())

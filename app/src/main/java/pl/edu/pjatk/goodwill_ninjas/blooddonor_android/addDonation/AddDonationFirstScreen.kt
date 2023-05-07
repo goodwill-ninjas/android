@@ -24,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.datepicker.DatePicker
@@ -33,13 +32,11 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donatio
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 import java.util.*
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit) {
-    val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     var datePickerService = DatePickerService()
     var scrollState = rememberScrollState()
@@ -99,29 +96,53 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
 
                             }
                         }
-                        DatePicker(onEvent)
-                    }
-                    Row {
-                        dropDownMenuRck(onEvent)
-                    }
-                    Row {
-                        OutlinedButton(
-                            onClick = {
-                                navController.navigate(Screen.AdvancedDonationParams.route)
-                            },
-                            modifier = Modifier.width(200.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color.White,
-                                contentColor = Color.Red
-                            ),
-                            shape = RoundedCornerShape(5),
-                        )
-                        {
-                            Text(
-                                text = "ZAAWANSOWANE",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
+
+                        Row {
+                            dropDownMenuRck(onEvent)
+                        }
+                        Row {
+                            OutlinedButton(
+                                onClick = {
+                                    navController.navigate(Screen.AdvancedDonationParams.route)
+                                },
+                                modifier = Modifier.width(200.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = Color.White,
+                                    contentColor = Color.Red
+                                ),
+                                shape = RoundedCornerShape(5),
                             )
+                            {
+                                Text(
+                                    text = "ZAAWANSOWANE",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+
+                        Row {
+                            dropDownMenuRck(onEvent)
+                        }
+                        Row {
+                            OutlinedButton(
+                                onClick = {
+                                    navController.navigate(Screen.AdvancedDonationParams.route)
+                                },
+                                modifier = Modifier.width(200.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = Color.White,
+                                    contentColor = Color.Red
+                                ),
+                                shape = RoundedCornerShape(5),
+                            )
+                            {
+                                Text(
+                                    text = "ZAAWANSOWANE",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
                     }
                 }
