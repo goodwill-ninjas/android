@@ -28,10 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.DatePicker
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 
 @Composable
-fun AddDisqualification(navController: NavController) {
+fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -> Unit) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -66,7 +67,7 @@ fun AddDisqualification(navController: NavController) {
                                     fontSize = 20.sp,
                                 )
                             }
-                            Row { DatePicker() }
+                            Row { DatePicker(onEvent) }
                         }
                         Column {
                             Row {
@@ -75,7 +76,7 @@ fun AddDisqualification(navController: NavController) {
                                     fontSize = 20.sp,
                                 )
                             }
-                            Row { DatePicker() }
+                            Row { DatePicker(onEvent) }
                         }
                         Row {
                             OutlinedButton(

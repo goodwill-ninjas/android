@@ -34,6 +34,8 @@ class DonationViewModel(
                 val details = state.value.details
                 val createdAt = state.value.createdAt
                 val deletedAt = state.value.deletedAt
+                val hand = state.value.hand
+                val bloodCenter = state.value.bloodCenter
 
                 if (donatedType.isBlank() || createdAt == null || amount == 0) {
                     return
@@ -46,7 +48,9 @@ class DonationViewModel(
                     companionUserId = companionUserId,
                     hemoglobin = hemoglobin,
                     createdAt = createdAt,
-                    deletedAt = deletedAt
+                    deletedAt = deletedAt,
+                    hand = hand,
+                    bloodCenter = bloodCenter
                 )
                 viewModelScope.launch {
                     dao.upsertDonation(donation)
@@ -59,7 +63,9 @@ class DonationViewModel(
                     hemoglobin = null,
                     details = null,
                     createdAt = null,
-                    deletedAt = null
+                    deletedAt = null,
+                    hand = null,
+                    bloodCenter = null
                 ) }
             }
             is DonationEvent.SetCompanionUserId -> {
@@ -100,6 +106,16 @@ class DonationViewModel(
             is DonationEvent.SetDeletedAt -> {
                 _state.update { it.copy(
                     deletedAt = event.deletedAt
+                ) }
+            }
+            is DonationEvent.SetHand -> {
+                _state.update { it.copy(
+                    hand = event.hand
+                ) }
+            }
+            is DonationEvent.SetBloodCenter -> {
+                _state.update { it.copy(
+                    bloodCenter = event.bloodCenter
                 ) }
             }
         }

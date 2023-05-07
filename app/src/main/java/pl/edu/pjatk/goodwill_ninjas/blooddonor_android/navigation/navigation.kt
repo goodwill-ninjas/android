@@ -83,7 +83,7 @@ fun Navigation(
                 DonationJournal(name, state, onEvent)
             }
             composable(route = Routes.ADD_DONATION) {
-                WelcomeScreen(navController)
+                WelcomeScreen(navController, onEvent)
 
             }
             composable(route = Routes.BOTTOM_SHEET_DIALOG) {
@@ -94,7 +94,7 @@ fun Navigation(
                 AdvancedDonationParams(navController)
             }
             composable(route = Routes.ADD_DISQUALIFICATION) {
-                AddDisqualification(navController)
+                AddDisqualification(navController, onEvent)
             }
             composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED) {
                 AddDisqualificationAdvanced(navController)

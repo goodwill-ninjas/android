@@ -30,13 +30,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import java.util.*
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WelcomeScreen(navController: NavController) {
+fun WelcomeScreen(navController: NavController,   onEvent: (DonationEvent) -> Unit) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     Scaffold {
@@ -76,7 +78,17 @@ fun WelcomeScreen(navController: NavController) {
                             DisplayDonationOptions()
                         }
                         Row {
-                            DatePicker()
+                            DatePicker(onEvent)}
+                        Row{
+                            Button(
+                                onClick = {
+                                    onEvent(DonationEvent.SetAmount(10))
+                                    onEvent(DonationEvent.SetDonatedType("Krew pelna"))
+                                    onEvent(DonationEvent.SaveDonation)}) {
+                                
+                            }
+                        }    
+                            
                         }
                         Row {
                             dropDownMenuRck()
@@ -107,37 +119,37 @@ fun WelcomeScreen(navController: NavController) {
             }
         }
     }
-}
-@Composable
-fun DateButtonInAddDonation() {
-    var bloodQty by remember {
-        mutableStateOf("")
-    }
-    val showDialog = remember { mutableStateOf(false) }
-    if (showDialog.value) {
-        AlertInAddDonation(msg = "Tu chciałem pokazać selektor dat",
-            showDialog = showDialog.value,
-            onDismiss = { showDialog.value = false })
-    }
-    Button(
-        modifier = Modifier.padding(vertical = 10.dp),
-        onClick = {
-            showDialog.value = true
-        }
-    ) {
-        Text(text = "Wybierz datę donacji")
-    }
-}
-@Composable
-fun AlertInAddDonation(
-    msg: String,
-    showDialog: Boolean,
-    onDismiss: () -> Unit
-) {
-    if (showDialog) {
-        DatePicker()
-    }
-}
+
+//@Composable
+//fun DateButtonInAddDonation() {
+//    var bloodQty by remember {
+//        mutableStateOf("")
+//    }
+//    val showDialog = remember { mutableStateOf(false) }
+//    if (showDialog.value) {
+//        AlertInAddDonation(msg = "Tu chciałem pokazać selektor dat",
+//            showDialog = showDialog.value,
+//            onDismiss = { showDialog.value = false })
+//    }
+//    Button(
+//        modifier = Modifier.padding(vertical = 10.dp),
+//        onClick = {
+//            showDialog.value = true
+//        }
+//    ) {
+//        Text(text = "Wybierz datę donacji")
+//    }
+//}
+//@Composable
+//fun AlertInAddDonation(
+//    msg: String,
+//    showDialog: Boolean,
+//    onDismiss: () -> Unit
+//) {
+//    if (showDialog) {
+//        DatePicker (onEvent)
+//    }
+//}
 @Composable
 fun dropDownMenuRck() {
     BlooddonorandroidTheme {

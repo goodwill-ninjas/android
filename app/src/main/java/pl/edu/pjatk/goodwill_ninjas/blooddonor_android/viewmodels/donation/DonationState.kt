@@ -12,5 +12,7 @@ data class DonationState(
     val hemoglobin: Double? = null,
     val details: String? = null,
     val createdAt: Long? = null,
-    val deletedAt: Long? = null
+    val deletedAt: Long? = null,
+    val hand: String? = null,
+    val bloodCenter: String? = null
 )
