@@ -17,5 +17,4 @@ open class TextFieldState(
         }
     }
     fun isValid() = validator(text)
-
 }

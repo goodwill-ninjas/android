@@ -27,8 +27,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-
-//@Preview
 @Composable
 fun SignInScreen() {
     val navController: NavController = rememberNavController()
@@ -86,7 +84,6 @@ fun Email(email: String, error: String?, onEmailChanged: (String) -> Unit, onIme
                         onNext = {
 
                             onImeAction()
-
                         }
                 ),
                 isError = error != null
