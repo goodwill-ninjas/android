@@ -15,8 +15,9 @@ import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.SignInScreen
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage.SignInScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import java.time.LocalDateTime
 
 object Routes {
@@ -24,6 +25,7 @@ object Routes {
     const val JOURNAL = "Journal"
     const val LOGIN = "Login"
 }
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Navigation() {
@@ -50,14 +52,16 @@ fun Navigation() {
         bottomBar = {
             if (currentRoute != "Login") {
 
-            MyBottomBar(navController)} },
+                MyBottomBar(navController)
+            }
+        },
         floatingActionButton = {
             if (currentRoute != "Login")
-            FloatingActionButton(onClick = {
-                navController.navigate(Screen.Journal.route)
-            }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-            }
+                FloatingActionButton(onClick = {
+                    navController.navigate(Screen.Journal.route)
+                }) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                }
         },
 
         isFloatingActionButtonDocked = true,
@@ -65,11 +69,15 @@ fun Navigation() {
     ) {
         NavHost(navController = navController, startDestination = Routes.LOGIN) {
             composable(route = Routes.LOGIN) {
-                SignInScreen()
+                SignInScreen(navController)
             }
             composable(route = Routes.JOURNAL) {
                 DonationJournal(name, donations)
             }
+            composable(route = Routes.SELF) {
+                MainPage(name)
+            }
+
         }
     }
 }
