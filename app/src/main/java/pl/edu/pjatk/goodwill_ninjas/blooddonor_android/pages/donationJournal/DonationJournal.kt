@@ -14,12 +14,18 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.UserCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
+import java.time.Instant
+import java.time.LocalDateTime
+import java.util.*
 
 @Composable
 fun DonationJournal (
     name: String,
-    donations: List<Donation>
+    state: DonationState,
+    onEvent: (DonationEvent) -> Unit
 ) {
     val scrollableState = rememberScrollState()
     Column(modifier = Modifier
@@ -29,8 +35,9 @@ fun DonationJournal (
         UserCard(name = name, badgeLevel = 1, donatedBlood = 12500)
         Spacer(modifier = Modifier.height(20.dp))
         Column(Modifier.verticalScroll(scrollableState)) {
-            donations.forEach {donation ->
-                BloodCard(bloodType = donation.donationType , isNextDonationCard = false, amount = donation.amount, donationDate = donation.donationDate)
+            state.donations.forEach {donation ->
+                BloodCard(bloodType = donation.donatedType , isNextDonationCard = false, amount = donation.amount, donationDate = LocalDateTime.ofInstant(
+                    donation.createdAt?.let { Instant.ofEpochMilli(it) }, TimeZone.getTimeZone("CEST").toZoneId()))
             }
         }
     }
