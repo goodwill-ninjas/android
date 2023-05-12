@@ -3,11 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
-
 android {
     namespace 'pl.edu.pjatk.goodwill_ninjas.blooddonor_android'
     compileSdk 33
-
     defaultConfig {
         applicationId "pl.edu.pjatk.goodwill_ninjas.blooddonor_android"
         minSdk 29
@@ -25,7 +23,6 @@ android {
             }
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -52,12 +49,14 @@ android {
         }
     }
 }
-
+task wrapper(type: Wrapper){
+    gradleVersion = '7.2'
+}
+task prepareKotlinBuildScriptModel{}
 dependencies {
     def lifecycle_version = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'
