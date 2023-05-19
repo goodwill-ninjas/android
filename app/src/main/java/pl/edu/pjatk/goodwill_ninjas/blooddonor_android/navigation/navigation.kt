@@ -71,15 +71,15 @@ fun Navigation(
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center
     ) {
-        NavHost(navController = navController, startDestination = Routes.LOGIN) {
+        NavHost(navController = navController, startDestination = Routes.SELF) {
             composable(route = Routes.LOGIN) {
-                SignInScreen(navController)
+                SignInScreen(navController, context)
             }
             composable(route = Routes.JOURNAL) {
                 DonationJournal(name, state, onEvent)
             }
             composable(route = Routes.SELF) {
-                MainPage(name)
+                MainPage(name, navController, context)
             }
 
         }
