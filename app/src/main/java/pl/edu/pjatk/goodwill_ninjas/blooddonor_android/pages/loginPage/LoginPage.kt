@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,13 +30,16 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.Password
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.PasswordState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.ErrorField
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(navController: NavController, context: Context) {
     val emailState = remember { EmailState() }
     val passwordState = remember {
         PasswordState()
     }
+    val loginViewModel = LoginViewModel(context)
+
     Column(
         modifier = Modifier
             .fillMaxWidth(
@@ -67,7 +71,10 @@ fun SignInScreen(navController: NavController) {
             }
         }
         Column {
-            Button(onClick = {  navController.navigate(Screen.MainPage.route)  },
+            Button(onClick = {
+                    loginViewModel.login(emailState.text, passwordState.text)
+                    navController.navigate(Screen.MainPage.route)
+                             },
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(16.dp),
                 enabled = emailState.isValid() && passwordState.isValid()
