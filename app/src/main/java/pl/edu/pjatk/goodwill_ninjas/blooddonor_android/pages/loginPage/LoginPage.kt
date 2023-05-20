@@ -72,7 +72,7 @@ fun SignInScreen(navController: NavController, context: Context) {
         }
         Column {
             Button(onClick = {
-                    loginViewModel.login()
+                    loginViewModel.login(emailState.text, passwordState.text)
                     navController.navigate(Screen.MainPage.route)
                              },
                 modifier = Modifier.fillMaxWidth(),

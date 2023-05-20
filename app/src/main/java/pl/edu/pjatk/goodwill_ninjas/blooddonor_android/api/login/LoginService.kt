@@ -1,14 +1,16 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.login
 
 import android.util.Log
+import com.fasterxml.jackson.databind.ObjectMapper
+import okhttp3.ResponseBody
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.restClient.RestClient
 
 class LoginService {
     private val restClient = RestClient.getClient()
     private val api = restClient.create(LoginApi::class.java)
-    private val loginBody = LoginBody(email = "test@example.com", password = "Testing123")
 
-    suspend fun successfulLoginResponse(): String {
+    suspend fun successfulLoginResponse(email: String, password: String): String {
+        val loginBody = LoginBody(email, password)
         val loginResponse = api.login(loginBody)
 
         val successful = loginResponse?.isSuccessful
@@ -16,17 +18,26 @@ class LoginService {
         val httpStatusMessage = loginResponse?.message()
 
         val body: LoginResponse? = loginResponse?.body()
-//
-//        val errorBody: ResponseBody? = loginResponse?.errorBody()
-//        val mapper = ObjectMapper()
-//
-//        val mappedBody: LoginErrorResponse? = errorBody.let { notNullErrorBody ->
-//            mapper.readValue(notNullErrorBody.toString(), LoginErrorResponse::class.java)
-//        }
+
         Log.wtf("response", body.toString())
+        Log.wtf("response", httpStatusCode.toString())
+        Log.wtf("response", httpStatusMessage)
         if (body != null) {
             return body.token
         }
         return ""
+    }
+    suspend fun errorLoginResponse(email: String, password: String) {
+        val loginBody = LoginBody(email, password)
+        val loginResponse = api.login(loginBody)
+
+        val errorBody: ResponseBody? = loginResponse?.errorBody()
+
+        val mapper = ObjectMapper()
+
+        val mappedBody: LoginErrorResponse? = errorBody.let { notNullErrorBody ->
+            mapper.readValue(notNullErrorBody.toString(), LoginErrorResponse::class.java)
+        }
+        Log.d("response", mappedBody.toString())
     }
 }

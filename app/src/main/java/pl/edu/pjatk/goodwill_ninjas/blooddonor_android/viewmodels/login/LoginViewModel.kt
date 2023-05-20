@@ -9,16 +9,18 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.login.LoginService
 
 class LoginViewModel(private val context: Context) {
     private val store = TokenStore(context)
-    fun login() = runBlocking {
+    fun login(email: String, password: String) = runBlocking {
         val service = LoginService()
         coroutineScope {
-            val token = service.successfulLoginResponse()
-            store.saveToken(token)
+            val token = service.successfulLoginResponse(email, password)
+            store.saveToken("Bearer $token")
         }
     }
 
     fun logout() = runBlocking {
-        store.saveToken("")
+        coroutineScope {
+            store.saveToken("")
+        }
     }
 
     fun getToken() = runBlocking {

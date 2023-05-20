@@ -8,7 +8,7 @@ object RestClient {
 
     private const val baseUrl = "https://api.pre.gwn.adamjurkiewicz.com/api/"
 
-    val okHttpClient = OkHttpClient()
+    private val okHttpClient = OkHttpClient()
         .newBuilder()
         .addInterceptor(RequestInterceptor)
         .build()

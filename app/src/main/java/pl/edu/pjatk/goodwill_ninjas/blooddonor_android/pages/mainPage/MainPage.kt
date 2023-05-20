@@ -28,20 +28,6 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.healthCheck.He
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import java.time.LocalDateTime
 
-
-//fun main() = runBlocking {
-//    val service = LoginService()
-//
-//    coroutineScope {
-//        launch(Dispatchers.IO) {
-//            println("[${Thread.currentThread().name}] ONE")
-//            service.successfulLoginResponse()
-//
-//        }
-//        println("[${Thread.currentThread().name}] Done!")
-//    }
-//}
-
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun MainPage(name: String, navController: NavController, context: Context) {
@@ -62,11 +48,8 @@ fun MainPage(name: String, navController: NavController, context: Context) {
             Image(painter = image, contentDescription = null, Modifier.height(250.dp))
         }
         BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2023, 2, 23, 0, 0))
-        Button(onClick = { navController.navigate(Routes.LOGIN) }) {
-            Text(text = "Login")
-        }
-        Button(onClick = { Log.d("token", loginViewModel.getToken()) }) {
-            Text(text = "Show Token")
+        Button(onClick = { healthCheckViewModel.healthCheck() }) {
+            Text(text = "HealthCheck")
         }
     }
 }

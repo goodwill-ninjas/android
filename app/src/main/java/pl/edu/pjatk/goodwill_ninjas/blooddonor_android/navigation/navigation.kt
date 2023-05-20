@@ -20,12 +20,14 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donatio
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage.SignInScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.profilePage.ProfilePage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 
 object Routes {
     const val SELF = "Main"
     const val JOURNAL = "Journal"
     const val LOGIN = "Login"
+    const val PROFILE = "Profile"
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -59,7 +61,7 @@ fun Navigation(
                     onEvent(DonationEvent.SetDonatedType("Krew pełna"))
                     onEvent(
                         DonationEvent.SetCreatedAt(
-                            DateTime.parse("01/10/2012").toInstant().millis
+                            DateTime.parse("2012-01-10").toInstant().millis
                         )
                     )
                     onEvent(DonationEvent.SetAmount(450))
@@ -80,6 +82,9 @@ fun Navigation(
             }
             composable(route = Routes.SELF) {
                 MainPage(name, navController, context)
+            }
+            composable(route = Routes.PROFILE) {
+                ProfilePage(navController, context)
             }
 
         }
