@@ -24,8 +24,10 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.healthCheck.HealthChe
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.login.LoginService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.JWTUtils
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.healthCheck.HealthCheckViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 import java.time.LocalDateTime
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -33,8 +35,8 @@ import java.time.LocalDateTime
 fun MainPage(name: String, navController: NavController, context: Context) {
     val loginViewModel = LoginViewModel(context)
     val healthCheckViewModel = HealthCheckViewModel(context)
-
-//    healthCheckViewModel.healthCheck()
+    val token: String = loginViewModel.getToken().split(" ")[1]
+    val userViewModel = UserViewModel(context, JWTUtils().decoded(token))
 
     val image = painterResource(id = R.drawable.droplet)
     Column(
@@ -48,7 +50,7 @@ fun MainPage(name: String, navController: NavController, context: Context) {
             Image(painter = image, contentDescription = null, Modifier.height(250.dp))
         }
         BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2023, 2, 23, 0, 0))
-        Button(onClick = { healthCheckViewModel.healthCheck() }) {
+        Button(onClick = { userViewModel.setUserId() }) {
             Text(text = "HealthCheck")
         }
     }

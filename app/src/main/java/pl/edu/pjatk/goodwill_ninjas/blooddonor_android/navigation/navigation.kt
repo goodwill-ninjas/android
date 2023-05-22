@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.first
 import org.joda.time.DateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
@@ -21,7 +22,10 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.Don
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage.SignInScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.profilePage.ProfilePage
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.JWTUtils
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 
 object Routes {
     const val SELF = "Main"
@@ -41,12 +45,18 @@ fun Navigation(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val context = LocalContext.current
-    val name = "Android"
+    val token = LoginViewModel(context).getToken()
+    val userViewModel = UserViewModel(context, JWTUtils().decoded(token))
+    userViewModel.setUserId()
+    userViewModel.setUserName()
+    val userId = userViewModel.getUserId()
+    val userName = userViewModel.getUserName()
+
 
     Scaffold(
         scaffoldState = scaffoldState,
 
-        topBar = { MytopBar(name) },
+        topBar = { MytopBar(userName) },
         modifier = Modifier.fillMaxSize(),
 
         bottomBar = {
@@ -78,10 +88,10 @@ fun Navigation(
                 SignInScreen(navController, context)
             }
             composable(route = Routes.JOURNAL) {
-                DonationJournal(name, state, onEvent)
+                DonationJournal(userName, state, onEvent)
             }
             composable(route = Routes.SELF) {
-                MainPage(name, navController, context)
+                MainPage(userName, navController, context)
             }
             composable(route = Routes.PROFILE) {
                 ProfilePage(navController, context)
