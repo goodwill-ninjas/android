@@ -16,7 +16,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFea
 
 @Database(
     entities = [Donation::class, UserFeat::class, BloodCenter::class],
-    version = 5,
+    version = 6,
     exportSchema = true)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun donationDao(): DonationDao
@@ -36,7 +36,7 @@ abstract class AppDatabase: RoomDatabase() {
 
         private val MIGRATION_2_3 = object: Migration(2,3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE ADD COLUMN (`hand` TEXT, `blood_center` TEXT)")
+                database.execSQL("ALTER TABLE Donation ADD COLUMN (`hand` TEXT, `blood_center` TEXT)")
             }
         }
 
@@ -48,7 +48,13 @@ abstract class AppDatabase: RoomDatabase() {
 
         private val MIGRATION_4_5 = object: Migration(4,5) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE bloodCenter(`id` INTEGER NOT NULL, `name` TEXT, `street_name` TEXT, `postal_code` TEXT, `city` TEXT, `voivodeship` TEXT, `geo_coordinates` TEXT, `phone_number` TEXT, `open_from` TEXT, `open_to` TEXT, `created_at` TEXT)")
+                database.execSQL("CREATE TABLE bloodCenter(`id` INTEGER NOT NULL PRIMARY KEY, `name` TEXT, `street_name` TEXT, `postal_code` TEXT, `city` TEXT, `voivodeship` TEXT, `geo_coordinates` TEXT, `phone_number` TEXT, `open_from` TEXT, `open_to` TEXT, `created_at` TEXT)")
+            }
+        }
+
+        private val MIGRATION_5_6 = object: Migration(5,6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE bloodCenter ADD COLUMN `street_number` TEXT")
             }
         }
 
@@ -62,7 +68,8 @@ abstract class AppDatabase: RoomDatabase() {
                     MIGRATION_1_2,
                     MIGRATION_2_3,
                     MIGRATION_3_4,
-                    MIGRATION_4_5
+                    MIGRATION_4_5,
+                    MIGRATION_5_6
                 ).build()
                 INSTANCE = instance
                 instance
