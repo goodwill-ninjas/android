@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.userTokenData
 
 import kotlinx.serialization.Serializable
 

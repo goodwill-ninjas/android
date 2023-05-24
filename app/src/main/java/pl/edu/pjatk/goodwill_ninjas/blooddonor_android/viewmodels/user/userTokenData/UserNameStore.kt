@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.userTokenData
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -16,12 +16,12 @@ class UserNameStore(private val context: Context) {
     }
 
     val getUserName: Flow<String> = context.dataStore.data.map { preferences ->
-        preferences[UserNameStore.USER_NAME] ?: ""
+        preferences[USER_NAME] ?: ""
     }
 
     suspend fun saveUserName(userName: String) {
         context.dataStore.edit { preferences ->
-            preferences[UserNameStore.USER_NAME] = userName
+            preferences[USER_NAME] = userName
         }
     }
 }

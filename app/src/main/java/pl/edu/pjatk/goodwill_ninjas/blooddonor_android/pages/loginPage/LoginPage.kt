@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -28,6 +30,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.Email
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.EmailState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.Password
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.PasswordState
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.ErrorField
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
@@ -35,11 +38,8 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginVie
 @Composable
 fun SignInScreen(navController: NavController, context: Context) {
     val emailState = remember { EmailState() }
-    val passwordState = remember {
-        PasswordState()
-    }
+    val passwordState = remember { PasswordState() }
     val loginViewModel = LoginViewModel(context)
-
     Column(
         modifier = Modifier
             .fillMaxWidth(
@@ -47,7 +47,6 @@ fun SignInScreen(navController: NavController, context: Context) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
         Row {
             Text(text = "Zaloguj się")
         }

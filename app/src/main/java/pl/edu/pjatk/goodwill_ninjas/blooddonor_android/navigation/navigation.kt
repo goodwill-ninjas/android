@@ -1,6 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,6 +23,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.Don
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage.SignInScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.profilePage.ProfilePage
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.registerPage.SignUpScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.JWTUtils
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
@@ -32,6 +34,7 @@ object Routes {
     const val JOURNAL = "Journal"
     const val LOGIN = "Login"
     const val PROFILE = "Profile"
+    const val REGISTER = "Register"
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -46,12 +49,16 @@ fun Navigation(
     val currentRoute = navBackStackEntry?.destination?.route
     val context = LocalContext.current
     val token = LoginViewModel(context).getToken()
-    val userViewModel = UserViewModel(context, JWTUtils().decoded(token))
-    userViewModel.setUserId()
-    userViewModel.setUserName()
-    val userId = userViewModel.getUserId()
-    val userName = userViewModel.getUserName()
-
+    val userViewModel: UserViewModel
+    var userName = ""
+    var userId = 0
+    if (token.isNotEmpty()) {
+        userViewModel = UserViewModel(context, token)
+        userViewModel.setUserId()
+        userViewModel.setUserName()
+        userId = userViewModel.getUserId()
+        userName = userViewModel.getUserName()
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -95,6 +102,9 @@ fun Navigation(
             }
             composable(route = Routes.PROFILE) {
                 ProfilePage(navController, context)
+            }
+            composable(route = Routes.REGISTER) {
+                SignUpScreen(navController, context)
             }
 
         }

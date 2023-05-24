@@ -18,8 +18,17 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.Registra
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun GenderPicker(loginViewModel: LoginViewModel) {
-    val options = listOf("Male", "Female")
+fun BloodTypePicker(loginViewModel: LoginViewModel) {
+    val options = listOf(
+        "0 Rh-",
+        "0 Rh+",
+        "A Rh-",
+        "A Rh+",
+        "B Rh-",
+        "B Rh+",
+        "AB Rh-",
+        "AB Rh+"
+    )
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
 
@@ -34,7 +43,7 @@ fun GenderPicker(loginViewModel: LoginViewModel) {
                 readOnly = true,
                 value = selectedOptionText,
                 onValueChange = { },
-                label = { Text("Płeć") },
+                label = { Text("Grupa krwi") },
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(
                         expanded = expanded
@@ -52,7 +61,7 @@ fun GenderPicker(loginViewModel: LoginViewModel) {
                     DropdownMenuItem(
                         onClick = {
                             selectedOptionText = selectionOption
-                            loginViewModel.onEvent(RegistrationEvent.SetGender(selectionOption))
+                            loginViewModel.onEvent(RegistrationEvent.SetBloodType(selectionOption))
                             expanded = false
                         }
                     ){

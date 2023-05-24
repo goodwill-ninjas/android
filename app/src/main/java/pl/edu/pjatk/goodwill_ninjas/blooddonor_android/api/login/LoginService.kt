@@ -40,4 +40,12 @@ class LoginService {
         }
         Log.d("response", mappedBody.toString())
     }
+
+    suspend fun successfulRegisterResponse(
+        body: RegisterBody
+    ): Int? {
+        val registerResponse = api.register(body)
+
+        return registerResponse?.code()
+    }
 }
