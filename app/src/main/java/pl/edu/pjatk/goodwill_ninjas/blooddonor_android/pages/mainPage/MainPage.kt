@@ -24,17 +24,19 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.healthCheck.HealthChe
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.login.LoginService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.JWTUtils
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.healthCheck.HealthCheckViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 import java.time.LocalDateTime
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun MainPage(name: String, navController: NavController, context: Context) {
     val loginViewModel = LoginViewModel(context)
-    val healthCheckViewModel = HealthCheckViewModel(context)
-
-//    healthCheckViewModel.healthCheck()
+    val token: String = loginViewModel.getToken()
+    var userViewModel: UserViewModel
+    var userId = 0
 
     val image = painterResource(id = R.drawable.droplet)
     Column(
@@ -48,8 +50,20 @@ fun MainPage(name: String, navController: NavController, context: Context) {
             Image(painter = image, contentDescription = null, Modifier.height(250.dp))
         }
         BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2023, 2, 23, 0, 0))
-        Button(onClick = { healthCheckViewModel.healthCheck() }) {
-            Text(text = "HealthCheck")
+        if (token.isNotEmpty()) {
+            userViewModel = UserViewModel(context, token)
+            userId = userViewModel.getUserId()
+            Button(onClick = {
+                userViewModel.getUser(userId, token)
+            }) {
+                Text(text = "HealthCheck")
+            }
+            Button(onClick = {
+                Log.d("UserState", userViewModel.state.value.toString())
+                Log.d("TokenBody", token)
+            }) {
+                Text(text = "Log userState")
+            }
         }
     }
 }
