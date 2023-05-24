@@ -1,22 +1,17 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.user.UserResponse
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.user.UserService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.JWTUtils
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.userBackendData.UserEvent
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.userBackendData.UserState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.userTokenData.UserIdStore
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.userTokenData.UserNameStore
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.userTokenData.UserTokenData
