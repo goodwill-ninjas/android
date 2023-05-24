@@ -19,6 +19,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.healthCheck.HealthCheckViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.userFeat.UserFeatViewModel
 
 @Composable
 fun ProfilePage(navController: NavController, context: Context) {
@@ -26,6 +27,7 @@ fun ProfilePage(navController: NavController, context: Context) {
     
     var token = loginViewModel.getToken()
     var userViewModal: UserViewModel
+    var userFeatViewModel: UserFeatViewModel
     
     Column(
         modifier = Modifier
@@ -43,12 +45,15 @@ fun ProfilePage(navController: NavController, context: Context) {
                 }
             } else {
                 userViewModal = UserViewModel(context, token)
-
+                userFeatViewModel = UserFeatViewModel(context, token)
                 Button(onClick = {
                     loginViewModel.logout()
                     token = loginViewModel.getToken()
                 }) {
                     Text(text = "Wyloguj się")
+                }
+                Button(onClick = { userFeatViewModel.getUserFeats(token) }) {
+                    Text(text = "Show Feats")
                 }
             })
             Spacer(modifier = Modifier.height(10.dp))

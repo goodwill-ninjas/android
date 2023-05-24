@@ -20,12 +20,9 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.Donat
 class MainActivity : ComponentActivity() {
 
     private val db by lazy {
-        Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "app.db"
-        ).build()
+        AppDatabase.getDatabase(applicationContext)
     }
+
     private val viewModel by viewModels<DonationViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
