@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.bloodCenters.BloodCenter
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.bloodCenters.BloodCenterDao
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationDao
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFeat
@@ -13,12 +15,13 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFea
 
 
 @Database(
-    entities = [Donation::class, UserFeat::class],
-    version = 4,
+    entities = [Donation::class, UserFeat::class, BloodCenter::class],
+    version = 5,
     exportSchema = true)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun donationDao(): DonationDao
     abstract fun userFeatDao(): UserFeatDao
+    abstract fun bloodCenterDao(): BloodCenterDao
 
     companion object {
         // Singleton - for making sure only one database is open
@@ -43,13 +46,24 @@ abstract class AppDatabase: RoomDatabase() {
             }
         }
 
+        private val MIGRATION_4_5 = object: Migration(4,5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE bloodCenter(`id` INTEGER NOT NULL, `name` TEXT, `street_name` TEXT, `postal_code` TEXT, `city` TEXT, `voivodeship` TEXT, `geo_coordinates` TEXT, `phone_number` TEXT, `open_from` TEXT, `open_to` TEXT, `created_at` TEXT)")
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).build()
+                ).addMigrations(
+                    MIGRATION_1_2,
+                    MIGRATION_2_3,
+                    MIGRATION_3_4,
+                    MIGRATION_4_5
+                ).build()
                 INSTANCE = instance
                 instance
             }

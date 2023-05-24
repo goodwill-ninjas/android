@@ -29,7 +29,7 @@ fun BloodCentersPage (navController: NavController, context: Context, db: AppDat
         if (token.isEmpty()) {
             navController.navigate(Routes.PROFILE)
         } else {
-            bloodCenterViewModel = BloodCenterViewModel(context, token)
+            bloodCenterViewModel = BloodCenterViewModel(context, token, db.bloodCenterDao())
             Column(
                 modifier = Modifier
                     .padding(15.dp)

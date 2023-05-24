@@ -106,7 +106,7 @@ fun Navigation(
                 MainPage(userName, navController, context)
             }
             composable(route = Routes.PROFILE) {
-                ProfilePage(navController, context)
+                ProfilePage(navController, context, db)
             }
             composable(route = Routes.REGISTER) {
                 SignUpScreen(navController, context)
