@@ -15,6 +15,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFea
 
 
 @Database(
+
     entities = [Donation::class, UserFeat::class, BloodCenter::class],
     version = 6,
     exportSchema = true)
@@ -22,6 +23,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun donationDao(): DonationDao
     abstract fun userFeatDao(): UserFeatDao
     abstract fun bloodCenterDao(): BloodCenterDao
+
 
     companion object {
         // Singleton - for making sure only one database is open
@@ -36,7 +38,7 @@ abstract class AppDatabase: RoomDatabase() {
 
         private val MIGRATION_2_3 = object: Migration(2,3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE Donation ADD COLUMN (`hand` TEXT, `blood_center` TEXT)")
+                database.execSQL("ALTER TABLE ADD COLUMN (`hand` TEXT, `blood_center` TEXT)")
             }
         }
 

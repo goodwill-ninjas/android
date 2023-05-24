@@ -49,6 +49,7 @@ fun ProfilePage(navController: NavController, context: Context, db: AppDatabase)
             } else {
                 userViewModal = UserViewModel(context, token)
                 userFeatViewModel = UserFeatViewModel(context, token, db.userFeatDao())
+
                 Button(onClick = {
                     loginViewModel.logout()
                     token = loginViewModel.getToken()
