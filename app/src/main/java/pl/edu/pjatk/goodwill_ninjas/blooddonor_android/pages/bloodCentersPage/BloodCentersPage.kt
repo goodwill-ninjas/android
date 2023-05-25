@@ -46,7 +46,7 @@ fun BloodCentersPage (navController: NavController, context: Context, db: AppDat
                     bloodCenterViewModel.getBloodCenters()
                 }
                 bloodCenters.forEach {
-                    BloodCenterCard(bloodCenter = it, bloodCenterViewModel)
+                    BloodCenterCard(bloodCenter = it, bloodCenterViewModel, context, token)
                 }
             }
         }
