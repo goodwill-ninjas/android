@@ -14,11 +14,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Database
 import kotlinx.coroutines.flow.first
 import org.joda.time.DateTime
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.bloodCentersPage.BloodCentersPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage.SignInScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
@@ -35,13 +38,15 @@ object Routes {
     const val LOGIN = "Login"
     const val PROFILE = "Profile"
     const val REGISTER = "Register"
+    const val BLOOD_CENTERS = "Blood_Centers"
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Navigation(
     state: DonationState,
-    onEvent: (DonationEvent) -> Unit
+    onEvent: (DonationEvent) -> Unit,
+    db: AppDatabase
 ) {
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
@@ -101,12 +106,14 @@ fun Navigation(
                 MainPage(userName, navController, context)
             }
             composable(route = Routes.PROFILE) {
-                ProfilePage(navController, context)
+                ProfilePage(navController, context, db)
             }
             composable(route = Routes.REGISTER) {
                 SignUpScreen(navController, context)
             }
-
+            composable(route = Routes.BLOOD_CENTERS) {
+                BloodCentersPage(navController, context, db)
+            }
         }
     }
 }

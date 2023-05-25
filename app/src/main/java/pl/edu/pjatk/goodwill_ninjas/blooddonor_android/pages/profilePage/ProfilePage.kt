@@ -15,6 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.flow.first
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFeat
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.healthCheck.HealthCheckViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
@@ -22,13 +25,13 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewM
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.userFeat.UserFeatViewModel
 
 @Composable
-fun ProfilePage(navController: NavController, context: Context) {
+fun ProfilePage(navController: NavController, context: Context, db: AppDatabase) {
     val loginViewModel = LoginViewModel(context)
     
     var token = loginViewModel.getToken()
     var userViewModal: UserViewModel
     var userFeatViewModel: UserFeatViewModel
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,7 +48,8 @@ fun ProfilePage(navController: NavController, context: Context) {
                 }
             } else {
                 userViewModal = UserViewModel(context, token)
-                userFeatViewModel = UserFeatViewModel(context, token)
+                userFeatViewModel = UserFeatViewModel(context, token, db.userFeatDao())
+
                 Button(onClick = {
                     loginViewModel.logout()
                     token = loginViewModel.getToken()
@@ -57,7 +61,7 @@ fun ProfilePage(navController: NavController, context: Context) {
                 }
             })
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Token: ${token}")
+            Text(text = "Token: $token")
         }
     }
 }

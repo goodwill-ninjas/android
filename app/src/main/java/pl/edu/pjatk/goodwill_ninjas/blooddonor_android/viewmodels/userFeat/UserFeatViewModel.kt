@@ -20,9 +20,14 @@ class UserFeatViewModel(context: Context, token: String, private val dao: UserFe
 
     val feats = dao.getAll()
 
-    fun getUserFeats(feats: List<UserFeat>, token: String) = runBlocking {
+    suspend fun getFeats(): List<UserFeat> {
+        return feats.first()
+    }
+
+    fun getUserFeats(token: String) = runBlocking {
         val service = UserFeatService()
         coroutineScope {
+            val feats = getFeats()
             val userFeats = service.successfulUserFeatResponse(id, token);
             if (userFeats != null) {
                 if(userFeats.size != feats.size) {
