@@ -23,12 +23,9 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.Donat
 class MainActivity : ComponentActivity() {
 
     private val db by lazy {
-        Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "app.db"
-        ).build()
+        AppDatabase.getDatabase(applicationContext)
     }
+
     private val viewModel by viewModels<DonationViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
@@ -43,7 +40,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlooddonorandroidTheme {
                 val state by viewModel.state.collectAsState()
-                Navigation(state = state, onEvent = viewModel::onEvent, exchangeViewModel = ExchangeViewModel(
+                Navigation(state = state, onEvent = viewModel::onEvent,db = db, exchangeViewModel = ExchangeViewModel(
                     LocalContext.current)
                 )
             }

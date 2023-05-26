@@ -6,5 +6,6 @@
     <string name="add_donation">Dodaj donację</string>
     <string name="add_disqualification">Dodaj dyskwalifikację</string>
     <string name="add_log">Dodaj wpis dzienika</string>
-    <string name="dodaj_donację">Dodaj donację</string>
+    <string name="hide_password">Hide password </string>
+    <string name="show_password">Show password</string>>
 </resources>

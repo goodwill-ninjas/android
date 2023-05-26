@@ -9,7 +9,7 @@ fun prepareBottomMenu(): List<BottomMenuItem> {
     val bottomMenuItemList = arrayListOf<BottomMenuItem>()
     bottomMenuItemList.add(BottomMenuItem(label = "Panel", icon = Icons.Filled.Home, route = Routes.SELF))
     bottomMenuItemList.add(BottomMenuItem(label = "Donacje", icon = Icons.Filled.WaterDrop, route = Routes.JOURNAL))
-    bottomMenuItemList.add(BottomMenuItem(label = "Placówki", icon = Icons.Filled.Map, route = Routes.SELF))
-    bottomMenuItemList.add(BottomMenuItem(label = "Profil", icon = Icons.Filled.Person, route = Routes.SELF))
+    bottomMenuItemList.add(BottomMenuItem(label = "Placówki", icon = Icons.Filled.Map, route = Routes.BLOOD_CENTERS))
+    bottomMenuItemList.add(BottomMenuItem(label = "Profil", icon = Icons.Filled.Person, route = Routes.PROFILE))
     return bottomMenuItemList
 }

@@ -15,7 +15,7 @@ fun MytopBar(name: String) {
     val contextForToast = LocalContext.current.applicationContext
     TopAppBar(title = {
         Text(
-            text = "Witaj $name",
+            text = if (name.isNotEmpty()) "Witaj $name" else "Nie jesteś zalogowany",
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center
         )
