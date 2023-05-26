@@ -22,6 +22,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDi
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.AdvancedDonationParams
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BottomSheetDialog
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.WelcomeScreen
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
@@ -104,14 +105,20 @@ fun Navigation(
                         onEvent(DonationEvent.SetCreatedAt(exchangeViewModel.getCreatedAt()))
                         onEvent(DonationEvent.SetDonatedType(exchangeViewModel.getDonationType()))
                         onEvent(DonationEvent.SetBloodCenter(exchangeViewModel.getBloodCentre()))
-                        onEvent(DonationEvent.SaveDonation) }) {
+                        onEvent(DonationEvent.SaveDonation)
+                    }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
                 }
             }
         },
         isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center
+        floatingActionButtonPosition = FabPosition.Center,
+        bottomBar = {
+            if (currentRoute != "BottomModal" && currentRoute != "Login") {
+                MyBottomBar(navController)
+            }
+        }
 //    Scaffold(
 //        scaffoldState = scaffoldState,
 //
@@ -189,5 +196,5 @@ fun Navigation(
                 BottomModal(navController)
             }
         }
-}
+    }
 }

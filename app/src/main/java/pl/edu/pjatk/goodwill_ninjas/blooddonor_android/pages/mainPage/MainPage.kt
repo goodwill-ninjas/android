@@ -38,12 +38,6 @@ import java.time.LocalDateTime
             Box(modifier = Modifier.padding(15.dp)) {
                 Image(painter = image, contentDescription = null, Modifier.height(250.dp))
             }
-            BloodCard(
-                bloodType = stringResource(R.string.full_blood),
-                isNextDonationCard = true,
-                amount = 0,
-                donationDate = LocalDateTime.of(2023, 2, 23, 0, 0)
-            )
             if (token.isNotEmpty()) {
                 userViewModel = UserViewModel(context, token)
                 userId = userViewModel.getUserId()
