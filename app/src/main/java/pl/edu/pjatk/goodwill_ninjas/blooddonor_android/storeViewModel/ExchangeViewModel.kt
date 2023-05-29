@@ -19,6 +19,8 @@ class ExchangeViewModel(private val context: Context) {
     fun getDonationType() = runBlocking { store.readDonationType.first() }
     fun saveDonationType(donationType: String) = runBlocking { store.storeDontationType(donationType) }
 
-
-
+    fun getDisqualificationDateStart() = runBlocking { store.readDisqualificationDateStart.first() }
+    fun saveDisqualificationDateStart(date: Long) = runBlocking { store.storeDisqualificationDateStart(date) }
+    fun getDisqualificationDateFinish() = runBlocking { store.readDisqualificationDateFinish.first() }
+    fun saveDisqualificationDateFinish(date: Long) = runBlocking { store.storeDisqualificationDateFinish(date) }
 }

@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import kotlinx.coroutines.runBlocking
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
@@ -56,7 +57,8 @@ import java.util.Calendar
 
 @Composable
 fun DatePicker(
-    onEvent: (DonationEvent) -> Unit,
+    onEventDonate: (DonationEvent) -> Unit,
+    onEventDisqualify: (DisqualificationEvent) -> Unit,
     exchangeViewModel: ExchangeViewModel
 ) {
     BlooddonorandroidTheme {
@@ -83,14 +85,18 @@ fun DatePicker(
                 OutlinedTextField(value = (date),
                     onValueChange = {
                         date = it
-                        onEvent(DonationEvent.SetCreatedAt(DateTime.parse(date).toInstant().millis))
+                        onEventDonate(DonationEvent.SetCreatedAt(DateTime.parse(date).toInstant().millis))
+                        onEventDisqualify(DisqualificationEvent.SetDateStart(DateTime.parse(date).toInstant().millis))
+                        onEventDisqualify(DisqualificationEvent.SetDateFinish(DateTime.parse(date).toInstant().millis))
                     },
                     readOnly = true,
                     label = { Text(text = "Data") }
 
                 )
                 Log.d("date", date)
-                onEvent(DonationEvent.SetCreatedAt(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
+                onEventDonate(DonationEvent.SetCreatedAt(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
+                onEventDisqualify(DisqualificationEvent.SetDateStart(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
+                onEventDisqualify(DisqualificationEvent.SetDateFinish(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
                 Log.d("dateRegularFormat", dateformatted.toString())
                 Log.d("dateMillis2", Instant.parse(dateformatted.toString()).millis.toString())
                 var dateformattedTomillis = Instant.parse(dateformatted.toString()).millis
@@ -106,6 +112,8 @@ fun DatePicker(
             }
             val run = runBlocking {
                 exchangeViewModel.saveCreatedAt(Instant.parse(dateformatted.toString()).millis)
+                exchangeViewModel.saveDisqualificationDateStart(Instant.parse(dateformatted.toString()).millis)
+                exchangeViewModel.saveDisqualificationDateFinish(Instant.parse(dateformatted.toString()).millis)
             }
         }
     }

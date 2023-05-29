@@ -28,6 +28,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import kotlinx.coroutines.runBlocking
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
@@ -38,7 +39,7 @@ import java.util.*
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit,  exchangeViewModel: ExchangeViewModel) {
+fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit, onEventDisqualification: (DisqualificationEvent) -> Unit,  exchangeViewModel: ExchangeViewModel) {
     val scaffoldState = rememberScaffoldState()
     var scrollState = rememberScrollState()
     val imeState = rememberImeState()
@@ -85,7 +86,7 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                             DisplayDonationOptions(onEvent, exchangeViewModel)
                         }
                         Row {
-                            DatePicker(onEvent, exchangeViewModel)
+                            DatePicker(onEvent, onEventDisqualification, exchangeViewModel)
                         }
                         Row {
                             dropDownMenuRck(onEvent, exchangeViewModel)

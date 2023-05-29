@@ -15,9 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.room.Room
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.Disqualification
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Navigation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.discqualification.DisqualificationViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
 
 class MainActivity : ComponentActivity() {
@@ -35,12 +37,21 @@ class MainActivity : ComponentActivity() {
             }
         }
     )
+    private val viewModelDisqualification by viewModels<DisqualificationViewModel>(
+        factoryProducer = {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return DisqualificationViewModel(db.disqualificationDao()) as T
+                }
+            }
+        }
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BlooddonorandroidTheme {
                 val state by viewModel.state.collectAsState()
-                Navigation(state = state, onEvent = viewModel::onEvent,db = db, exchangeViewModel = ExchangeViewModel(
+                Navigation(state = state, onEvent = viewModel::onEvent, onEventDisqualification = viewModelDisqualification::onEventDisqualification, db = db, exchangeViewModel = ExchangeViewModel(
                     LocalContext.current)
                 )
             }

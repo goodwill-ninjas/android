@@ -1,4 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.OutlinedButton
@@ -22,18 +24,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.DatePicker
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 
 @Composable
-fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
+fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -> Unit, onEventDisqualification: (DisqualificationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -68,7 +73,7 @@ fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -
                                     fontSize = 20.sp,
                                 )
                             }
-                            Row { DatePicker(onEvent, exchangeViewModel) }
+                            Row { DatePicker(onEvent, onEventDisqualification, exchangeViewModel) }
                         }
                         Column {
                             Row {
@@ -77,8 +82,19 @@ fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -
                                     fontSize = 20.sp,
                                 )
                             }
-                            Row { DatePicker(onEvent, exchangeViewModel) }
-                        }
+                            Row { DatePicker(onEvent, onEventDisqualification, exchangeViewModel) }
+
+
+                            Row{
+                                OutlinedButton(onClick = {
+                                    Log.d("this i button", "clicked")
+                                    onEventDisqualification(DisqualificationEvent.SetDateStart(1000000000))
+                                    onEventDisqualification(DisqualificationEvent.SetDateFinish(10000000000))
+                                    onEventDisqualification(DisqualificationEvent.SaveDisqualification) }) {
+
+                                }
+
+                            }
                         Row {
                             OutlinedButton(
                                 onClick = {
@@ -103,4 +119,4 @@ fun AddDisqualification(navController: NavController, onEvent: (DonationEvent) -
             }
         }
     }
-}
+}}

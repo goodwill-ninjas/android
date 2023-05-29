@@ -25,6 +25,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.WelcomeScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.bloodCentersPage.BloodCentersPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal.DonationJournal
@@ -57,6 +58,7 @@ object Routes {
 fun Navigation(
     state: DonationState,
     onEvent: (DonationEvent) -> Unit,
+    onEventDisqualification: (DisqualificationEvent) -> Unit,
     exchangeViewModel: ExchangeViewModel,
     db: AppDatabase
 ) {
@@ -106,6 +108,13 @@ fun Navigation(
                         onEvent(DonationEvent.SetDonatedType(exchangeViewModel.getDonationType()))
                         onEvent(DonationEvent.SetBloodCenter(exchangeViewModel.getBloodCentre()))
                         onEvent(DonationEvent.SaveDonation)
+                    }) {
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                    }
+                }
+                if (currentRoute.equals("Add_disqualification")) {
+                    FloatingActionButton(onClick = {
+                        onEventDisqualification(DisqualificationEvent.SaveDisqualification)
                     }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
@@ -175,7 +184,7 @@ fun Navigation(
                 BloodCentersPage(navController, context, db)
             }
             composable(route = Routes.ADD_DONATION) {
-                WelcomeScreen(navController, onEvent, exchangeViewModel)
+                WelcomeScreen(navController, onEvent, onEventDisqualification, exchangeViewModel)
 
             }
             composable(route = Routes.BOTTOM_SHEET_DIALOG) {
@@ -186,7 +195,7 @@ fun Navigation(
                 AdvancedDonationParams(onEvent, state, exchangeViewModel)
             }
             composable(route = Routes.ADD_DISQUALIFICATION) {
-                AddDisqualification(navController, onEvent, exchangeViewModel)
+                AddDisqualification(navController, onEvent, onEventDisqualification, exchangeViewModel)
             }
             composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED) {
                 AddDisqualificationAdvanced(navController, onEvent)

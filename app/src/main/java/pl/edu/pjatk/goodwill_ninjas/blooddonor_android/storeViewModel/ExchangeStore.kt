@@ -21,6 +21,8 @@ class ExchangeStore(var context: Context) {
         val DONATION_TYPE_KEY = stringPreferencesKey("DONATON_TYPE")
         val AMOUNT_KEY = intPreferencesKey("AMOUNT")
         val BLOOD_CENTRE_KEY = stringPreferencesKey("DONATION_CENTRE")
+        val DISQUALIFICATION_START = longPreferencesKey("DATE_START")
+        val DISQUALIFICATION_FINISH = longPreferencesKey("DATE_FINISH")
     }
     suspend fun storeDonationBloodCentre(
         bloodCentre: String
@@ -62,5 +64,25 @@ class ExchangeStore(var context: Context) {
     }
     val readAmount: Flow<Int> = context.dataStore.data.map { preferences ->
         preferences[AMOUNT_KEY] ?: 0
+    }
+    suspend fun storeDisqualificationDateStart(
+        date: Long
+    ) {
+        context.dataStore.edit { preferences ->
+            preferences[DISQUALIFICATION_START] = date
+        }
+    }
+    val readDisqualificationDateStart: Flow<Long> = context.dataStore.data.map { preferences ->
+        preferences[DISQUALIFICATION_START] ?: 0L
+    }
+    suspend fun storeDisqualificationDateFinish(
+        date: Long
+    ) {
+        context.dataStore.edit { preferences ->
+            preferences[DISQUALIFICATION_FINISH] = date
+        }
+    }
+    val readDisqualificationDateFinish: Flow<Long> = context.dataStore.data.map { preferences ->
+        preferences[DISQUALIFICATION_FINISH] ?: 0L
     }
 }
