@@ -1,8 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,12 +14,12 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donatio
 
 class DonationViewModel(
     private val dao: DonationDao
-): ViewModel() {
+) : ViewModel() {
 
 
     private val _state = MutableStateFlow(DonationState())
     private val _donations = dao.getAll()
-    val state = combine( _state, _donations ) { state, donations ->
+    val state = combine(_state, _donations) { state, donations ->
         state.copy(
             donations = donations
         )
@@ -32,7 +29,7 @@ class DonationViewModel(
         when (event) {
             is DonationEvent.SaveDonation -> {
                 val companionUserId = state.value.companionUserId
-                val donatedType  = state.value.donatedType
+                val donatedType = state.value.donatedType
                 val amount = state.value.amount
                 val bloodPressure = state.value.bloodPressure
                 val hemoglobin = state.value.hemoglobin
@@ -60,68 +57,100 @@ class DonationViewModel(
                 viewModelScope.launch {
                     dao.upsertDonation(donation)
                 }
-                _state.update { it.copy(
-                    donatedType = "",
-                    companionUserId = null,
-                    amount = 0,
-                    bloodPressure = null,
-                    hemoglobin = null,
-                    details = null,
-                    createdAt = null,
-                    deletedAt = null,
-                    hand = null,
-                    bloodCenter = null
-                ) }
+                _state.update {
+                    it.copy(
+                        donatedType = "",
+                        companionUserId = null,
+                        amount = 0,
+                        bloodPressure = null,
+                        hemoglobin = null,
+                        details = null,
+                        createdAt = null,
+                        deletedAt = null,
+                        hand = null,
+                        bloodCenter = null
+                    )
+                }
             }
+
             is DonationEvent.SetCompanionUserId -> {
-                _state.update { it.copy(
-                    companionUserId = event.companionUserId
-                ) }
+                _state.update {
+                    it.copy(
+                        companionUserId = event.companionUserId
+                    )
+                }
             }
+
             is DonationEvent.SetDonatedType -> {
-                _state.update { it.copy(
-                    donatedType = event.donatedType
-                ) }
+                _state.update {
+                    it.copy(
+                        donatedType = event.donatedType
+                    )
+                }
             }
+
             is DonationEvent.SetAmount -> {
-                _state.update { it.copy(
-                    amount = event.amount
-                ) }
+                _state.update {
+                    it.copy(
+                        amount = event.amount
+                    )
+                }
             }
+
             is DonationEvent.SetBloodPressure -> {
-                _state.update { it.copy(
-                    bloodPressure = event.bloodPressure
-                ) }
+                _state.update {
+                    it.copy(
+                        bloodPressure = event.bloodPressure
+                    )
+                }
             }
+
             is DonationEvent.SetHemoglobin -> {
-                _state.update { it.copy(
-                    hemoglobin = event.hemoglobin
-                ) }
+                _state.update {
+                    it.copy(
+                        hemoglobin = event.hemoglobin
+                    )
+                }
             }
+
             is DonationEvent.SetDetails -> {
-                _state.update { it.copy(
-                    details = event.details
-                ) }
+                _state.update {
+                    it.copy(
+                        details = event.details
+                    )
+                }
             }
+
             is DonationEvent.SetCreatedAt -> {
-                _state.update { it.copy(
-                    createdAt = event.createdAt
-                ) }
+                _state.update {
+                    it.copy(
+                        createdAt = event.createdAt
+                    )
+                }
             }
+
             is DonationEvent.SetDeletedAt -> {
-                _state.update { it.copy(
-                    deletedAt = event.deletedAt
-                ) }
+                _state.update {
+                    it.copy(
+                        deletedAt = event.deletedAt
+                    )
+                }
             }
+
             is DonationEvent.SetHand -> {
-                _state.update { it.copy(
-                    hand = event.hand
-                ) }
+                _state.update {
+                    it.copy(
+                        hand = event.hand
+                    )
+                }
             }
+
             is DonationEvent.SetBloodCenter -> {
-                _state.update { it.copy(
-                    bloodCenter = event.bloodCenter
-                ) }
+                _state.update {
+                    it.copy(
+                        bloodCenter = event.bloodCenter
+                    )
+                }
             }
         }
     }

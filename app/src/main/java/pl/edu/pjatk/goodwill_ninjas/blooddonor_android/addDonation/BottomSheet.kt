@@ -21,11 +21,9 @@ fun MainBottomScreen(navController: NavController) {
         confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded }
     )
     val coroutineScope = rememberCoroutineScope()
-
     BackHandler(sheetState.isVisible) {
         coroutineScope.launch { sheetState.hide() }
     }
-
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = { BottomSheet(navController) },

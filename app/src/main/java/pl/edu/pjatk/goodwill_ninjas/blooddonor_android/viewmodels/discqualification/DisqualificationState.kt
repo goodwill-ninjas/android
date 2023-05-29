@@ -7,8 +7,8 @@ data class DisqualificationState (
     val disqualifications: List<Disqualification> = emptyList(),
     val companionUserId: Int? = null,
     val dateStart: Long? = null,
-    val dateFinish: Long? = null,
+    val days: Int? = null,
     val bloodPressure: String? = null,
-    val hemoglobin: Double? = null,
+    val hemoglobin: String? = null,
     val details: String? = null,
 )

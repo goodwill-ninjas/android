@@ -1,7 +1,5 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,10 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -48,13 +44,14 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodQtyInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobinLevelInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 
 @Composable
-fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:DonationState, exchangeViewModel: ExchangeViewModel) {
+fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:DonationState, exchangeViewModel: ExchangeViewModel, onDisqualificationEvent: (DisqualificationEvent)->Unit) {
     val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
     val imeState = rememberImeState()
@@ -96,10 +93,10 @@ fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:Donati
                             )
                         }
                         Row {
-                            BloodPressureInput(onEvent)
+                            BloodPressureInput(onEvent, onDisqualificationEvent)
                         }
                         Row {
-                            HemoglobinLevelInput(onEvent)
+                            HemoglobinLevelInput(onEvent, onDisqualificationEvent)
                         }
                         Row {
                             ExaminationResult(onEvent)
@@ -111,7 +108,6 @@ fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:Donati
                             BloodQtyInput(onEvent, exchangeViewModel)
                         }
                     }
-
                 }
             }
         }
@@ -169,7 +165,6 @@ fun DonationHandSelector(onEvent: (DonationEvent) -> Unit) {
                         selectedOption = it
                     }) {
                         Text(text = it)
-
                     }
                 }
 

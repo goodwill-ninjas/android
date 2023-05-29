@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,9 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import kotlinx.coroutines.runBlocking
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
@@ -40,7 +41,6 @@ import java.util.*
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit, onEventDisqualification: (DisqualificationEvent) -> Unit,  exchangeViewModel: ExchangeViewModel) {
-    val scaffoldState = rememberScaffoldState()
     var scrollState = rememberScrollState()
     val imeState = rememberImeState()
     LaunchedEffect(key1 = imeState.value) {
@@ -52,8 +52,9 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
         val image = painterResource(id = R.drawable.droplet)
         Column(
             modifier = Modifier
+                .scrollable(state = scrollState, orientation = Orientation.Vertical)
                 .verticalScroll(scrollState)
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(paddingValues = it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -89,7 +90,7 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                             DatePicker(onEvent, onEventDisqualification, exchangeViewModel)
                         }
                         Row {
-                            dropDownMenuRck(onEvent, exchangeViewModel)
+                            dropDownMenuBloodCentre(onEvent, exchangeViewModel)
                         }
                         Row {
                             OutlinedButton(
@@ -98,7 +99,6 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                                 },
                                 modifier = Modifier.width(200.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = Color.White,
                                     contentColor = Color.Red
                                 ),
                                 shape = RoundedCornerShape(5),
@@ -107,23 +107,19 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                                 Text(
                                     text = "ZAAWANSOWANE",
                                     fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold, color = Color.White
                                 )
                             }
                         }
-
-
                     }
                 }
-
-
             }
         }
     }
 }
 
 @Composable
-fun dropDownMenuRck(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
+fun dropDownMenuBloodCentre(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
     BlooddonorandroidTheme {
         val options = listOf(
             "RCKiK Gdańsk",
@@ -136,7 +132,6 @@ fun dropDownMenuRck(onEvent: (DonationEvent) -> Unit, exchangeViewModel: Exchang
         }
         var selectedOption by remember {
             mutableStateOf("RCKiK Gdańsk")
-
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -164,7 +159,6 @@ fun dropDownMenuRck(onEvent: (DonationEvent) -> Unit, exchangeViewModel: Exchang
 
                         }
                     }
-
                 }
                 onEvent(DonationEvent.SetBloodCenter(selectedOption))
                 val run = runBlocking {
@@ -174,7 +168,6 @@ fun dropDownMenuRck(onEvent: (DonationEvent) -> Unit, exchangeViewModel: Exchang
         }
     }
 }
-
 @Composable
 fun DisplayDonationOptions(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
     BlooddonorandroidTheme {
@@ -187,7 +180,6 @@ fun DisplayDonationOptions(onEvent: (DonationEvent) -> Unit, exchangeViewModel: 
         }
     }
 }
-
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun dropDownMenuDonationType(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {

@@ -37,22 +37,23 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobinLevelInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
 
 @Composable
-fun AddDisqualificationAdvanced(navController: NavController,  onEvent: (DonationEvent) -> Unit) {
-    val navController = rememberNavController()
+fun AddDisqualificationAdvanced(
+    onEvent: (DonationEvent) -> Unit,
+    onEventDisqualification: (DisqualificationEvent) -> Unit
+) {
     val scaffoldState = rememberScaffoldState()
     var scrollState = rememberScrollState()
     val imeState = rememberImeState()
-    LaunchedEffect(key1 = imeState.value){
-        if(imeState.value){
+    LaunchedEffect(key1 = imeState.value) {
+        if (imeState.value) {
             scrollState.animateScrollTo(scrollState.maxValue, tween(300))
         }
     }
@@ -83,13 +84,13 @@ fun AddDisqualificationAdvanced(navController: NavController,  onEvent: (Donatio
                         modifier = Modifier.padding(15.dp)
                     ) {
                         Row {
-                            BloodPressureInput(onEvent)
+                            BloodPressureInput(onEvent, onEventDisqualification)
                         }
                         Row {
-                            HemoglobinLevelInput(onEvent)
+                            HemoglobinLevelInput(onEvent, onEventDisqualification)
                         }
                         Row {
-                            DiscqualificationDescription()
+                            DiscqualificationDetails(onEventDisqualification)
                         }
                     }
 
@@ -99,7 +100,7 @@ fun AddDisqualificationAdvanced(navController: NavController,  onEvent: (Donatio
     }
 }
 @Composable
-private fun DiscqualificationDescription() {
+private fun DiscqualificationDetails(onEventDisqualification: (DisqualificationEvent) -> Unit) {
     var value by remember {
         mutableStateOf("")
     }
@@ -108,8 +109,9 @@ private fun DiscqualificationDescription() {
         horizontalAlignment = Alignment.Start,
     ) {
         OutlinedTextField(
-            modifier = Modifier.height(150.dp).
-            height(IntrinsicSize.Min),
+            modifier = Modifier
+                .height(150.dp)
+                .height(IntrinsicSize.Min),
             value = value,
             onValueChange = { newText ->
                 value = newText
@@ -132,5 +134,6 @@ private fun DiscqualificationDescription() {
                 }
             )
         )
+        onEventDisqualification(DisqualificationEvent.SetDetails(value))
     }
 }

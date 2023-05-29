@@ -44,7 +44,6 @@ fun BottomModal(navController: NavController) {
                     }
                 },
                 content = { innerPadding ->{Unit}
-
                 }
             )
         }

@@ -80,10 +80,6 @@ fun Navigation(
     val currentRoute = navBackStackEntry?.destination?.route
     val scaffoldState = rememberScaffoldState()
     val name = "Android"
-    val alert: () -> Unit = {
-        Log.d("debugTag", "Value" + currentRoute)
-    }
-    alert()
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { MytopBar(name) },
@@ -114,6 +110,19 @@ fun Navigation(
                 }
                 if (currentRoute.equals("Add_disqualification")) {
                     FloatingActionButton(onClick = {
+                        onEventDisqualification(DisqualificationEvent.SaveDisqualification)
+                    }) {
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+                    }
+                }
+                if (currentRoute.equals("Add_disqualification_advanced")) {
+                    FloatingActionButton(onClick = {
+                        onEventDisqualification(DisqualificationEvent.SetDateStart(exchangeViewModel.getDisqualificationDateStart()))
+                        onEventDisqualification(
+                            DisqualificationEvent.SetDays(
+                                exchangeViewModel.getDisqualificationDays()
+                            )
+                        )
                         onEventDisqualification(DisqualificationEvent.SaveDisqualification)
                     }) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
@@ -155,7 +164,6 @@ fun Navigation(
 //                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
 //                }
 //        },
-//>>>>>>> main
 //        isFloatingActionButtonDocked = true,
 //        floatingActionButtonPosition = FabPosition.Center,
 //        bottomBar = {
@@ -192,13 +200,18 @@ fun Navigation(
 
             }
             composable(route = Routes.ADVANCED) {
-                AdvancedDonationParams(onEvent, state, exchangeViewModel)
+                AdvancedDonationParams(onEvent, state, exchangeViewModel, onEventDisqualification)
             }
             composable(route = Routes.ADD_DISQUALIFICATION) {
-                AddDisqualification(navController, onEvent, onEventDisqualification, exchangeViewModel)
+                AddDisqualification(
+                    navController,
+                    onEvent,
+                    onEventDisqualification,
+                    exchangeViewModel
+                )
             }
             composable(route = Routes.ADD_DISCQUALIFICATION_ADVANCED) {
-                AddDisqualificationAdvanced(navController, onEvent)
+                AddDisqualificationAdvanced(onEvent, onEventDisqualification)
 
             }
             composable(route = Routes.BottomModal) {

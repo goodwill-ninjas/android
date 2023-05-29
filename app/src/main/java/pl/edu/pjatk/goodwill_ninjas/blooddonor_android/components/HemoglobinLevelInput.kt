@@ -14,11 +14,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 
 
 @Composable
-fun HemoglobinLevelInput(onEvent: (DonationEvent) -> Unit) {
+fun HemoglobinLevelInput(onEvent: (DonationEvent) -> Unit, onDisqualificationEvent: (DisqualificationEvent)->Unit) {
     var value by remember {
         mutableStateOf("00")
     }
@@ -50,5 +51,6 @@ fun HemoglobinLevelInput(onEvent: (DonationEvent) -> Unit) {
             )
         )
         onEvent(DonationEvent.SetHemoglobin(value.toDouble()))
+        onDisqualificationEvent(DisqualificationEvent.SetHemoglobin(value))
     }
 }

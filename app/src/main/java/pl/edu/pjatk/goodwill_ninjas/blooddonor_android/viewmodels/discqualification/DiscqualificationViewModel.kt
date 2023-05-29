@@ -26,18 +26,17 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO) : ViewMode
             is DisqualificationEvent.SaveDisqualification -> {
                 val companionUserId = state.value.companionUserId
                 val dateStart = state.value.dateStart
-                val dateFinish = state.value.dateFinish
+                val days = state.value.days
                 val bloodPressure = state.value.bloodPressure
                 val hemoglobin = state.value.hemoglobin
                 val details = state.value.details
-
-//                if (dateStart == null || dateFinish == null) {
-//                    return
-//                }
+                if (dateStart == null || days == null) {
+                    return
+                }
                 val disqualification = Disqualification(
                     companionUserId = companionUserId,
                     dateStart = dateStart,
-                    dateFinish = dateFinish,
+                    days = days,
                     bloodPressure = bloodPressure,
                     hemoglobin = hemoglobin,
                     details = details,
@@ -48,15 +47,14 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO) : ViewMode
                 _state.update {
                     it.copy(
                         companionUserId = null,
-                        dateStart = null,
-                        dateFinish = null,
+                        dateStart = 0,
+                        days = 0,
                         bloodPressure = null,
                         hemoglobin = null,
                         details = "",
                     )
                 }
             }
-
             is DisqualificationEvent.SetCompanionUserId -> {
                 _state.update {
                     it.copy(
@@ -64,7 +62,6 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO) : ViewMode
                     )
                 }
             }
-
             is DisqualificationEvent.SetDateStart -> {
                 _state.update {
                     it.copy(
@@ -72,15 +69,13 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO) : ViewMode
                     )
                 }
             }
-
-            is DisqualificationEvent.SetDateFinish -> {
+            is DisqualificationEvent.SetDays -> {
                 _state.update {
                     it.copy(
-                        dateFinish = event.dateFinish
+                        days = event.days
                     )
                 }
             }
-
             is DisqualificationEvent.SetBloodPressure -> {
                 _state.update {
                     it.copy(
@@ -88,7 +83,6 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO) : ViewMode
                     )
                 }
             }
-
             is DisqualificationEvent.SetHemoglobin -> {
                 _state.update {
                     it.copy(
@@ -96,7 +90,6 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO) : ViewMode
                     )
                 }
             }
-
             is DisqualificationEvent.SetDetails -> {
                 _state.update {
                     it.copy(

@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 7,
-    "identityHash": "6f86340f4a8fef2802e027fd0e5a20a9",
+    "version": 8,
+    "identityHash": "d19705598330ba9d81217adcb6e71297",
     "entities": [
       {
         "tableName": "Donation",
@@ -228,7 +228,7 @@
       },
       {
         "tableName": "Disqualification",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `companion_user_id` INTEGER, `date_start` INTEGER, `date_finish` INTEGER, `blood_pressure` TEXT, `hemoglobin` TEXT, `details` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `companion_user_id` INTEGER, `date_start` INTEGER, `days` INTEGER, `blood_pressure` TEXT, `hemoglobin` TEXT, `details` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -249,8 +249,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "dateFinish",
-            "columnName": "date_finish",
+            "fieldPath": "days",
+            "columnName": "days",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -286,7 +286,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6f86340f4a8fef2802e027fd0e5a20a9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd19705598330ba9d81217adcb6e71297')"
     ]
   }
 }

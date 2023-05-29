@@ -16,12 +16,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.runBlocking
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 
 @Composable
-fun BloodQtyInput(
-    onEvent: (DonationEvent) -> Unit,
+fun DaysInput(
+    onDisqualificationEvent: (DisqualificationEvent) -> Unit,
     exchangeViewModel: ExchangeViewModel
 ) {
     var value by remember {
@@ -36,7 +36,7 @@ fun BloodQtyInput(
             onValueChange = { newText ->
                 value = newText
             },
-            label = { Text(text = "Ilość") },
+            label = { Text(text = "Ilość dni dyskwalifikacji") },
             placeholder = { Text(text = "Ilość") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),
             keyboardOptions = KeyboardOptions(
@@ -44,9 +44,9 @@ fun BloodQtyInput(
                 imeAction = ImeAction.Next
             ),
         )
-        onEvent(DonationEvent.SetAmount(value.toInt()))
+        onDisqualificationEvent(DisqualificationEvent.SetDays(value.toInt()))
         val run = runBlocking {
-            exchangeViewModel.saveAmount(value.toInt())
+            exchangeViewModel.saveDisqualificationDays(value.toInt())
         }
     }
 }

@@ -8,10 +8,8 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -22,7 +20,7 @@ class ExchangeStore(var context: Context) {
         val AMOUNT_KEY = intPreferencesKey("AMOUNT")
         val BLOOD_CENTRE_KEY = stringPreferencesKey("DONATION_CENTRE")
         val DISQUALIFICATION_START = longPreferencesKey("DATE_START")
-        val DISQUALIFICATION_FINISH = longPreferencesKey("DATE_FINISH")
+        val DAYS = intPreferencesKey("DAYS")
     }
     suspend fun storeDonationBloodCentre(
         bloodCentre: String
@@ -75,14 +73,14 @@ class ExchangeStore(var context: Context) {
     val readDisqualificationDateStart: Flow<Long> = context.dataStore.data.map { preferences ->
         preferences[DISQUALIFICATION_START] ?: 0L
     }
-    suspend fun storeDisqualificationDateFinish(
-        date: Long
+    suspend fun storeDisqualificationDays(
+        days: Int
     ) {
         context.dataStore.edit { preferences ->
-            preferences[DISQUALIFICATION_FINISH] = date
+            preferences[DAYS] = days
         }
     }
-    val readDisqualificationDateFinish: Flow<Long> = context.dataStore.data.map { preferences ->
-        preferences[DISQUALIFICATION_FINISH] ?: 0L
+    val readDisqualificationDays: Flow<Int> = context.dataStore.data.map { preferences ->
+        preferences[DAYS] ?: 0
     }
 }

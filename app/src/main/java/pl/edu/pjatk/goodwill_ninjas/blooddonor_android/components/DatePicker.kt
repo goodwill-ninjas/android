@@ -10,29 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.runBlocking
-import org.joda.time.DateTime
-import org.joda.time.Instant
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.Composable
@@ -44,15 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import kotlinx.coroutines.runBlocking
+import org.joda.time.DateTime
+import org.joda.time.Instant
+import org.joda.time.LocalDate
+import org.joda.time.format.DateTimeFormat
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
-import java.text.DateFormat
 import java.util.Calendar
 
 @Composable
@@ -87,19 +64,12 @@ fun DatePicker(
                         date = it
                         onEventDonate(DonationEvent.SetCreatedAt(DateTime.parse(date).toInstant().millis))
                         onEventDisqualify(DisqualificationEvent.SetDateStart(DateTime.parse(date).toInstant().millis))
-                        onEventDisqualify(DisqualificationEvent.SetDateFinish(DateTime.parse(date).toInstant().millis))
                     },
                     readOnly = true,
                     label = { Text(text = "Data") }
-
                 )
-                Log.d("date", date)
                 onEventDonate(DonationEvent.SetCreatedAt(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
                 onEventDisqualify(DisqualificationEvent.SetDateStart(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
-                onEventDisqualify(DisqualificationEvent.SetDateFinish(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
-                Log.d("dateRegularFormat", dateformatted.toString())
-                Log.d("dateMillis2", Instant.parse(dateformatted.toString()).millis.toString())
-                var dateformattedTomillis = Instant.parse(dateformatted.toString()).millis
                 Icon(
                     imageVector = Icons.Filled.DateRange, contentDescription = null,
                     modifier = Modifier
@@ -113,7 +83,6 @@ fun DatePicker(
             val run = runBlocking {
                 exchangeViewModel.saveCreatedAt(Instant.parse(dateformatted.toString()).millis)
                 exchangeViewModel.saveDisqualificationDateStart(Instant.parse(dateformatted.toString()).millis)
-                exchangeViewModel.saveDisqualificationDateFinish(Instant.parse(dateformatted.toString()).millis)
             }
         }
     }

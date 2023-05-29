@@ -23,11 +23,9 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.discqualificat
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
 
 class MainActivity : ComponentActivity() {
-
     private val db by lazy {
         AppDatabase.getDatabase(applicationContext)
     }
-
     private val viewModel by viewModels<DonationViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
@@ -51,6 +49,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlooddonorandroidTheme {
                 val state by viewModel.state.collectAsState()
+                val stateDisqualify by viewModelDisqualification.state.collectAsState()
                 Navigation(state = state, onEvent = viewModel::onEvent, onEventDisqualification = viewModelDisqualification::onEventDisqualification, db = db, exchangeViewModel = ExchangeViewModel(
                     LocalContext.current)
                 )
