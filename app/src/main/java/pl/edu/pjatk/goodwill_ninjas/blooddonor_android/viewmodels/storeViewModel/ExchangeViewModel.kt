@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel
 
 import android.content.Context
 import kotlinx.coroutines.flow.first

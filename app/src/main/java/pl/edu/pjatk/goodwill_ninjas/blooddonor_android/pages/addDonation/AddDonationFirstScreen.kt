@@ -1,6 +1,7 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDonation
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -12,8 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -29,18 +28,24 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.runBlocking
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.BloodQtyInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.DatePicker
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.dropDownMenuBloodCentre
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.bloodCenter.BloodCenterViewModel
 import java.util.*
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit, onEventDisqualification: (DisqualificationEvent) -> Unit,  exchangeViewModel: ExchangeViewModel) {
+fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit, onEventDisqualification: (DisqualificationEvent) -> Unit,
+                  exchangeViewModel: ExchangeViewModel, context: Context, db: AppDatabase) {
     var scrollState = rememberScrollState()
     val imeState = rememberImeState()
     LaunchedEffect(key1 = imeState.value) {
@@ -90,7 +95,7 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                             DatePicker(onEvent, onEventDisqualification, exchangeViewModel)
                         }
                         Row {
-                            dropDownMenuBloodCentre(onEvent, exchangeViewModel)
+                            dropDownMenuBloodCentre(onEvent, exchangeViewModel, context, db)
                         }
                         Row {
                             OutlinedButton(
@@ -112,57 +117,6 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                             }
                         }
                     }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun dropDownMenuBloodCentre(onEvent: (DonationEvent) -> Unit, exchangeViewModel: ExchangeViewModel) {
-    BlooddonorandroidTheme {
-        val options = listOf(
-            "RCKiK Gdańsk",
-            "RCKiK Warszawa",
-            "RCKiK Poznań",
-            "RCKiK Kraków"
-        )
-        var isExpanded by remember {
-            mutableStateOf(false)
-        }
-        var selectedOption by remember {
-            mutableStateOf("RCKiK Gdańsk")
-        }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Box {
-                TextButton(onClick = { isExpanded = true }) {
-                    Row {
-                        Text(text = "$selectedOption", fontSize = 20.sp)
-                        Icon(
-                            Icons.Default.ArrowDropDown,
-                            contentDescription = ""
-                        )
-                    }
-                }
-                DropdownMenu(
-                    expanded = isExpanded,
-                    onDismissRequest = { isExpanded = false }) {
-                    options.forEach {
-                        DropdownMenuItem(onClick = {
-                            isExpanded = false
-                            selectedOption = it
-                        }) {
-                            Text(text = it, fontSize = 20.sp)
-
-                        }
-                    }
-                }
-                onEvent(DonationEvent.SetBloodCenter(selectedOption))
-                val run = runBlocking {
-                    exchangeViewModel.saveBloodCentre(selectedOption)
                 }
             }
         }

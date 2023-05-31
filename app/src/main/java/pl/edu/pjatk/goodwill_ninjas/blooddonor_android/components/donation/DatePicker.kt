@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation
 import android.app.DatePickerDialog
 import android.util.Log
 import androidx.compose.foundation.clickable
@@ -28,7 +28,7 @@ import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import java.util.Calendar
 

@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDonation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -41,12 +41,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodPressureInput
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodQtyInput
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.HemoglobinLevelInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.BloodPressureInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.BloodQtyInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.HemoglobinLevelInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 

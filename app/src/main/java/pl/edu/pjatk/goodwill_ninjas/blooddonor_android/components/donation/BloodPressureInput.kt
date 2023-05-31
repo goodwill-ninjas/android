@@ -1,6 +1,8 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -15,17 +17,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.runBlocking
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
 
 @Composable
-fun BloodQtyInput(
-    onEvent: (DonationEvent) -> Unit,
-    exchangeViewModel: ExchangeViewModel
-) {
+fun BloodPressureInput( onEvent: (DonationEvent) -> Unit, onDisqualificationEvent: (DisqualificationEvent)->Unit) {
     var value by remember {
-        mutableStateOf("0")
+        mutableStateOf("")
     }
     val context = LocalContext.current.applicationContext
     Column(
@@ -36,17 +34,25 @@ fun BloodQtyInput(
             onValueChange = { newText ->
                 value = newText
             },
-            label = { Text(text = "Ilość") },
-            placeholder = { Text(text = "Ilość") },
+            label = { Text(text = "Ciśnienie") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),
+            placeholder = { Text(text = "00:00") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    Toast.makeText(
+                        context,
+                        "On Search Click: value = $value",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            )
         )
-        onEvent(DonationEvent.SetAmount(value.toInt()))
-        val run = runBlocking {
-            exchangeViewModel.saveAmount(value.toInt())
-        }
+        onEvent(DonationEvent.SetBloodPressure(value))
+        onDisqualificationEvent(DisqualificationEvent.SetBloodPressure(value))
     }
 }

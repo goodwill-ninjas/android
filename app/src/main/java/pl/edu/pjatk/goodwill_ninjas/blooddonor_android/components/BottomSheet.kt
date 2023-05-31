@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
@@ -7,13 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomSheetDialog(navController: NavController) {
+fun MainBottomScreen(navController: NavController) {
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded }
@@ -24,7 +26,7 @@ fun BottomSheetDialog(navController: NavController) {
     }
     ModalBottomSheetLayout(
         sheetState = sheetState,
-        sheetContent = { BottomSheetOne(navController) },
+        sheetContent = { BottomSheet(navController) },
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
@@ -50,22 +52,27 @@ fun BottomSheetDialog(navController: NavController) {
     }
 }
 @Composable
-fun BottomSheetOne(navController: NavController) {
+fun BottomSheet(navController: NavController) {
     Column(
         modifier = Modifier.padding(32.dp)
     ) {
 
         Row {
-            addDonation(navController)
+            addDonation1(navController)
         }
         Spacer(modifier = Modifier.height(32.dp))
         Row {
-            addDiscqualification(navController)
+            addDiscqualification1(navController)
         }
     }
 }
 @Composable
-fun addDonation(navController: NavController) {
+@Preview
+fun see() {
+    MainBottomScreen(navController = NavController(LocalContext.current))
+}
+@Composable
+fun addDonation1(navController: NavController) {
     Button(onClick = {
         navController.navigate(
             Screen.AddDonationFirstScreen.route
@@ -75,7 +82,7 @@ fun addDonation(navController: NavController) {
     }
 }
 @Composable
-fun addDiscqualification(navController: NavController) {
+fun addDiscqualification1(navController: NavController) {
     Button(onClick = {
         navController.navigate(
             Screen.AddDisqualification.route

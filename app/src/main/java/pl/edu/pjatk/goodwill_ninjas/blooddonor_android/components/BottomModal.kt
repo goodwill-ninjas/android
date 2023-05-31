@@ -10,8 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.addDiscqualification1
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.addDonation1
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.addDiscqualification1
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.addDonation1
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

@@ -1,4 +1,4 @@
-package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
+package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,12 +16,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.runBlocking
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 
 @Composable
-fun DaysInput(
-    onDisqualificationEvent: (DisqualificationEvent) -> Unit,
+fun BloodQtyInput(
+    onEvent: (DonationEvent) -> Unit,
     exchangeViewModel: ExchangeViewModel
 ) {
     var value by remember {
@@ -36,7 +36,7 @@ fun DaysInput(
             onValueChange = { newText ->
                 value = newText
             },
-            label = { Text(text = "Ilość dni dyskwalifikacji") },
+            label = { Text(text = "Ilość") },
             placeholder = { Text(text = "Ilość") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),
             keyboardOptions = KeyboardOptions(
@@ -44,9 +44,9 @@ fun DaysInput(
                 imeAction = ImeAction.Next
             ),
         )
-        onDisqualificationEvent(DisqualificationEvent.SetDays(value.toInt()))
+        onEvent(DonationEvent.SetAmount(value.toInt()))
         val run = runBlocking {
-            exchangeViewModel.saveDisqualificationDays(value.toInt())
+            exchangeViewModel.saveAmount(value.toInt())
         }
     }
 }

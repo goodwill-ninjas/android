@@ -61,10 +61,4 @@ fun MainPage(name: String, navController: NavController, context: Context) {
         )
 
     }
-//    BloodCard(
-//        bloodType = stringResource(R.string.full_blood),
-//        isNextDonationCard = true,
-//        amount = 0,
-//        donationDate = LocalDateTime.of(2023, 2, 23, 0, 0)
-//    )
 }

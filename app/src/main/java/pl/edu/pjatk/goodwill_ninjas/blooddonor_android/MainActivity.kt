@@ -13,12 +13,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.room.Room
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.Disqualification
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Navigation
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.bloodCenter.BloodCenterViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.discqualification.DisqualificationViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
 
@@ -49,14 +48,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlooddonorandroidTheme {
                 val state by viewModel.state.collectAsState()
-                val stateDisqualify by viewModelDisqualification.state.collectAsState()
-                Navigation(state = state, onEvent = viewModel::onEvent, onEventDisqualification = viewModelDisqualification::onEventDisqualification, db = db, exchangeViewModel = ExchangeViewModel(
-                    LocalContext.current)
+                Navigation(
+                    state = state,
+                    onEvent = viewModel::onEvent,
+                    onEventDisqualification = viewModelDisqualification::onEventDisqualification,
+                    db = db,
+                    exchangeViewModel = ExchangeViewModel(
+                        LocalContext.current
+                    )
                 )
             }
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

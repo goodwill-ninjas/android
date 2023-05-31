@@ -17,11 +17,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualification
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDisqualification.AddDisqualificationAdvanced
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.AdvancedDonationParams
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.BottomSheetDialog
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.addDonation.WelcomeScreen
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDisqualification.AddDisqualification
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDisqualification.AddDisqualificationAdvanced
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDonation.AdvancedDonationParams
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BottomSheetDialog
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDonation.WelcomeScreen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MyBottomBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.MytopBar
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
@@ -33,7 +33,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage.SignInScr
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.profilePage.ProfilePage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.registerPage.SignUpScreen
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.storeViewModel.ExchangeViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
@@ -82,7 +82,7 @@ fun Navigation(
     val name = "Android"
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { MytopBar(name) },
+        topBar = { MytopBar(userName) },
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             if (currentRoute != "BottomModal") {
@@ -137,40 +137,6 @@ fun Navigation(
                 MyBottomBar(navController)
             }
         }
-//    Scaffold(
-//        scaffoldState = scaffoldState,
-//
-//        topBar = { MytopBar(userName) },
-//        modifier = Modifier.fillMaxSize(),
-//
-//        bottomBar = {
-//            if (currentRoute != "Login") {
-//
-//                MyBottomBar(navController)
-//            }
-//        },
-//        floatingActionButton = {
-//            if (currentRoute != "Login")
-//                FloatingActionButton(onClick = {
-//                    onEvent(DonationEvent.SetDonatedType("Krew pełna"))
-//                    onEvent(
-//                        DonationEvent.SetCreatedAt(
-//                            DateTime.parse("2012-01-10").toInstant().millis
-//                        )
-//                    )
-//                    onEvent(DonationEvent.SetAmount(450))
-//                    onEvent(DonationEvent.SaveDonation)
-//                }) {
-//                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-//                }
-//        },
-//        isFloatingActionButtonDocked = true,
-//        floatingActionButtonPosition = FabPosition.Center,
-//        bottomBar = {
-//            if (currentRoute != "BottomModal" && currentRoute != "Login") {
-//                MyBottomBar(navController)
-//            }
-//        },
     ) {
         NavHost(navController = navController, startDestination = Routes.SELF) {
             composable(route = Routes.LOGIN) {
@@ -192,7 +158,7 @@ fun Navigation(
                 BloodCentersPage(navController, context, db)
             }
             composable(route = Routes.ADD_DONATION) {
-                WelcomeScreen(navController, onEvent, onEventDisqualification, exchangeViewModel)
+                WelcomeScreen(navController, onEvent, onEventDisqualification, exchangeViewModel, context, db)
 
             }
             composable(route = Routes.BOTTOM_SHEET_DIALOG) {
