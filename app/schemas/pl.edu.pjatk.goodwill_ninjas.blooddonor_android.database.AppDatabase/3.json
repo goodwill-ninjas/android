@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "4cfab188cf660c3d74627988c0e866ff",
+    "identityHash": "7994903875931f17677e5ae4b4c77d4a",
     "entities": [
       {
         "tableName": "Donation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `companion_user_id` INTEGER, `donated_type` TEXT NOT NULL, `amount` INTEGER NOT NULL, `blood_pressure` TEXT, `hemoglobin` REAL, `details` TEXT, `created_at` INTEGER, `deleted_at` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `companion_user_id` INTEGER, `donated_type` TEXT NOT NULL, `amount` INTEGER NOT NULL, `blood_pressure` TEXT, `hemoglobin` REAL, `details` TEXT, `created_at` INTEGER, `deleted_at` INTEGER, `hand` TEXT, `blood_center` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -61,6 +61,18 @@
             "columnName": "deleted_at",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "hand",
+            "columnName": "hand",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bloodCenter",
+            "columnName": "blood_center",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -76,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4cfab188cf660c3d74627988c0e866ff')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7994903875931f17677e5ae4b4c77d4a')"
     ]
   }
 }

@@ -10,10 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-
 @Composable
 fun MytopBar(name: String) {
-
     val contextForToast = LocalContext.current.applicationContext
     TopAppBar(title = {
         Text(
@@ -23,7 +21,6 @@ fun MytopBar(name: String) {
         )
     },
         actions = {
-
             TopAppBarActionButton(
                 imageVector = Icons.Outlined.AddAlert,
                 description = "Alert"
@@ -31,8 +28,6 @@ fun MytopBar(name: String) {
                 Toast.makeText(contextForToast, "Alert", Toast.LENGTH_SHORT)
                     .show()
             }
-
-
             TopAppBarActionButton(
                 imageVector = Icons.Outlined.Share,
                 description = "Share"
@@ -40,7 +35,6 @@ fun MytopBar(name: String) {
                 Toast.makeText(contextForToast, "Share", Toast.LENGTH_SHORT)
                     .show()
             }
-
             TopAppBarActionButton(
                 imageVector = Icons.Outlined.Search,
                 description = "Search"
@@ -51,7 +45,6 @@ fun MytopBar(name: String) {
         }
     )
 }
-
 @Composable
 fun TopAppBarActionButton(
     imageVector: ImageVector,

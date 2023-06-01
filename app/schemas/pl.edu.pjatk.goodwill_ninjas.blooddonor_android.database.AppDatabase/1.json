@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4cfab188cf660c3d74627988c0e866ff",
+    "identityHash": "05bd5256266b83984730cde7597f6aca",
     "entities": [
       {
         "tableName": "Donation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `donated_type` TEXT NOT NULL, `amount` INTEGER NOT NULL, `donation_date` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `donated_type` TEXT NOT NULL, `amount` INTEGER NOT NULL, `donation_date` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -30,8 +30,8 @@
             "fieldPath": "donationDate",
             "columnName": "donation_date",
             "affinity": "INTEGER",
-            "notNull": false
-          },
+            "notNull": true
+          }
         ],
         "primaryKey": {
           "autoGenerate": true,
@@ -46,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4cfab188cf660c3d74627988c0e866ff')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '05bd5256266b83984730cde7597f6aca')"
     ]
   }
 }

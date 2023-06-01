@@ -1,7 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation
 
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
-import java.sql.Timestamp
+
 
 data class DonationState(
     val donations: List<Donation> = emptyList(),
@@ -12,5 +12,9 @@ data class DonationState(
     val hemoglobin: Double? = null,
     val details: String? = null,
     val createdAt: Long? = null,
-    val deletedAt: Long? = null
+    val deletedAt: Long? = null,
+    val hand: String? = null,
+    val bloodCenter: String? = null
 )
+
+

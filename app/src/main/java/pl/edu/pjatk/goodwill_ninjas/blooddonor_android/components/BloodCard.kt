@@ -1,6 +1,12 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components
 
-import androidx.compose.foundation.layout.*
+import android.util.Log
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -13,10 +19,8 @@ import androidx.compose.ui.unit.dp
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.BloodTypeIcon
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 @Composable
 fun BloodCard (
     bloodType: String,
