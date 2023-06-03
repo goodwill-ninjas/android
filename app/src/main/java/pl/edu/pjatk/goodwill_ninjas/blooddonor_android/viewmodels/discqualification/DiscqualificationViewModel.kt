@@ -3,15 +3,19 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.discqualifica
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationBody
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.Disqualification
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationDAO
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationParsers
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 
@@ -37,6 +41,14 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO, context: C
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DisqualificationState())
 
+    private suspend fun addDonation(donation: DonationBody, token: String) {
+        val service = DonationService()
+        coroutineScope {
+            service.successfulAddDonationResponse(donation, token)
+        }
+    }
+
+
     fun onEventDisqualification(event: DisqualificationEvent) {
         when (event) {
             is DisqualificationEvent.SaveDisqualification -> {
@@ -59,6 +71,20 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO, context: C
                 )
                 viewModelScope.launch {
                     dao.upsertDisqualification(disqualification)
+                    val donationBody = userId?.let {
+                        DonationBody(
+                            user_id = it,
+                            disqualified = true,
+                            companion_user_id = companionUserId,
+                            blood_pressure = bloodPressure,
+                            hemoglobin = hemoglobin,
+                            details = details,
+                            donated_at = DonationParsers().parseToDate(dateStart)
+                        )
+                    }
+                    if (donationBody != null) {
+                        addDonation(donationBody, token)
+                    }
                 }
                 _state.update {
                     it.copy(

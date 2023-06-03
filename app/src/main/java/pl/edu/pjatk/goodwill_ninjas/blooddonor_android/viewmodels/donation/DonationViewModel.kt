@@ -50,8 +50,6 @@ class DonationViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DonationState())
 
-    private val donations = MutableStateFlow(listOf(DonationBody()))
-
     private suspend fun addDonation(donation: DonationBody, token: String) {
         val service = DonationService()
         coroutineScope {
@@ -137,7 +135,6 @@ class DonationViewModel(
                             donated_at = DonationParsers().parseToDate(createdAt)
                         )
                     }
-                    Log.d("CurrToken", token)
                     if (donationBody != null) {
                         addDonation(donationBody, token)
                     }
