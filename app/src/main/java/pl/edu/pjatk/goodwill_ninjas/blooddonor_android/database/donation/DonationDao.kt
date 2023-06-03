@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.Flow
 interface DonationDao {
     @Query("SELECT * FROM donation")
     fun getAll(): Flow<List<Donation>>
+
+    @Query("DELETE FROM donation")
+    suspend fun deleteAll()
     @Upsert
     suspend fun upsertDonation(donation: Donation)
 }

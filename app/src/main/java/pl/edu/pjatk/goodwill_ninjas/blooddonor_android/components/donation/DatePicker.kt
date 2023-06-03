@@ -56,7 +56,7 @@ fun DatePicker(
             month,
             day
         )
-        mDatePickerDialog.datePicker.minDate = mCalendar.timeInMillis
+        mDatePickerDialog.datePicker.minDate = 0
         Box(modifier = Modifier.fillMaxWidth()) {
             Row(modifier = Modifier.align(Alignment.CenterStart)) {
                 OutlinedTextField(value = (date),

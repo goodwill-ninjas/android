@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return DonationViewModel(db.donationDao()) as T
+                    return DonationViewModel(db.donationDao(), applicationContext) as T
                 }
             }
         }
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return DisqualificationViewModel(db.disqualificationDao()) as T
+                    return DisqualificationViewModel(db.disqualificationDao(), applicationContext) as T
                 }
             }
         }
