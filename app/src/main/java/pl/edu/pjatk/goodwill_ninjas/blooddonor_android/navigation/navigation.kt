@@ -153,7 +153,7 @@ fun Navigation(
                 DonationJournal(userName, state, onEvent, db, context, userId, token, navController)
             }
             composable(route = Routes.SELF) {
-                MainPage(userName, navController, context)
+                MainPage(userName, navController, context, db)
             }
             composable(route = Routes.PROFILE) {
                 ProfilePage(navController, context, db)

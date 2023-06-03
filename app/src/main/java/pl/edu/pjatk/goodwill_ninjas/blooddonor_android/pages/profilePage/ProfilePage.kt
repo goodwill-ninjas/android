@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.first
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.carousel.Carousel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFeat
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
@@ -49,19 +50,22 @@ fun ProfilePage(navController: NavController, context: Context, db: AppDatabase)
             } else {
                 userViewModal = UserViewModel(context, token)
                 userFeatViewModel = UserFeatViewModel(context, token, db.userFeatDao())
+                userFeatViewModel.getUserFeats(token)
 
                 Button(onClick = {
                     loginViewModel.logout()
                     token = loginViewModel.getToken()
+                    navController.navigate(Routes.LOGIN)
                 }) {
                     Text(text = "Wyloguj się")
                 }
-                Button(onClick = { userFeatViewModel.getUserFeats(token) }) {
-                    Text(text = "Show Feats")
+                Spacer(modifier = Modifier.height(100.dp))
+                if (userFeatViewModel.getFeats().size > 0) {
+                    Carousel(items = userFeatViewModel.getFeats())
                 }
             })
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Token: $token")
+//            Text(text = "Token: $token")
         }
     }
 }

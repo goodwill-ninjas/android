@@ -23,6 +23,10 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.healthCheck.HealthCheckService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.login.LoginService
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.userFeat.UserFeatResponse
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.mainPageBadge.MainPageBadge
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFeat
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.JWTUtils
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.healthCheck.HealthCheckViewModel
@@ -33,12 +37,13 @@ import java.time.LocalDateTime
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun MainPage(name: String, navController: NavController, context: Context) {
+fun MainPage(name: String, navController: NavController, context: Context, db: AppDatabase) {
     val loginViewModel = LoginViewModel(context)
     val token: String = loginViewModel.getToken()
     var userViewModel: UserViewModel
     var userId = 0
-    val userFeatViewModel: UserFeatViewModel
+    var userFeatViewModel: UserFeatViewModel
+    var userFeats: List<UserFeat>
 
     val image = painterResource(id = R.drawable.droplet)
     Column(
@@ -48,17 +53,25 @@ fun MainPage(name: String, navController: NavController, context: Context) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(modifier = Modifier.padding(15.dp)) {
-            if (token.isNotEmpty() && userId != 0) {
-                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
-            }
-        }
-        BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2023, 2, 23, 0, 0))
+        Log.d("Token", token)
         if (token.isNotEmpty()) {
             userViewModel = UserViewModel(context, token)
             userId = userViewModel.getUserId()
+            userViewModel.getUser(userId, token)
+            userFeatViewModel = UserFeatViewModel(context, token, dao = db.userFeatDao())
+            userFeatViewModel.getUserFeats(token)
+            userFeats = userFeatViewModel.getFeats()
+            Log.d("Feats!", userFeats.toString())
+            Box(modifier = Modifier.padding(15.dp)) {
+                if(userFeats.isNotEmpty()) {
+                    userFeats.first { item -> item.featName == "Zasłużony Dawca Krwi" }.achievedRanks?.let { it -> MainPageBadge(featRanksNumber = it.count{it.isDigit()}) }
+                }
+                else {
+                    MainPageBadge(featRanksNumber = 0)
+                }
+            }
+            BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2,2,12,0,0))
             Button(onClick = {
-                userViewModel.getUser(userId, token)
             }) {
                 Text(text = "HealthCheck")
             }

@@ -19,13 +19,13 @@ class UserFeatViewModel(context: Context, token: String, private val dao: UserFe
 
     private val feats = dao.getAll()
 
-    private suspend fun getFeats(): List<UserFeat> {
-        return feats.first()
+    fun getFeats(): List<UserFeat> = runBlocking {
+        return@runBlocking feats.first()
     }
 
     fun getUserFeats(token: String) = runBlocking {
         val service = UserFeatService()
-            dao.deleteAll()
+        dao.deleteAll()
         coroutineScope {
             val userFeats = service.successfulUserFeatResponse(id, token);
             if (userFeats != null) {
