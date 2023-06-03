@@ -12,5 +12,6 @@ data class DonationBody(
     @JsonProperty("hemoglobin") val hemoglobin: String? = null,
     @JsonProperty("arm") val arm: String? = null,
     @JsonProperty("details") val details: String? = null,
-    @JsonProperty("donated_at") val donated_at: String? = null
+    @JsonProperty("donated_at") val donated_at: String? = null,
+    @JsonProperty("disqualification_days") val disqualification_days: Int? = null
 )

@@ -15,5 +15,6 @@ data class DonationResponse(
     @JsonProperty("details") val details: String? = null,
     @JsonProperty("donated_at") val donatedAt: String? = null,
     @JsonProperty("created_at") val createdAt: String? = null,
-    @JsonProperty("deleted_at") val deletedAt: String? = null
+    @JsonProperty("deleted_at") val deletedAt: String? = null,
+    @JsonProperty("disqualification_days") val disqualificationDays: Int? = null
 )

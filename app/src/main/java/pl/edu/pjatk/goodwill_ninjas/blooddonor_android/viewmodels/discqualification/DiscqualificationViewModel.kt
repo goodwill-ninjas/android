@@ -79,7 +79,8 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO, context: C
                             blood_pressure = bloodPressure,
                             hemoglobin = hemoglobin,
                             details = details,
-                            donated_at = DonationParsers().parseToDate(dateStart)
+                            donated_at = DonationParsers().parseToDate(dateStart),
+                            disqualification_days = days
                         )
                     }
                     if (donationBody != null) {
