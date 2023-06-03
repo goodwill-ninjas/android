@@ -13,4 +13,6 @@ sealed interface DonationEvent {
     data class SetDetails(val details: String): DonationEvent
     data class SetCreatedAt(val createdAt: Long): DonationEvent
     data class SetDeletedAt(val deletedAt: Long): DonationEvent
+    data class SetHand(val hand: String): DonationEvent
+    data class SetBloodCenter(val bloodCenter: String): DonationEvent
 }

@@ -15,5 +15,7 @@ data class Donation(
     @ColumnInfo(name = "hemoglobin") val hemoglobin: Double?,
     @ColumnInfo(name = "details") val details: String?,
     @ColumnInfo(name = "created_at") val createdAt: Long?,
-    @ColumnInfo(name = "deleted_at") val deletedAt: Long?
+    @ColumnInfo(name = "deleted_at") val deletedAt: Long?,
+    @ColumnInfo(name = "hand") val hand: String?,
+    @ColumnInfo(name = "blood_center") val bloodCenter: String?
     )
