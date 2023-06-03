@@ -18,5 +18,5 @@ interface DonationApi {
     suspend fun addDonation(
         @Header("Authorization") token: String,
         @Body donationBody: DonationBody
-    ): Response<Int>?
+    ): Response<DonationResponse>?
 }

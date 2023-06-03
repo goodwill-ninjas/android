@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.donationJournal
 
+import android.content.Context
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.scrollable
@@ -10,13 +11,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.room.Database
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.UserCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.nextDonation.NextDonation
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
@@ -25,19 +33,38 @@ import java.util.*
 fun DonationJournal (
     name: String,
     state: DonationState,
-    onEvent: (DonationEvent) -> Unit
+    onEvent: (DonationEvent) -> Unit,
+    db: AppDatabase,
+    context: Context,
+    userId: Int,
+    token: String,
+    navController: NavController
 ) {
-    val scrollableState = rememberScrollState()
+    val donationViewModel = DonationViewModel(dao = db.donationDao(), context = context)
+
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(15.dp)
     ) {
-        UserCard(name = name, badgeLevel = 1, donatedBlood = 12500)
-        Spacer(modifier = Modifier.height(20.dp))
-        Column(Modifier.verticalScroll(scrollableState)) {
-            state.donations.forEach {donation ->
-                BloodCard(bloodType = donation.donatedType , isNextDonationCard = false, amount = donation.amount, donationDate = LocalDateTime.ofInstant(
-                    donation.createdAt?.let { Instant.ofEpochMilli(it) }, TimeZone.getTimeZone("CEST").toZoneId()))
+        if(token.isEmpty()) {
+            navController.navigate(Routes.LOGIN)
+        } else {
+            donationViewModel.getDonations(userId, token)
+            val scrollableState = rememberScrollState()
+            UserCard(name = name, badgeLevel = 1, donatedBlood = 12500)
+            Spacer(modifier = Modifier.height(20.dp))
+            Column(Modifier.verticalScroll(scrollableState)) {
+                state.donations.sortedBy { item -> item.createdAt }
+                state.donations.forEach { donation ->
+                    BloodCard(bloodType = donation.donatedType,
+                        isNextDonationCard = false,
+                        amount = donation.amount,
+                        donationDate = LocalDateTime.ofInstant(
+                            donation.createdAt?.let { Instant.ofEpochMilli(it) },
+                            TimeZone.getTimeZone("CEST").toZoneId()
+                        )
+                    )
+                }
             }
         }
     }

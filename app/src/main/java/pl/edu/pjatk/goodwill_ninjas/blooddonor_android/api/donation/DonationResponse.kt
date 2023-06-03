@@ -14,5 +14,6 @@ data class DonationResponse(
     @JsonProperty("arm") val arm: String? = null,
     @JsonProperty("details") val details: String? = null,
     @JsonProperty("donated_at") val donatedAt: String? = null,
-    @JsonProperty("created_at") val createdAt: String? = null
+    @JsonProperty("created_at") val createdAt: String? = null,
+    @JsonProperty("deleted_at") val deletedAt: String? = null
 )

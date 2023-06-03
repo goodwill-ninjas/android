@@ -1,8 +1,10 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -11,6 +13,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.joda.time.Instant
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationBody
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
@@ -18,10 +22,12 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donatio
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class DonationViewModel(
     private val dao: DonationDao,
-    context: Context
+    context: Context,
 ) : ViewModel() {
     private val loginViewModel = LoginViewModel(context)
     private val token = loginViewModel.getToken()
@@ -53,13 +59,34 @@ class DonationViewModel(
         }
     }
 
-    suspend fun getDonations(userId: Int, token: String) {
+    fun getDonations(userId: Int, token: String) = runBlocking {
         val service = DonationService()
         coroutineScope {
             val donations = service.successfulDonationsResponse(userId, token)
             if (donations != null) {
                 if (donations.size != dao.getAll().first().size) {
-
+                    dao.deleteAll()
+                    for (item in donations) {
+                        val donation = item.amount?.let {
+                            Donation(
+                                companionUserId = item.companionUserId,
+                                donatedType = DonationParsers().parseDonationType(item.donatedType.toString()),
+                                amount = it,
+                                bloodPressure = item.bloodPressure,
+                                hemoglobin = item.hemoglobin,
+                                details = item.details,
+                                createdAt = Instant.parse(item.donatedAt).millis,
+                                deletedAt = null,
+                                hand = item.arm,
+                                bloodCenter = null
+                            )
+                        }
+                        if (donation != null) {
+                            runBlocking {
+                                dao.upsertDonation(donation)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -104,12 +131,13 @@ class DonationViewModel(
                             donated_type = DonationParsers().parseDonationType(donatedType),
                             amount = amount,
                             blood_pressure = bloodPressure,
-                            hemoglobin = hemoglobin,
-                            arm = hand,
+                            hemoglobin = DonationParsers().parseHemoglobin(hemoglobin),
+                            arm = DonationParsers().parseHand(hand),
                             details = details,
                             donated_at = DonationParsers().parseToDate(createdAt)
                         )
                     }
+                    Log.d("CurrToken", token)
                     if (donationBody != null) {
                         addDonation(donationBody, token)
                     }

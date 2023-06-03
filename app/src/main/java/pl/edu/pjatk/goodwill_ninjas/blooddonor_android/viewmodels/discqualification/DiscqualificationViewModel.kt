@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.discqualification
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,8 +12,23 @@ import kotlinx.coroutines.launch
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.Disqualification
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationDAO
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 
-class DisqualificationViewModel(private val dao: DisqualificationDAO) : ViewModel() {
+class DisqualificationViewModel(private val dao: DisqualificationDAO, context: Context) : ViewModel() {
+    private val loginViewModel = LoginViewModel(context)
+    private val token = loginViewModel.getToken()
+
+    private lateinit var userViewModel: UserViewModel
+    var userId: Int? = null
+
+    init {
+        if (token.isNotEmpty()) {
+            userViewModel = UserViewModel(context, token)
+            userId = userViewModel.getUserId()
+        }
+    }
+
     private val _state = MutableStateFlow(DisqualificationState())
     private val _disqualifications = dao.getAll()
     val state = combine(_state, _disqualifications) { state, disqualifications ->

@@ -15,11 +15,11 @@ class DonationService {
         return donationResponse.body()
     }
 
-    suspend fun successfulAddDonationResponse(donationBody: DonationBody, token: String): Int? {
+    suspend fun successfulAddDonationResponse(donationBody: DonationBody, token: String): DonationResponse? {
         val addDonationResponse = api.addDonation("Bearer $token", donationBody)
         val successful = addDonationResponse?.isSuccessful
         if (addDonationResponse != null) {
-            return addDonationResponse.code()
+            return addDonationResponse.body()
         }
         return null
     }

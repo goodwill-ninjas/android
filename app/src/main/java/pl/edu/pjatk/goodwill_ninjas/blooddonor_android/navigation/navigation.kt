@@ -94,7 +94,10 @@ fun Navigation(
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                 }
                 if (currentRoute.equals("Add_donation")) {
-                    FloatingActionButton(onClick = { onEvent(DonationEvent.SaveDonation) }, backgroundColor = Color.Green) {
+                    FloatingActionButton(onClick = {
+                        onEvent(DonationEvent.SaveDonation)
+                        navController.navigate(Routes.SELF)
+                    }, backgroundColor = Color.Green) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
                 }
@@ -105,6 +108,7 @@ fun Navigation(
                         onEvent(DonationEvent.SetDonatedType(exchangeViewModel.getDonationType()))
                         onEvent(DonationEvent.SetBloodCenter(exchangeViewModel.getBloodCentre()))
                         onEvent(DonationEvent.SaveDonation)
+                        navController.navigate(Routes.SELF)
                     }, backgroundColor = Color.Green) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
@@ -112,6 +116,7 @@ fun Navigation(
                 if (currentRoute.equals("Add_disqualification")) {
                     FloatingActionButton(onClick = {
                         onEventDisqualification(DisqualificationEvent.SaveDisqualification)
+                        navController.navigate(Routes.SELF)
                     }, backgroundColor = Color.Green) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
@@ -125,6 +130,7 @@ fun Navigation(
                             )
                         )
                         onEventDisqualification(DisqualificationEvent.SaveDisqualification)
+                        navController.navigate(Routes.SELF)
                     }, backgroundColor = Color.Green) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                     }
@@ -144,7 +150,7 @@ fun Navigation(
                 SignInScreen(navController, context)
             }
             composable(route = Routes.JOURNAL) {
-                DonationJournal(userName, state, onEvent)
+                DonationJournal(userName, state, onEvent, db, context, userId, token, navController)
             }
             composable(route = Routes.SELF) {
                 MainPage(userName, navController, context)

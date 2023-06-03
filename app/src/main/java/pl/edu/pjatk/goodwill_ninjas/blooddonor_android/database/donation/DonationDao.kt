@@ -11,7 +11,7 @@ interface DonationDao {
     fun getAll(): Flow<List<Donation>>
 
     @Query("DELETE FROM donation")
-    fun deleteAll(): Flow<List<Donation>>
+    suspend fun deleteAll()
     @Upsert
     suspend fun upsertDonation(donation: Donation)
 }
