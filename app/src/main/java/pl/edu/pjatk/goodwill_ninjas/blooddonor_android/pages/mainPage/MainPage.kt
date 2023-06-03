@@ -28,6 +28,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.JWTUtils
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.healthCheck.HealthCheckViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.userFeat.UserFeatViewModel
 import java.time.LocalDateTime
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -37,6 +38,7 @@ fun MainPage(name: String, navController: NavController, context: Context) {
     val token: String = loginViewModel.getToken()
     var userViewModel: UserViewModel
     var userId = 0
+    val userFeatViewModel: UserFeatViewModel
 
     val image = painterResource(id = R.drawable.droplet)
     Column(
@@ -47,7 +49,9 @@ fun MainPage(name: String, navController: NavController, context: Context) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = Modifier.padding(15.dp)) {
-            Image(painter = image, contentDescription = null, Modifier.height(250.dp))
+            if (token.isNotEmpty() && userId != 0) {
+                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
+            }
         }
         BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2023, 2, 23, 0, 0))
         if (token.isNotEmpty()) {
