@@ -1,21 +1,40 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationBody
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationDao
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 
 class DonationViewModel(
-    private val dao: DonationDao
+    private val dao: DonationDao,
+    context: Context
 ) : ViewModel() {
+    private val loginViewModel = LoginViewModel(context)
+    private val token = loginViewModel.getToken()
 
+    private lateinit var userViewModel: UserViewModel
+    var userId: Int? = null
+
+    init {
+        if (token.isNotEmpty()) {
+            userViewModel = UserViewModel(context, token)
+            userId = userViewModel.getUserId()
+        }
+    }
 
     private val _state = MutableStateFlow(DonationState())
     private val _donations = dao.getAll()
@@ -24,6 +43,27 @@ class DonationViewModel(
             donations = donations
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DonationState())
+
+    private val donations = MutableStateFlow(listOf(DonationBody()))
+
+    private suspend fun addDonation(donation: DonationBody, token: String) {
+        val service = DonationService()
+        coroutineScope {
+            service.successfulAddDonationResponse(donation, token)
+        }
+    }
+
+    suspend fun getDonations(userId: Int, token: String) {
+        val service = DonationService()
+        coroutineScope {
+            val donations = service.successfulDonationsResponse(userId, token)
+            if (donations != null) {
+                if (donations.size != dao.getAll().first().size) {
+
+                }
+            }
+        }
+    }
 
     fun onEvent(event: DonationEvent) {
         when (event) {
@@ -56,6 +96,23 @@ class DonationViewModel(
                 )
                 viewModelScope.launch {
                     dao.upsertDonation(donation)
+                    val donationBody = userId?.let {
+                        DonationBody(
+                            user_id = it,
+                            disqualified = false,
+                            companion_user_id = companionUserId,
+                            donated_type = DonationParsers().parseDonationType(donatedType),
+                            amount = amount,
+                            blood_pressure = bloodPressure,
+                            hemoglobin = hemoglobin,
+                            arm = hand,
+                            details = details,
+                            donated_at = DonationParsers().parseToDate(createdAt)
+                        )
+                    }
+                    if (donationBody != null) {
+                        addDonation(donationBody, token)
+                    }
                 }
                 _state.update {
                     it.copy(

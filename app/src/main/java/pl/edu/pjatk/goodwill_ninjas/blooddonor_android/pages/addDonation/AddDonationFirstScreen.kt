@@ -30,15 +30,14 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.*
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.BloodQtyInput
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.DatePicker
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.dropDownMenuBloodCentre
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.DropDownMenuBloodCentre
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.ui.theme.BlooddonorandroidTheme
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.bloodCenter.BloodCenterViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import java.util.*
 
 
@@ -95,7 +94,7 @@ fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit
                             DatePicker(onEvent, onEventDisqualification, exchangeViewModel)
                         }
                         Row {
-                            dropDownMenuBloodCentre(onEvent, exchangeViewModel, context, db)
+                            DropDownMenuBloodCentre(onEvent, exchangeViewModel, context, db)
                         }
                         Row {
                             OutlinedButton(
@@ -141,8 +140,7 @@ fun dropDownMenuDonationType(onEvent: (DonationEvent) -> Unit, exchangeViewModel
         "Krew pełna",
         "Osocze",
         "Płytki krwi",
-        "Krwinki czerwone",
-        "Krwinki białe"
+        "Krwinki czerwone"
     )
     var isExpanded by remember {
         mutableStateOf(false)
@@ -183,8 +181,6 @@ fun dropDownMenuDonationType(onEvent: (DonationEvent) -> Unit, exchangeViewModel
                         childOptions += "250"
                     } else if (selectedOption.equals("Krwinki czerwone")) {
                         childOptions += "600"
-                    } else if (selectedOption.equals("Krwinki białe")) {
-                        childOptions += "200"
                     } else if (selectedOption.equals("Osocze")) {
                         childOptions += "650"
                     }

@@ -30,7 +30,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.bloodCenter.Bl
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 
 @Composable
-fun dropDownMenuBloodCentre(
+fun DropDownMenuBloodCentre(
     onEvent: (DonationEvent) -> Unit,
     exchangeViewModel: ExchangeViewModel,
     context: Context, db: AppDatabase
@@ -39,9 +39,9 @@ fun dropDownMenuBloodCentre(
     val loginViewModel = LoginViewModel(context)
     val token = loginViewModel.getToken()
     bloodCenterViewModel = BloodCenterViewModel(context, token, db.bloodCenterDao())
-     var bc = bloodCenterViewModel.getBloodCenters(token)
+    val bc = bloodCenterViewModel.getBloodCenters(token)
     val bloodCenters = runBlocking {
-        bloodCenterViewModel.getBloodCenters()
+        bloodCenterViewModel.getBloodCenters().map { item -> item.name }
     }
     Log.d("bc", bc.toString())
     BlooddonorandroidTheme {
@@ -64,7 +64,7 @@ fun dropDownMenuBloodCentre(
             Box {
                 TextButton(onClick = { isExpanded = true }) {
                     Row {
-                        Text(text = "$selectedOption", fontSize = 20.sp)
+                        Text(text = selectedOption, fontSize = 20.sp)
                         Icon(
                             Icons.Default.ArrowDropDown,
                             contentDescription = ""
@@ -77,9 +77,13 @@ fun dropDownMenuBloodCentre(
                     bloodCenters.forEach {
                         DropdownMenuItem(onClick = {
                             isExpanded = false
-                            selectedOption = it.toString()
+                            if (it != null) {
+                                selectedOption = it
+                            }
                         }) {
-                            Text(text = it.toString(), fontSize = 20.sp)
+                            if (it != null) {
+                                Text(text = it, fontSize = 20.sp)
+                            }
 
                         }
                     }
