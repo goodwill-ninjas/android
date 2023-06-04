@@ -13,7 +13,8 @@ data class UserResponse (
     @JsonProperty("avatar_id") val avatarId: Int? = 0,
     @JsonProperty("has_verified_email") val hasVerifiedEmail: Boolean? = false,
     @JsonProperty("created_at") val createdAt: String? = "",
-    @JsonProperty("expDetails") val expDetails: ExpDetails? = ExpDetails()
+    @JsonProperty("exp_details") val exp_details: ExpDetails? = ExpDetails(),
+    @JsonProperty("can_donate_after") val can_donate_after: String? = ""
         )
 
 data class Settings (
@@ -28,7 +29,7 @@ data class Settings (
 
 data class ExpDetails (
     @JsonProperty("level") val level: Int = 0,
-    @JsonProperty("currentExperience") val currentExperience: Int? = 0,
-    @JsonProperty("minExperience") val minExperience: Int? = 0,
-    @JsonProperty("maxExperience") val maxExperience: Int? = 0
+    @JsonProperty("current_experience") val current_experience: Int? = 0,
+    @JsonProperty("min_experience") val min_experience: Int? = 0,
+    @JsonProperty("max_experience") val max_experience: Int? = 0
         )

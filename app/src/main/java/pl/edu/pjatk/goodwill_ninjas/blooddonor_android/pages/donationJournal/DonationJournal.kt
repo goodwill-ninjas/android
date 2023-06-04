@@ -10,11 +10,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.room.Database
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.user.UserResponse
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.UserCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
@@ -25,6 +29,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
@@ -41,6 +46,8 @@ fun DonationJournal (
     navController: NavController
 ) {
     val donationViewModel = DonationViewModel(dao = db.donationDao(), context = context)
+    lateinit var userViewModel: UserViewModel
+    var user: UserResponse
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -50,9 +57,15 @@ fun DonationJournal (
             navController.navigate(Routes.LOGIN)
         } else {
             donationViewModel.getDonations(userId, token)
+            userViewModel = UserViewModel(context, token)
+            runBlocking {
+                userViewModel.getUser(userId, token)
+                user = userViewModel.state.value
+            }
             val scrollableState = rememberScrollState()
-            UserCard(name = name, badgeLevel = 1, donatedBlood = 12500)
+            UserCard(user, context)
             Spacer(modifier = Modifier.height(20.dp))
+            Text(text = "Historia Donacji", fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Column(Modifier.verticalScroll(scrollableState)) {
                 state.donations.sortedBy { item -> item.createdAt }
                 state.donations.forEach { donation ->
@@ -65,6 +78,9 @@ fun DonationJournal (
                         )
                     )
                 }
+            }
+            if (state.donations.isEmpty()) {
+                Text(text = "Nie dodałeś jeszcze donacji. Oddaj krew już dziś!")
             }
         }
     }

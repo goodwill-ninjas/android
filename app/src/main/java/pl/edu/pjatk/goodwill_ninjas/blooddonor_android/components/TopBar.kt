@@ -19,30 +19,7 @@ fun MytopBar(name: String) {
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center
         )
-    },
-        actions = {
-            TopAppBarActionButton(
-                imageVector = Icons.Outlined.AddAlert,
-                description = "Alert"
-            ) {
-                Toast.makeText(contextForToast, "Alert", Toast.LENGTH_SHORT)
-                    .show()
-            }
-            TopAppBarActionButton(
-                imageVector = Icons.Outlined.Share,
-                description = "Share"
-            ) {
-                Toast.makeText(contextForToast, "Share", Toast.LENGTH_SHORT)
-                    .show()
-            }
-            TopAppBarActionButton(
-                imageVector = Icons.Outlined.Search,
-                description = "Search"
-            ) {
-                Toast.makeText(contextForToast, "Search", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
+    }
     )
 }
 @Composable

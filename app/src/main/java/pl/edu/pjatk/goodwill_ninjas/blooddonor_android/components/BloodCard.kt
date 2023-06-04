@@ -52,10 +52,11 @@ fun BloodCard (
                 if (isNextDonationCard) {
                     Box {
                         Text(
+                            if(bloodDonation.calculateNextDonation() < 1)
                             stringResource(
                                 id = R.string.next_donation,
                                 bloodDonation.calculateNextDonation()
-                            )
+                            ) else stringResource(id = R.string.next_donation_now)
                         )
                     }
                 }
