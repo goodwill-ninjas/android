@@ -62,11 +62,14 @@ fun MainPage(name: String, navController: NavController, context: Context, db: A
                 }
             }
             if (user.username != null) {
+                val nextDonationDate: LocalDateTime =
+                    if (user.can_donate_after == null) LocalDateTime.now()
+                    else LocalDateTime.parse(user.can_donate_after, DateTimeFormatter.ISO_DATE_TIME)
                 BloodCard(
                     bloodType = stringResource(R.string.full_blood),
                     isNextDonationCard = true,
                     amount = 0,
-                    donationDate = LocalDateTime.parse(user.can_donate_after, DateTimeFormatter.ISO_DATE_TIME)
+                    donationDate = nextDonationDate
                 )
             }
         }
