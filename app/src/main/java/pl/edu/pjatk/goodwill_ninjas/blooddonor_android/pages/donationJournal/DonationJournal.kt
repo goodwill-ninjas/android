@@ -14,7 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.room.Database
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.user.UserResponse
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.UserCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.Donation
@@ -25,6 +27,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.DonationType
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationViewModel
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.*
@@ -41,6 +44,8 @@ fun DonationJournal (
     navController: NavController
 ) {
     val donationViewModel = DonationViewModel(dao = db.donationDao(), context = context)
+    lateinit var userViewModel: UserViewModel
+    var user: UserResponse
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -50,8 +55,13 @@ fun DonationJournal (
             navController.navigate(Routes.LOGIN)
         } else {
             donationViewModel.getDonations(userId, token)
+            userViewModel = UserViewModel(context, token)
+            runBlocking {
+                userViewModel.getUser(userId, token)
+                user = userViewModel.state.value
+            }
             val scrollableState = rememberScrollState()
-            UserCard(name = name, badgeLevel = 1, donatedBlood = 12500)
+            UserCard(user, context)
             Spacer(modifier = Modifier.height(20.dp))
             Column(Modifier.verticalScroll(scrollableState)) {
                 state.donations.sortedBy { item -> item.createdAt }

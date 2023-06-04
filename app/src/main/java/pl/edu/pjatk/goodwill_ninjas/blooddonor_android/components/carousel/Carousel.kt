@@ -12,10 +12,10 @@ fun Carousel(
     items: List<UserFeat>,
     modifier: Modifier = Modifier
 ) {
-    val listState = rememberLazyListState(Int.MAX_VALUE/2)
+    val listState = rememberLazyListState(0)
     LazyRow( state = listState, modifier = modifier) {
         items(
-            count = Int.MAX_VALUE,
+            count = items.size,
             itemContent = {
                 items.forEach {item ->
                     BadgeCard(item)

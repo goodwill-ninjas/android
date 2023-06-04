@@ -23,6 +23,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.healthCheck.HealthCheckService
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.login.LoginService
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.user.UserResponse
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.userFeat.UserFeatResponse
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.mainPageBadge.MainPageBadge
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
@@ -34,6 +35,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginVie
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.userFeat.UserFeatViewModel
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -44,8 +46,8 @@ fun MainPage(name: String, navController: NavController, context: Context, db: A
     var userId = 0
     var userFeatViewModel: UserFeatViewModel
     var userFeats: List<UserFeat>
+    var user: UserResponse
 
-    val image = painterResource(id = R.drawable.droplet)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,25 +63,25 @@ fun MainPage(name: String, navController: NavController, context: Context, db: A
             userFeatViewModel = UserFeatViewModel(context, token, dao = db.userFeatDao())
             userFeatViewModel.getUserFeats(token)
             userFeats = userFeatViewModel.getFeats()
-            Log.d("Feats!", userFeats.toString())
+            runBlocking {
+                userViewModel.getUser(userId, token)
+                user = userViewModel.state.value
+            }
             Box(modifier = Modifier.padding(15.dp)) {
-                if(userFeats.isNotEmpty()) {
+                if(userFeats.isNotEmpty() && userFeats.any{ item -> item.featName == "Zasłużony Dawca Krwi" }) {
                     userFeats.first { item -> item.featName == "Zasłużony Dawca Krwi" }.achievedRanks?.let { it -> MainPageBadge(featRanksNumber = it.count{it.isDigit()}) }
                 }
                 else {
                     MainPageBadge(featRanksNumber = 0)
                 }
             }
-            BloodCard(bloodType = stringResource(R.string.full_blood), isNextDonationCard = true, amount = 0, donationDate = LocalDateTime.of(2,2,12,0,0))
-            Button(onClick = {
-            }) {
-                Text(text = "HealthCheck")
-            }
-            Button(onClick = {
-                Log.d("UserState", userViewModel.state.value.toString())
-                Log.d("TokenBody", token)
-            }) {
-                Text(text = "Log userState")
+            if (user.username != null) {
+                BloodCard(
+                    bloodType = stringResource(R.string.full_blood),
+                    isNextDonationCard = true,
+                    amount = 0,
+                    donationDate = LocalDateTime.parse(user.can_donate_after, DateTimeFormatter.ISO_DATE_TIME)
+                )
             }
         }
     }

@@ -27,8 +27,7 @@ fun BadgeCard(
     userFeat: UserFeat
 ) {
     Card(
-        modifier = Modifier.padding(5.dp),
-        elevation = 5.dp
+        modifier = Modifier.padding(5.dp)
     ) {
         Row(horizontalArrangement = Arrangement.Center) {
             Image(painter = painterResource(R.drawable.odznaka_1), contentDescription = null, modifier = Modifier.width(30.dp).padding(2.dp))
