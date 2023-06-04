@@ -16,6 +16,7 @@ fun Carousel(
     LazyRow( state = listState, modifier = modifier) {
         items(
             count = items.size,
+
             itemContent = {
                 items.forEach {item ->
                     BadgeCard(item)
