@@ -17,6 +17,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.BloodCard
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.mainPageBadge.MainPageBadge
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.AppDatabase
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFeat
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.userFeat.UserFeatViewModel
@@ -72,6 +73,8 @@ fun MainPage(name: String, navController: NavController, context: Context, db: A
                     donationDate = nextDonationDate
                 )
             }
+        } else {
+            navController.navigate(Routes.PROFILE)
         }
     }
 }

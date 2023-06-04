@@ -10,7 +10,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.room.Database
 import kotlinx.coroutines.coroutineScope
@@ -63,6 +65,7 @@ fun DonationJournal (
             val scrollableState = rememberScrollState()
             UserCard(user, context)
             Spacer(modifier = Modifier.height(20.dp))
+            Text(text = "Historia Donacji", fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Column(Modifier.verticalScroll(scrollableState)) {
                 state.donations.sortedBy { item -> item.createdAt }
                 state.donations.forEach { donation ->
@@ -75,6 +78,9 @@ fun DonationJournal (
                         )
                     )
                 }
+            }
+            if (state.donations.isEmpty()) {
+                Text(text = "Nie dodałeś jeszcze donacji. Oddaj krew już dziś!")
             }
         }
     }
