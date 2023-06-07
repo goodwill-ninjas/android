@@ -9,10 +9,6 @@ class NextDonation(
     override val type: String,
 ) : NextDonationInterface {
     fun calculateNextDonation(): Long {
-        return if (this.type == DonationType.FULL) {
-            ChronoUnit.DAYS.between(LocalDateTime.now(), date.plusMonths(3))
-        } else {
-            ChronoUnit.DAYS.between(LocalDateTime.now(), date.plusMonths(2))
-        }
+        return ChronoUnit.DAYS.between(LocalDateTime.now(), date)
     }
 }

@@ -46,13 +46,13 @@ fun BloodCard (
                     )
                     Column(modifier = Modifier.padding(5.dp)) {
                         Text(bloodType, fontWeight = FontWeight(700))
-                        Text(text = donationDate.format(DateTimeFormatter.ISO_DATE).toString())
+                        Text(text = "Następna donacja: ${donationDate.format(DateTimeFormatter.ISO_DATE).toString()}")
                     }
                 }
                 if (isNextDonationCard) {
                     Box {
                         Text(
-                            if(bloodDonation.calculateNextDonation() < 1)
+                            if(bloodDonation.calculateNextDonation() > 1)
                             stringResource(
                                 id = R.string.next_donation,
                                 bloodDonation.calculateNextDonation()
