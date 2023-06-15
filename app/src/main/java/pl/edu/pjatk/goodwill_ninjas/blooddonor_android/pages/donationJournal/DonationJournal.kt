@@ -54,7 +54,7 @@ fun DonationJournal (
         .padding(15.dp)
     ) {
         if(token.isEmpty()) {
-            navController.navigate(Routes.LOGIN)
+            navController.navigate(Routes.PROFILE)
         } else {
             donationViewModel.getDonations(userId, token)
             userViewModel = UserViewModel(context, token)

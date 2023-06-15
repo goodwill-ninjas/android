@@ -68,7 +68,6 @@ fun DatePicker(
                     readOnly = true,
                     label = { Text(text = "Data") }
                 )
-                onEventDonate(DonationEvent.SetCreatedAt(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
                 onEventDisqualify(DisqualificationEvent.SetDateStart(Instant.parse(LocalDate.parse(date , firstDateFormat).toString()).millis))
                 Icon(
                     imageVector = Icons.Filled.DateRange, contentDescription = null,
@@ -80,7 +79,7 @@ fun DatePicker(
                         }
                 )
             }
-            val run = runBlocking {
+            runBlocking {
                 exchangeViewModel.saveCreatedAt(Instant.parse(dateformatted.toString()).millis)
                 exchangeViewModel.saveDisqualificationDateStart(Instant.parse(dateformatted.toString()).millis)
             }

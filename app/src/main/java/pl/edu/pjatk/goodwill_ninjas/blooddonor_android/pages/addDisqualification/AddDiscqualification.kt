@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDisqualification
 
+import android.util.Log
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -47,12 +48,13 @@ fun AddDisqualification(
 ) {
     val scaffoldState = rememberScaffoldState()
     val imeState = rememberImeState()
-    var scrollState = rememberScrollState()
+    val scrollState = rememberScrollState()
     LaunchedEffect(key1 = imeState.value) {
         if (imeState.value) {
             scrollState.animateScrollTo(scrollState.maxValue, tween(300))
         }
     }
+    Log.d("ime", imeState.toString())
     Scaffold(
         scaffoldState = scaffoldState,
     ) {

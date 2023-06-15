@@ -1,5 +1,6 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.disqualification
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
@@ -34,8 +35,8 @@ fun DaysInput(
         OutlinedTextField(
             value = value,
             onValueChange = { newText ->
-                value = newText
-            },
+                value = newText.ifEmpty { 0.toString() }
+                            },
             label = { Text(text = "Ilość dni dyskwalifikacji") },
             placeholder = { Text(text = "Ilość") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),
@@ -45,8 +46,9 @@ fun DaysInput(
             ),
         )
         onDisqualificationEvent(DisqualificationEvent.SetDays(value.toInt()))
-        val run = runBlocking {
+        runBlocking {
             exchangeViewModel.saveDisqualificationDays(value.toInt())
+            Log.d("exchange", exchangeViewModel.getDisqualificationDays().toString())
         }
     }
 }

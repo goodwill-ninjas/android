@@ -31,8 +31,10 @@ fun ProfilePage (
     db: AppDatabase
 ) {
     val loginViewModel = LoginViewModel(context)
-    
-    var token = loginViewModel.getToken()
+    var token: String
+    runBlocking {
+        token = loginViewModel.getToken()
+    }
     var userViewModal: UserViewModel
     var userFeatViewModel: UserFeatViewModel
     var userId = 0

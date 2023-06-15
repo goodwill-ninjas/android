@@ -84,7 +84,6 @@ fun Navigation(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val scaffoldState = rememberScaffoldState()
-    val name = "Android"
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { MytopBar(userName) },
@@ -93,7 +92,6 @@ fun Navigation(
             if (currentRoute != "BottomModal" && currentRoute != Routes.LOGIN) {
                 FloatingActionButton(onClick = {
                     navController.navigate(Screen.BottomModal.route)
-                    Log.i("message", "FAB starting page")
                 }) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
                 }
@@ -119,6 +117,12 @@ fun Navigation(
                 }
                 if (currentRoute.equals("Add_disqualification")) {
                     FloatingActionButton(onClick = {
+                        onEventDisqualification(DisqualificationEvent.SetDateStart(exchangeViewModel.getDisqualificationDateStart()))
+                        onEventDisqualification(
+                            DisqualificationEvent.SetDays(
+                                exchangeViewModel.getDisqualificationDays()
+                            )
+                        )
                         onEventDisqualification(DisqualificationEvent.SaveDisqualification)
                         navController.navigate(Routes.SELF)
                     }, backgroundColor = Color.Green) {
@@ -144,7 +148,7 @@ fun Navigation(
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
-            if (currentRoute != "BottomModal" && currentRoute != "Login") {
+            if (currentRoute != "BottomModal" && currentRoute != Routes.LOGIN && currentRoute != Routes.REGISTER) {
                 MyBottomBar(navController)
             }
         }
