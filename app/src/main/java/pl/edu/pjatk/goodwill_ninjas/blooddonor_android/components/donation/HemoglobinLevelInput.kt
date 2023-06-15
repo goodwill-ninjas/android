@@ -2,12 +2,14 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -25,11 +27,12 @@ fun HemoglobinLevelInput(onEvent: (DonationEvent) -> Unit, onDisqualificationEve
     val context = LocalContext.current.applicationContext
     Column(
         horizontalAlignment = Alignment.Start,
+        modifier = Modifier.fillMaxWidth()
     ) {
         OutlinedTextField(
             value = value,
             onValueChange = { newText ->
-                value = newText
+                value = newText.ifEmpty { 0.toString() }
             },
             label = { Text(text = "Hemoglobina") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),

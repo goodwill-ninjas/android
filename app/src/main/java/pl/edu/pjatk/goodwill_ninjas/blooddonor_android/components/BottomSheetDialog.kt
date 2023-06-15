@@ -52,7 +52,7 @@ fun BottomSheetDialog(navController: NavController) {
 @Composable
 fun BottomSheetOne(navController: NavController) {
     Column(
-        modifier = Modifier.padding(32.dp)
+        modifier = Modifier.padding(32.dp).fillMaxWidth()
     ) {
 
         Row {
@@ -66,21 +66,27 @@ fun BottomSheetOne(navController: NavController) {
 }
 @Composable
 fun addDonation(navController: NavController) {
-    Button(onClick = {
-        navController.navigate(
-            Screen.AddDonationFirstScreen.route
-        )
-    }) {
+    Button(
+        onClick = {
+            navController.navigate(
+                Screen.AddDonationFirstScreen.route
+            )
+        },
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Text(text = "Dodaj donację")
     }
 }
 @Composable
 fun addDiscqualification(navController: NavController) {
-    Button(onClick = {
-        navController.navigate(
-            Screen.AddDisqualification.route
-        )
-    }) {
+    Button(
+        onClick = {
+            navController.navigate(
+                Screen.AddDisqualification.route
+            )
+        },
+        modifier = Modifier.fillMaxWidth())
+    {
         Text("Dodaj dyskwalifikację")
     }
 }

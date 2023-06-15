@@ -27,7 +27,7 @@ fun BloodQtyInput(
     exchangeViewModel: ExchangeViewModel
 ) {
     var value by remember {
-        mutableStateOf("0")
+        mutableStateOf("450")
     }
     val context = LocalContext.current.applicationContext
     Column(
@@ -36,7 +36,7 @@ fun BloodQtyInput(
         OutlinedTextField(
             value = value,
             onValueChange = { newText ->
-                value = newText
+                value = newText.ifEmpty { 0.toString() }
             },
             label = { Text(text = "Ilość") },
             placeholder = { Text(text = "Ilość") },

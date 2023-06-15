@@ -32,11 +32,11 @@ fun BloodPressureInput( onEvent: (DonationEvent) -> Unit, onDisqualificationEven
         OutlinedTextField(
             value = value,
             onValueChange = { newText ->
-                value = newText
+                value = newText.ifEmpty { 0.toString() }
             },
             label = { Text(text = "Ciśnienie") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),
-            placeholder = { Text(text = "00:00") },
+            placeholder = { Text(text = "00/00") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
