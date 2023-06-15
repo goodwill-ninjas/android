@@ -25,4 +25,4 @@ data class BloodCapacity (
     @JsonProperty("source_datetime") val sourceDatetime: String = "",
     @JsonProperty("updated_at") val updatedAt: String = "",
     @JsonProperty("created_at") val createdAt: String = ""
-        )
+)

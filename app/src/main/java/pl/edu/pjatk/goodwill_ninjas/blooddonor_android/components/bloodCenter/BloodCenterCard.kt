@@ -37,8 +37,6 @@ fun BloodCenterCard (
     var cardExpanded by remember { mutableStateOf(false) }
     val bloodCenterDetailsViewModel = BloodCenterDetailsViewModel(context, token)
 
-
-
     Box {
         Card(
             elevation = 5.dp,

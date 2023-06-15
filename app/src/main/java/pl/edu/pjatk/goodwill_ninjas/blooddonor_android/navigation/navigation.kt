@@ -3,7 +3,10 @@ package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation
 import BottomModal
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Space
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -192,4 +196,5 @@ fun Navigation(
             }
         }
     }
+    Spacer(modifier = Modifier.width(40.dp))
 }

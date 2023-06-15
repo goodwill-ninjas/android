@@ -12,5 +12,5 @@ interface LoginApi {
 
     @Headers("Accept: Application/json")
     @POST("auth/register")
-    suspend fun register(@Body registerBody: RegisterBody): Response<Int>?
+    suspend fun register(@Body registerBody: RegisterBody): Response<RegisterResponse>?
 }

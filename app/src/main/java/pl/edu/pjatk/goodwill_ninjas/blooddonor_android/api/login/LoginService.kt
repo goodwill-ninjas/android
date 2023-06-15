@@ -19,9 +19,6 @@ class LoginService {
 
         val body: LoginResponse? = loginResponse?.body()
 
-        Log.wtf("response", body.toString())
-        Log.wtf("response", httpStatusCode.toString())
-        Log.wtf("response", httpStatusMessage)
         if (body != null) {
             return body.token
         }
@@ -43,9 +40,9 @@ class LoginService {
 
     suspend fun successfulRegisterResponse(
         body: RegisterBody
-    ): Int? {
+    ): RegisterResponse? {
         val registerResponse = api.register(body)
-
-        return registerResponse?.code()
+        val httpStatusCode: Int? = registerResponse?.code()
+        return registerResponse?.body()
     }
 }
