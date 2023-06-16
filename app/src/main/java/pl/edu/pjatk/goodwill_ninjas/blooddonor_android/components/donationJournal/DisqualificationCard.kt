@@ -20,6 +20,8 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationParsers
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun DisqualificationCard(
@@ -44,8 +46,20 @@ fun DisqualificationCard(
                         modifier = Modifier.padding(5.dp)
                     ) {
                         Text(text = stringResource(id = R.string.disqualification), fontWeight = FontWeight.Bold)
-                        Text(text = "Od: ${DonationParsers().parseToDate(disqualificationDate)}")
-                        Text(text = "Do: ${DonationParsers().parseToDate(disqualificationDate + 86400000 * days)}")
+                        Text(text = "Od: " +
+                                Instant
+                                    .ofEpochMilli(disqualificationDate)
+                                    .atZone( ZoneId.of("Europe/Warsaw"))
+                                    .toLocalDate()
+                                    .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                        )
+                        Text(text = "Do: " +
+                                Instant
+                                    .ofEpochMilli(disqualificationDate + 86400000 * days)
+                                    .atZone(ZoneId.of("Europe/Warsaw"))
+                                    .toLocalDate()
+                                    .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                        )
                     }
                 }
             }

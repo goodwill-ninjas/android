@@ -11,6 +11,6 @@ data class Disqualification (
     @ColumnInfo(name ="date_start") val dateStart: Long? = 0,
     @ColumnInfo(name ="days") val days: Int? = 0,
     @ColumnInfo(name ="blood_pressure") val bloodPressure: String? = "",
-    @ColumnInfo(name ="hemoglobin") val hemoglobin: String? = "",
+    @ColumnInfo(name ="hemoglobin") val hemoglobin: Double? = null,
     @ColumnInfo(name ="details") val details: String? = "",
 )

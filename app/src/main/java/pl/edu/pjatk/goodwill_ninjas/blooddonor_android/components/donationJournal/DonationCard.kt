@@ -22,6 +22,8 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.BloodTypeIcon
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun DonationCard(
@@ -47,7 +49,13 @@ fun DonationCard(
                         modifier = Modifier.padding(5.dp)
                     ) {
                         Text(text = donationType, fontWeight = FontWeight.Bold)
-                        Text(text = "Data: ${Instant.ofEpochMilli(donationDate)}")
+                        Text(text = "Data: " +
+                                Instant
+                                    .ofEpochMilli(donationDate)
+                                    .atZone(ZoneId.of("Europe/Warsaw"))
+                                    .toLocalDate()
+                                    .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                        )
                         Text(text = "Ilość: $amount")
                     }
                 }

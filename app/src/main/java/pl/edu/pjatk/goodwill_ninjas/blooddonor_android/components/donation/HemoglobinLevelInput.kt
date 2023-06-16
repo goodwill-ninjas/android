@@ -22,7 +22,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donatio
 @Composable
 fun HemoglobinLevelInput(onEvent: (DonationEvent) -> Unit, onDisqualificationEvent: (DisqualificationEvent)->Unit) {
     var value by remember {
-        mutableStateOf("00")
+        mutableStateOf("0")
     }
     val context = LocalContext.current.applicationContext
     Column(
@@ -36,7 +36,7 @@ fun HemoglobinLevelInput(onEvent: (DonationEvent) -> Unit, onDisqualificationEve
             },
             label = { Text(text = "Hemoglobina") },
             textStyle = TextStyle.Default.copy(fontSize = 16.sp),
-            placeholder = { Text(text = "00") },
+            placeholder = { Text(text = "0") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
@@ -52,7 +52,18 @@ fun HemoglobinLevelInput(onEvent: (DonationEvent) -> Unit, onDisqualificationEve
                 }
             )
         )
-        onEvent(DonationEvent.SetHemoglobin(value.toDouble()))
-        onDisqualificationEvent(DisqualificationEvent.SetHemoglobin(value))
+        onEvent(
+            if (value == "0") {
+                DonationEvent.SetHemoglobin(null)
+            } else {
+                DonationEvent.SetHemoglobin(value.toDouble())
+            })
+        onDisqualificationEvent(
+            if (value == "0") {
+                DisqualificationEvent.SetHemoglobin(null)
+            } else {
+                DisqualificationEvent.SetHemoglobin(value.toDouble())
+            }
+        )
     }
 }

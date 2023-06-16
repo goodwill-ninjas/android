@@ -52,7 +52,19 @@ fun BloodPressureInput( onEvent: (DonationEvent) -> Unit, onDisqualificationEven
                 }
             )
         )
-        onEvent(DonationEvent.SetBloodPressure(value))
-        onDisqualificationEvent(DisqualificationEvent.SetBloodPressure(value))
+        onEvent(
+            if(value.isEmpty()) {
+                DonationEvent.SetBloodPressure(null)
+            } else {
+                DonationEvent.SetBloodPressure(value)
+            }
+        )
+        onDisqualificationEvent(
+            if(value.isEmpty()) {
+                DisqualificationEvent.SetBloodPressure(null)
+            } else {
+                DisqualificationEvent.SetBloodPressure(value)
+            }
+        )
     }
 }
