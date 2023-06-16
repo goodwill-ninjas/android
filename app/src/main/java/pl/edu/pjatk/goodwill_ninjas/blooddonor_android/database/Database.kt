@@ -18,7 +18,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.userFeat.UserFea
 
 @Database(
     entities = [Donation::class, UserFeat::class, BloodCenter::class, Disqualification::class],
-    version = 8,
+    version = 9,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -65,6 +65,12 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE disqualification RENAME COLUMN date_finish TO days")
             }
         }
+        private val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE disqualification")
+                database.execSQL(" CREATE TABLE disqualification(`id` INTEGER NOT NULL PRIMARY KEY, `date_start` INTEGER, `days` INTEGER, `blood_pressure` TEXT, `hemoglobin` REAL, `details` TEXT, `companion_user_id` INTEGER)")
+            }
+        }
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -78,7 +84,8 @@ abstract class AppDatabase : RoomDatabase() {
                     MIGRATION_4_5,
                     MIGRATION_5_6,
                     MIGRATION_6_7,
-                    MIGRATION_7_8
+                    MIGRATION_7_8,
+                    MIGRATION_8_9
                 ).build()
                 INSTANCE = instance
                 instance

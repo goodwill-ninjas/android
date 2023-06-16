@@ -76,7 +76,7 @@ class DonationViewModel(
                                 dateStart = Instant.parse(item.createdAt).millis,
                                 days = item.disqualificationDays,
                                 details = item.details,
-                                hemoglobin = item.hemoglobin.toString()
+                                hemoglobin = item.hemoglobin
                             )
                             runBlocking {
                                 disqualificationDao.upsertDisqualification(disqualification)
@@ -147,7 +147,7 @@ class DonationViewModel(
                             donated_type = DonationParsers().parseDonationType(donatedType),
                             amount = amount,
                             blood_pressure = bloodPressure,
-                            hemoglobin = DonationParsers().parseHemoglobin(hemoglobin),
+                            hemoglobin = hemoglobin,
                             arm = DonationParsers().parseHand(hand),
                             details = details,
                             donated_at = DonationParsers().parseToDate(createdAt)

@@ -46,7 +46,7 @@ fun BloodCard (
                     )
                     Column(modifier = Modifier.padding(5.dp)) {
                         Text(bloodType, fontWeight = FontWeight(700))
-                        Text(text = "Następna donacja: ${donationDate.format(DateTimeFormatter.ISO_DATE).toString()}")
+                        Text(text = "Następna donacja: ${donationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}")
                     }
                 }
                 if (isNextDonationCard) {
