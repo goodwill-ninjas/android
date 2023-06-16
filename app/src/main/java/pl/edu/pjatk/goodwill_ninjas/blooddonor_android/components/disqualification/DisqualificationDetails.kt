@@ -58,6 +58,7 @@ fun DisqualificationDetails(onEventDisqualification: (DisqualificationEvent) -> 
                 }
             )
         )
+
         onEventDisqualification(DisqualificationEvent.SetDetails(value))
     }
 }

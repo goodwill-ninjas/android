@@ -31,8 +31,10 @@ fun ProfilePage (
     db: AppDatabase
 ) {
     val loginViewModel = LoginViewModel(context)
-    
-    var token = loginViewModel.getToken()
+    var token: String
+    runBlocking {
+        token = loginViewModel.getToken()
+    }
     var userViewModal: UserViewModel
     var userFeatViewModel: UserFeatViewModel
     var userId = 0
@@ -41,7 +43,7 @@ fun ProfilePage (
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(10.dp, bottom = 60.dp)
     ) {
         Column(modifier = Modifier.padding(15.dp)) {
             (if (token.isEmpty()) {

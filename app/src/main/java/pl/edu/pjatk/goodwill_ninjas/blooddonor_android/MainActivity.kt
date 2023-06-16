@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return DonationViewModel(db.donationDao(), applicationContext) as T
+                    return DonationViewModel(db.donationDao(), db.disqualificationDao(), applicationContext) as T
                 }
             }
         }
@@ -48,8 +48,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlooddonorandroidTheme {
                 val state by viewModel.state.collectAsState()
+                val disqualificationState by viewModelDisqualification.state.collectAsState()
                 Navigation(
                     state = state,
+                    disqualificationState = disqualificationState,
                     onEvent = viewModel::onEvent,
                     onEventDisqualification = viewModelDisqualification::onEventDisqualification,
                     db = db,

@@ -1,6 +1,7 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.discqualification
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.coroutineScope
@@ -52,13 +53,13 @@ class DisqualificationViewModel(private val dao: DisqualificationDAO, context: C
     fun onEventDisqualification(event: DisqualificationEvent) {
         when (event) {
             is DisqualificationEvent.SaveDisqualification -> {
-                val companionUserId = state.value.companionUserId
-                val dateStart = state.value.dateStart
-                val days = state.value.days
-                val bloodPressure = state.value.bloodPressure
-                val hemoglobin = state.value.hemoglobin
-                val details = state.value.details
-                if (dateStart == null || days == null) {
+                val companionUserId = _state.value.companionUserId
+                val dateStart = _state.value.dateStart
+                val days = _state.value.days
+                val bloodPressure = _state.value.bloodPressure
+                val hemoglobin = _state.value.hemoglobin
+                val details = _state.value.details
+                if (dateStart == null || days == null || days == 0) {
                     return
                 }
                 val disqualification = Disqualification(

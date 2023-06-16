@@ -63,25 +63,19 @@ fun AdvancedDonationParams(onEvent: (DonationEvent) ->Unit, donationState:Donati
     Scaffold(
         scaffoldState = scaffoldState,
         ) {
-        val image = painterResource(id = R.drawable.droplet)
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
                 .fillMaxSize()
                 .padding(paddingValues = it),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.SpaceAround
         ) {
-            Box(modifier = Modifier.padding()) {
-                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
-            }
-            Box(modifier = Modifier.padding()) {
+            Box(
+                modifier = Modifier.padding(),
+            ) {
                 androidx.compose.material.Card(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(15.dp)
-                        .clickable { },
-                    elevation = 10.dp
                 ) {
                     Column(
                         modifier = Modifier.padding(15.dp)

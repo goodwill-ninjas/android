@@ -8,5 +8,6 @@
     <string name="add_disqualification">Dodaj dyskwalifikację</string>
     <string name="add_log">Dodaj wpis dzienika</string>
     <string name="hide_password">Hide password </string>
-    <string name="show_password">Show password</string>>
+    <string name="show_password">Show password</string>
+    <string name="disqualification">Dyskwalifikacja</string>
 </resources>

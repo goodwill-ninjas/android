@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 interface DisqualificationDAO {
     @Query("SELECT * from disqualification")
     fun getAll(): Flow<List<Disqualification>>
+    @Query("DELETE FROM disqualification")
+    suspend fun deleteAll()
     @Update
     fun updateDisqualification(disqualification: Disqualification)
     @Upsert

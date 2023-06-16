@@ -24,6 +24,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.login.Password
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.register.BloodTypePicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.register.GenderPicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.register.UserName
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Routes
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.RegistrationEvent
@@ -80,7 +81,7 @@ fun SignUpScreen(navController: NavController, context: Context) {
             Button(onClick = {
                 val state = loginViewModel.registrationDataStore.value
                 loginViewModel.register(state)
-                navController.navigate(Screen.MainPage.route)
+                navController.navigate(Routes.LOGIN)
             },
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(16.dp),

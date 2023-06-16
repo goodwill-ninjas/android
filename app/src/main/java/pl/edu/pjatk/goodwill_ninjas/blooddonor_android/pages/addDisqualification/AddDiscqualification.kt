@@ -1,12 +1,15 @@
 package pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.addDisqualification
 
+import android.util.Log
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,19 +29,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.DatePicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.disqualification.DaysInput
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.components.donation.DatePicker
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.navigation.Screen
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.rememberImeState
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 
 @Composable
 fun AddDisqualification(
@@ -47,7 +48,7 @@ fun AddDisqualification(
 ) {
     val scaffoldState = rememberScaffoldState()
     val imeState = rememberImeState()
-    var scrollState = rememberScrollState()
+    val scrollState = rememberScrollState()
     LaunchedEffect(key1 = imeState.value) {
         if (imeState.value) {
             scrollState.animateScrollTo(scrollState.maxValue, tween(300))
@@ -56,24 +57,17 @@ fun AddDisqualification(
     Scaffold(
         scaffoldState = scaffoldState,
     ) {
-        val image = painterResource(id = R.drawable.droplet)
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(paddingValues = it),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(paddingValues = it)
         ) {
-            Box(modifier = Modifier.padding()) {
-                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
-            }
-            Box(modifier = Modifier.padding()) {
+            Box(modifier = Modifier.padding(10.dp)) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(15.dp)
-                        .clickable { },
+                        .padding(15.dp),
                     elevation = 10.dp
                 ) {
                     Column(
@@ -89,6 +83,7 @@ fun AddDisqualification(
                             }
                             Row { DatePicker(onEvent, onEventDisqualification, exchangeViewModel) }
                         }
+                        Spacer(modifier = Modifier.height(20.dp))
                         Column {
                             Row {
                                 Text(
@@ -99,6 +94,7 @@ fun AddDisqualification(
                             Row {
                                 DaysInput(onEventDisqualification, exchangeViewModel)
                             }
+                            Spacer(modifier = Modifier.height(20.dp))
                             Row {
                                 OutlinedButton(
                                     onClick = {

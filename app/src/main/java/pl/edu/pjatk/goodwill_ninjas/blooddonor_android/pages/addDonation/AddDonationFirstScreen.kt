@@ -45,31 +45,29 @@ import java.util.*
 @Composable
 fun WelcomeScreen(navController: NavController, onEvent: (DonationEvent) -> Unit, onEventDisqualification: (DisqualificationEvent) -> Unit,
                   exchangeViewModel: ExchangeViewModel, context: Context, db: AppDatabase) {
-    var scrollState = rememberScrollState()
+    val scaffoldState = rememberScaffoldState()
+    val scrollState = rememberScrollState()
     val imeState = rememberImeState()
     LaunchedEffect(key1 = imeState.value) {
         if (imeState.value) {
             scrollState.animateScrollTo(scrollState.maxValue, tween(300))
         }
     }
-    Scaffold {
-        val image = painterResource(id = R.drawable.droplet)
+    Scaffold(
+        scaffoldState = scaffoldState
+    ) {
         Column(
             modifier = Modifier
-                .scrollable(state = scrollState, orientation = Orientation.Vertical)
                 .verticalScroll(scrollState)
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(paddingValues = it),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(modifier = Modifier.padding()) {
-                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
-            }
-            Box(modifier = Modifier.padding()) {
                 Card(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(15.dp)
                         .clickable { },
                     elevation = 10.dp
