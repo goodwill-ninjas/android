@@ -4,6 +4,7 @@ import BottomModal
 import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Space
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
@@ -38,6 +39,7 @@ import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.loginPage.SignInScr
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.mainPage.MainPage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.profilePage.ProfilePage
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.pages.registerPage.SignUpScreen
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.discqualification.DisqualificationState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.storeViewModel.ExchangeViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationState
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
@@ -62,6 +64,7 @@ object Routes {
 @Composable
 fun Navigation(
     state: DonationState,
+    disqualificationState: DisqualificationState,
     onEvent: (DonationEvent) -> Unit,
     onEventDisqualification: (DisqualificationEvent) -> Unit,
     exchangeViewModel: ExchangeViewModel,
@@ -89,7 +92,7 @@ fun Navigation(
         topBar = { MytopBar(userName) },
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
-            if (currentRoute != "BottomModal" && currentRoute != Routes.LOGIN) {
+            if (currentRoute != "BottomModal" && currentRoute != Routes.LOGIN && currentRoute != Routes.REGISTER) {
                 FloatingActionButton(onClick = {
                     navController.navigate(Screen.BottomModal.route)
                 }) {
@@ -97,6 +100,10 @@ fun Navigation(
                 }
                 if (currentRoute.equals("Add_donation")) {
                     FloatingActionButton(onClick = {
+                        onEvent(DonationEvent.SetAmount(exchangeViewModel.getAmount()))
+                        onEvent(DonationEvent.SetCreatedAt(exchangeViewModel.getCreatedAt()))
+                        onEvent(DonationEvent.SetDonatedType(exchangeViewModel.getDonationType()))
+                        onEvent(DonationEvent.SetBloodCenter(exchangeViewModel.getBloodCentre()))
                         onEvent(DonationEvent.SaveDonation)
                         navController.navigate(Routes.SELF)
                     }, backgroundColor = Color.Green) {
@@ -158,7 +165,7 @@ fun Navigation(
                 SignInScreen(navController, context)
             }
             composable(route = Routes.JOURNAL) {
-                DonationJournal(userName, state, onEvent, db, context, userId, token, navController)
+                DonationJournal(userName, state, disqualificationState, onEvent, db, context, userId, token, navController)
             }
             composable(route = Routes.SELF) {
                 MainPage(userName, navController, context, db)

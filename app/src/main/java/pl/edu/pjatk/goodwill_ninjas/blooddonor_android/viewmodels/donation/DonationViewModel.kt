@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,16 +16,17 @@ import kotlinx.coroutines.runBlocking
 import org.joda.time.Instant
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationBody
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.api.donation.DonationService
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.Disqualification
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.disqualification.DisqualificationDAO
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.Donation
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationDao
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.database.donation.DonationEvent
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.login.LoginViewModel
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.user.UserViewModel
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 class DonationViewModel(
     private val dao: DonationDao,
+    private val disqualificationDao: DisqualificationDAO,
     context: Context,
 ) : ViewModel() {
     private val loginViewModel = LoginViewModel(context)
@@ -62,26 +62,44 @@ class DonationViewModel(
         coroutineScope {
             val donations = service.successfulDonationsResponse(userId, token)
             if (donations != null) {
-                if (donations.size != dao.getAll().first().size) {
+                if(
+                    donations.filter { item -> item.disqualified == true }.size != disqualificationDao.getAll().first().size
+                    || donations.filter { item -> item.disqualified == false }.size != dao.getAll().first().size
+                ) {
                     dao.deleteAll()
+                    disqualificationDao.deleteAll()
                     for (item in donations) {
-                        val donation = item.amount?.let {
-                            Donation(
+                        if (item.disqualified == true) {
+                            val disqualification = Disqualification(
                                 companionUserId = item.companionUserId,
-                                donatedType = DonationParsers().parseDonationType(item.donatedType.toString()),
-                                amount = it,
                                 bloodPressure = item.bloodPressure,
-                                hemoglobin = item.hemoglobin,
+                                dateStart = Instant.parse(item.createdAt).millis,
+                                days = item.disqualificationDays,
                                 details = item.details,
-                                createdAt = Instant.parse(item.donatedAt).millis,
-                                deletedAt = null,
-                                hand = item.arm,
-                                bloodCenter = null
+                                hemoglobin = item.hemoglobin.toString()
                             )
-                        }
-                        if (donation != null) {
                             runBlocking {
-                                dao.upsertDonation(donation)
+                                disqualificationDao.upsertDisqualification(disqualification)
+                            }
+                        } else {
+                            val donation = item.amount?.let {
+                                Donation(
+                                    companionUserId = item.companionUserId,
+                                    donatedType = DonationParsers().parseDonationType(item.donatedType.toString()),
+                                    amount = it,
+                                    bloodPressure = item.bloodPressure,
+                                    hemoglobin = item.hemoglobin,
+                                    details = item.details,
+                                    createdAt = Instant.parse(item.donatedAt).millis,
+                                    deletedAt = null,
+                                    hand = item.arm,
+                                    bloodCenter = null
+                                )
+                            }
+                            if (donation != null) {
+                                runBlocking {
+                                    dao.upsertDonation(donation)
+                                }
                             }
                         }
                     }
@@ -93,16 +111,16 @@ class DonationViewModel(
     fun onEvent(event: DonationEvent) {
         when (event) {
             is DonationEvent.SaveDonation -> {
-                val companionUserId = state.value.companionUserId
-                val donatedType = state.value.donatedType
-                val amount = state.value.amount
-                val bloodPressure = state.value.bloodPressure
-                val hemoglobin = state.value.hemoglobin
-                val details = state.value.details
-                val createdAt = state.value.createdAt
-                val deletedAt = state.value.deletedAt
-                val hand = state.value.hand
-                val bloodCenter = state.value.bloodCenter
+                val companionUserId = _state.value.companionUserId
+                val donatedType = _state.value.donatedType
+                val amount = _state.value.amount
+                val bloodPressure = _state.value.bloodPressure
+                val hemoglobin = _state.value.hemoglobin
+                val details = _state.value.details
+                val createdAt = _state.value.createdAt
+                val deletedAt = _state.value.deletedAt
+                val hand = _state.value.hand
+                val bloodCenter = _state.value.bloodCenter
 
                 if (donatedType.isBlank() || createdAt == null || amount == 0) {
                     return
@@ -135,6 +153,7 @@ class DonationViewModel(
                             donated_at = DonationParsers().parseToDate(createdAt)
                         )
                     }
+                    Log.d("donbody", donationBody.toString())
                     if (donationBody != null) {
                         addDonation(donationBody, token)
                     }

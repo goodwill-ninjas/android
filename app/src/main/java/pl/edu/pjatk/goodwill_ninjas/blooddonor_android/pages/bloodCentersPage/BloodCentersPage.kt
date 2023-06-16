@@ -29,7 +29,7 @@ fun BloodCentersPage (navController: NavController, context: Context, db: AppDat
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(10.dp, bottom = 60.dp)
     ) {
         if (token.isEmpty()) {
             navController.navigate(Routes.PROFILE)

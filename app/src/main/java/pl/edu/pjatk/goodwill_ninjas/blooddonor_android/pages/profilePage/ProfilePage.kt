@@ -43,7 +43,7 @@ fun ProfilePage (
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(10.dp, bottom = 60.dp)
     ) {
         Column(modifier = Modifier.padding(15.dp)) {
             (if (token.isEmpty()) {

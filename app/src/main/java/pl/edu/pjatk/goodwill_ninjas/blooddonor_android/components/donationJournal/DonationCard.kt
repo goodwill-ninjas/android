@@ -13,18 +13,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.R
-import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.viewmodels.donation.DonationParsers
+import pl.edu.pjatk.goodwill_ninjas.blooddonor_android.utils.BloodTypeIcon
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Composable
-fun DisqualificationCard(
-    disqualificationDate: Long,
-    days: Int
+fun DonationCard(
+    donationType: String,
+    donationDate: Long,
+    amount: Int
 ) {
     Box(modifier = Modifier.fillMaxWidth()){
         Card(
@@ -36,16 +39,16 @@ fun DisqualificationCard(
             Column(modifier = Modifier.padding(15.dp)) {
                 Row {
                     Icon(
-                        Icons.Rounded.Error,
+                        painter = painterResource(id = BloodTypeIcon.FullBlood),
                         contentDescription = null,
                         Modifier.height(50.dp)
                     )
                     Column(
                         modifier = Modifier.padding(5.dp)
                     ) {
-                        Text(text = stringResource(id = R.string.disqualification), fontWeight = FontWeight.Bold)
-                        Text(text = "Od: ${DonationParsers().parseToDate(disqualificationDate)}")
-                        Text(text = "Do: ${DonationParsers().parseToDate(disqualificationDate + 86400000 * days)}")
+                        Text(text = donationType, fontWeight = FontWeight.Bold)
+                        Text(text = "Data: ${Instant.ofEpochMilli(donationDate)}")
+                        Text(text = "Ilość: $amount")
                     }
                 }
             }

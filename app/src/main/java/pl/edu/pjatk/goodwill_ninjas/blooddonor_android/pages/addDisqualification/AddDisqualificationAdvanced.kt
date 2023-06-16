@@ -46,18 +46,12 @@ fun AddDisqualificationAdvanced(
     Scaffold(
         scaffoldState = scaffoldState,
     ) {
-        val image = painterResource(id = R.drawable.droplet)
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
                 .padding(paddingValues = it),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(modifier = Modifier.padding()) {
-                Image(painter = image, contentDescription = null, Modifier.height(250.dp))
-            }
             Box(modifier = Modifier.padding()) {
                 Card(
                     modifier = Modifier
